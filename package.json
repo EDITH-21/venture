@@ -1,0 +1,13 @@
+{
+  "name": "vanguard-digital-mern",
+  "version": "1.0.0",
+  "description": "Production-Ready Full-Stack Technology Company & Venture Studio Web Platform",
+  "private": true,
+  "scripts": {
+    "install-all": "cd server && npm install && cd ../client && npm install",
+    "seed": "cd server && npm run seed",
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build"
+  }
+}

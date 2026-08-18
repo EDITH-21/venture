@@ -1,0 +1,18 @@
+import express from 'express';
+import {
+  createInquiry,
+  getInquiries,
+  updateInquiryStatus,
+  deleteInquiry,
+} from '../controllers/inquiryController.js';
+import { protect, adminOnly } from '../middleware/authMiddleware.js';
+import { inquiryLimiter } from '../middleware/rateLimiter.js';
+
+const router = express.Router();
+
+router.post('/', inquiryLimiter, createInquiry);
+router.get('/', protect, adminOnly, getInquiries);
+router.put('/:id', protect, adminOnly, updateInquiryStatus);
+router.delete('/:id', protect, adminOnly, deleteInquiry);
+
+export default router;
