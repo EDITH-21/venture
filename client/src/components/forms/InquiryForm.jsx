@@ -105,6 +105,31 @@ export const InquiryForm = ({ initialService = '' }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const OWNER_WHATSAPP = '919998160726';
+
+  const buildWhatsAppMessage = (data) => {
+    const lines = [
+      `🔔 *New Project Inquiry*`,
+      ``,
+      `👤 *Name:* ${data.name}`,
+      `📧 *Email:* ${data.email}`,
+      `📱 *Phone:* ${data.phone}`,
+      data.company ? `🏢 *Company:* ${data.company}` : '',
+      `🛠️ *Service:* ${data.service}`,
+      `💰 *Budget:* ${data.budget}`,
+      ``,
+      `📋 *Project Details:*`,
+      data.message,
+    ].filter(Boolean).join('\n');
+    return encodeURIComponent(lines);
+  };
+
+  const openWhatsApp = (data) => {
+    const msg = buildWhatsAppMessage(data);
+    const url = `https://wa.me/${OWNER_WHATSAPP}?text=${msg}`;
+    window.open(url, '_blank');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
@@ -113,6 +138,8 @@ export const InquiryForm = ({ initialService = '' }) => {
     try {
       const res = await inquiriesAPI.submit(formData);
       if (res.data?.success) {
+        // Auto-open WhatsApp with inquiry details
+        openWhatsApp(formData);
         setStatus('success');
         setFormData({
           name: '',
@@ -150,17 +177,22 @@ export const InquiryForm = ({ initialService = '' }) => {
             <h3 className="text-3xl font-serif font-semibold text-warm-white mb-3">
               Inquiry Received
             </h3>
-            <p className="text-text-muted text-base max-w-md mb-8">
-              Thanks. We'll get back to you soon.
+            <p className="text-text-muted text-base max-w-md mb-4">
+              Your inquiry has been submitted and sent via WhatsApp. We'll get back to you shortly!
             </p>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setStatus('idle')}
-              className="text-xs uppercase tracking-wider font-semibold"
-            >
-              Submit Another Message
-            </Button>
+            <p className="text-champagne text-sm font-mono mb-8">
+              💬 WhatsApp: +91 99981 60726
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setStatus('idle')}
+                className="text-xs uppercase tracking-wider font-semibold"
+              >
+                Submit Another Message
+              </Button>
+            </div>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
