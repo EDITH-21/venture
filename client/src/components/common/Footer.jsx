@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Mail, Phone, MessageSquare, Instagram, Linkedin, Shield } from 'lucide-react';
+import { ArrowUpRight, Mail, Phone, MessageSquare, Instagram, Shield } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext';
 
 export const Footer = () => {
   const { settings } = useSettings();
+  const whatsappNum = (settings.whatsapp || '9998160726').replace(/[^0-9]/g, '');
 
   return (
     <footer className="bg-obsidian border-t border-graphite-border/60 text-warm-white pt-20 pb-12">
@@ -32,21 +33,28 @@ export const Footer = () => {
 
             <div className="flex flex-col gap-2 pt-2 text-xs text-text-muted">
               <a
-                href={`mailto:${settings.email}`}
+                href={`mailto:${settings.email || 'shivamgate21@gmail.com'}`}
                 className="flex items-center gap-2 hover:text-champagne transition-colors"
               >
                 <Mail className="w-4 h-4 text-champagne" />
-                <span>{settings.email || 'contact@vanguard-digital.tech'}</span>
+                <span>{settings.email || 'shivamgate21@gmail.com'}</span>
               </a>
-              {settings.phone && (
-                <a
-                  href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
-                  className="flex items-center gap-2 hover:text-champagne transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-champagne" />
-                  <span>{settings.phone}</span>
-                </a>
-              )}
+              <a
+                href={`tel:${(settings.phone || '+919998160726').replace(/[^0-9+]/g, '')}`}
+                className="flex items-center gap-2 hover:text-champagne transition-colors"
+              >
+                <Phone className="w-4 h-4 text-champagne" />
+                <span>{settings.phone || '+91 99981 60726'}</span>
+              </a>
+              <a
+                href={`https://wa.me/${whatsappNum}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-champagne transition-colors"
+              >
+                <MessageSquare className="w-4 h-4 text-champagne" />
+                <span>WhatsApp: +91 {whatsappNum}</span>
+              </a>
             </div>
           </div>
 
@@ -111,23 +119,32 @@ export const Footer = () => {
           {/* Connect Column */}
           <div className="lg:col-span-3 flex flex-col gap-4">
             <h4 className="text-xs uppercase tracking-[0.2em] text-champagne font-semibold">
-              Connect
+              Quick Connect
             </h4>
             <ul className="flex flex-col gap-3 text-sm text-text-muted">
-              {settings.linkedin && (
-                <li>
-                  <a
-                    href={settings.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-champagne transition-colors group"
-                  >
-                    <Linkedin className="w-4 h-4 text-champagne" />
-                    <span>LinkedIn</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </a>
-                </li>
-              )}
+              {/* WhatsApp — always visible */}
+              <li>
+                <a
+                  href={`https://wa.me/${whatsappNum}?text=Hi%2C%20I%20want%20to%20enquire%20about%20your%20services`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-champagne transition-colors group"
+                >
+                  <MessageSquare className="w-4 h-4 text-champagne" />
+                  <span>WhatsApp Us</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${settings.email || 'shivamgate21@gmail.com'}`}
+                  className="flex items-center gap-2 hover:text-champagne transition-colors group"
+                >
+                  <Mail className="w-4 h-4 text-champagne" />
+                  <span>Email Us</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </a>
+              </li>
               {settings.instagram && (
                 <li>
                   <a
@@ -138,20 +155,6 @@ export const Footer = () => {
                   >
                     <Instagram className="w-4 h-4 text-champagne" />
                     <span>Instagram</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </a>
-                </li>
-              )}
-              {settings.whatsapp && (
-                <li>
-                  <a
-                    href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-champagne transition-colors group"
-                  >
-                    <MessageSquare className="w-4 h-4 text-champagne" />
-                    <span>WhatsApp Business</span>
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </a>
                 </li>

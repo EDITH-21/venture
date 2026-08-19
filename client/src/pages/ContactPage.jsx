@@ -1,11 +1,12 @@
 import React from 'react';
-import { Mail, Phone, MessageSquare, Linkedin, Instagram, MapPin, Sparkles } from 'lucide-react';
+import { Mail, Phone, MessageSquare, Instagram, MapPin, Sparkles } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import { SEOHead } from '../components/common/SEOHead';
 import { InquiryForm } from '../components/forms/InquiryForm';
 
 export const ContactPage = () => {
   const { settings } = useSettings();
+  const whatsappNum = (settings.whatsapp || '9998160726').replace(/[^0-9]/g, '');
 
   return (
     <>
@@ -49,7 +50,7 @@ export const ContactPage = () => {
               <InquiryForm />
             </div>
 
-            {/* Right Column: Direct Channels & Site Settings */}
+            {/* Right Column: Direct Channels */}
             <div className="lg:col-span-4 space-y-8">
               <div className="bg-graphite/50 p-8 rounded-sm border border-graphite-border space-y-6">
                 <h3 className="text-xl font-serif font-semibold text-warm-white pb-4 border-b border-white/5">
@@ -63,67 +64,52 @@ export const ContactPage = () => {
                       Direct Email
                     </span>
                     <a
-                      href={`mailto:${settings.email}`}
+                      href={`mailto:${settings.email || 'shivamgate21@gmail.com'}`}
                       className="text-warm-white hover:text-champagne transition-colors flex items-center gap-2 font-sans text-sm"
                     >
                       <Mail className="w-4 h-4 text-champagne" />
-                      <span>{settings.email || 'contact@vanguard-digital.tech'}</span>
+                      <span>{settings.email || 'shivamgate21@gmail.com'}</span>
                     </a>
                   </div>
 
                   {/* Phone */}
-                  {settings.phone && (
-                    <div className="pt-2">
-                      <span className="text-text-muted uppercase tracking-wider block mb-1">
-                        Telephone
-                      </span>
-                      <a
-                        href={`tel:${settings.phone.replace(/[^0-9+]/g, '')}`}
-                        className="text-warm-white hover:text-champagne transition-colors flex items-center gap-2 font-sans text-sm"
-                      >
-                        <Phone className="w-4 h-4 text-champagne" />
-                        <span>{settings.phone}</span>
-                      </a>
-                    </div>
-                  )}
+                  <div className="pt-2">
+                    <span className="text-text-muted uppercase tracking-wider block mb-1">
+                      Phone / Call
+                    </span>
+                    <a
+                      href={`tel:+91${whatsappNum}`}
+                      className="text-warm-white hover:text-champagne transition-colors flex items-center gap-2 font-sans text-sm"
+                    >
+                      <Phone className="w-4 h-4 text-champagne" />
+                      <span>{settings.phone || '+91 99981 60726'}</span>
+                    </a>
+                  </div>
 
                   {/* WhatsApp */}
-                  {settings.whatsapp && (
-                    <div className="pt-2">
-                      <span className="text-text-muted uppercase tracking-wider block mb-1">
-                        WhatsApp Business
-                      </span>
-                      <a
-                        href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-warm-white hover:text-champagne transition-colors flex items-center gap-2 font-sans text-sm"
-                      >
-                        <MessageSquare className="w-4 h-4 text-champagne" />
-                        <span>{settings.whatsapp}</span>
-                      </a>
-                    </div>
-                  )}
+                  <div className="pt-2">
+                    <span className="text-text-muted uppercase tracking-wider block mb-1">
+                      WhatsApp Business
+                    </span>
+                    <a
+                      href={`https://wa.me/${whatsappNum}?text=Hi%2C%20I%20want%20to%20enquire%20about%20your%20services`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-warm-white hover:text-champagne transition-colors flex items-center gap-2 font-sans text-sm"
+                    >
+                      <MessageSquare className="w-4 h-4 text-champagne" />
+                      <span>+91 {whatsappNum}</span>
+                    </a>
+                  </div>
                 </div>
 
-                {/* Social Networks */}
-                <div className="pt-6 border-t border-white/5 space-y-3">
-                  <span className="text-text-muted text-[10px] font-mono uppercase tracking-wider block">
-                    Institutional Networks
-                  </span>
-                  <div className="flex items-center gap-3">
-                    {settings.linkedin && (
-                      <a
-                        href={settings.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-sm bg-obsidian border border-graphite-border flex items-center justify-center text-champagne hover:border-champagne hover:scale-105 transition-all"
-                        aria-label="LinkedIn"
-                      >
-                        <Linkedin className="w-4 h-4" />
-                      </a>
-                    )}
-                    {settings.instagram && (
+                {/* Social Networks — no LinkedIn */}
+                {settings.instagram && (
+                  <div className="pt-6 border-t border-white/5 space-y-3">
+                    <span className="text-text-muted text-[10px] font-mono uppercase tracking-wider block">
+                      Social Networks
+                    </span>
+                    <div className="flex items-center gap-3">
                       <a
                         href={settings.instagram}
                         target="_blank"
@@ -133,18 +119,18 @@ export const ContactPage = () => {
                       >
                         <Instagram className="w-4 h-4" />
                       </a>
-                    )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
-              {/* SLA Guarantee Box */}
+              {/* Response SLA Box */}
               <div className="bg-graphite/30 p-6 rounded-sm border border-champagne/20 space-y-2">
                 <span className="text-xs font-mono uppercase tracking-widest text-champagne font-bold block">
                   Response SLA
                 </span>
                 <p className="text-xs text-text-muted leading-relaxed">
-                  All enterprise inquiries are reviewed by our senior engineering leads within 24 business hours.
+                  All inquiries are personally reviewed and responded to within 24 hours. You can also reach us instantly on WhatsApp.
                 </p>
               </div>
             </div>

@@ -202,11 +202,12 @@ export const InquiryForm = ({ initialService = '' }) => {
               {/* Phone */}
               <div>
                 <label className="block text-xs font-mono uppercase tracking-wider text-warm-white/90 mb-2">
-                  Phone / WhatsApp Number
+                  Phone / WhatsApp Number <span className="text-champagne">*</span>
                 </label>
                 <input
                   type="tel"
                   name="phone"
+                  required
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="e.g. +91 98765 43210"

@@ -12,7 +12,6 @@ export const SettingsPage = () => {
     phone: '',
     whatsapp: '',
     instagram: '',
-    linkedin: '',
     website: '',
   });
 
@@ -28,7 +27,6 @@ export const SettingsPage = () => {
         phone: settings.phone || '',
         whatsapp: settings.whatsapp || '',
         instagram: settings.instagram || '',
-        linkedin: settings.linkedin || '',
         website: settings.website || '',
       });
     }
@@ -155,17 +153,6 @@ export const SettingsPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
-          {/* LinkedIn */}
-          <div>
-            <label className="block text-text-muted uppercase mb-2">LinkedIn URL</label>
-            <input
-              type="url"
-              value={formData.linkedin}
-              onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2.5 text-xs text-warm-white focus:border-champagne"
-            />
-          </div>
-
           {/* Instagram */}
           <div>
             <label className="block text-text-muted uppercase mb-2">Instagram URL</label>

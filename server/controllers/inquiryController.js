@@ -1,4 +1,5 @@
 import Inquiry from '../models/Inquiry.js';
+import { sendInquiryEmail } from '../utils/sendEmail.js';
 
 // @desc    Submit project inquiry / contact form
 // @route   POST /api/inquiries
@@ -7,22 +8,33 @@ export const createInquiry = async (req, res) => {
   try {
     const { name, email, phone, company, service, budget, message } = req.body;
 
-    if (!name || !email || !message) {
+    if (!name || !email || !phone || !message) {
       return res.status(400).json({
         success: false,
-        message: 'Name, email, and project message are required.',
+        message: 'Name, email, phone number, and project message are required.',
       });
     }
 
     const inquiry = await Inquiry.create({
       name: name.trim(),
       email: email.trim().toLowerCase(),
-      phone: phone ? phone.trim() : '',
+      phone: phone.trim(),
       company: company ? company.trim() : '',
       service: service || 'General Technology Inquiry',
       budget: budget || 'Flexible',
       message: message.trim(),
       status: 'New',
+    });
+
+    // Send email notification to admin (non-blocking — won't fail the response)
+    sendInquiryEmail({
+      name: inquiry.name,
+      email: inquiry.email,
+      phone: inquiry.phone,
+      company: inquiry.company,
+      service: inquiry.service,
+      budget: inquiry.budget,
+      message: inquiry.message,
     });
 
     res.status(201).json({

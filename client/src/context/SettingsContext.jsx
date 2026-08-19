@@ -7,11 +7,10 @@ export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState({
     companyName: 'Vanguard Digital',
     tagline: "Technology, creativity and digital solutions for what's next.",
-    email: 'contact@vanguard-digital.tech',
-    phone: '+1 (555) 019-2834',
-    whatsapp: '+1 (555) 019-2834',
+    email: 'shivamgate21@gmail.com',
+    phone: '+91 99981 60726',
+    whatsapp: '9998160726',
     instagram: 'https://instagram.com/vanguard.digital',
-    linkedin: 'https://linkedin.com/company/vanguard-digital',
     website: 'https://vanguard-digital.tech',
   });
   const [loading, setLoading] = useState(true);
