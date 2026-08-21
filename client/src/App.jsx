@@ -10,6 +10,9 @@ import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { SolutionsPage } from './pages/SolutionsPage';
 import { ServiceDetailPage } from './pages/ServiceDetailPage';
+import { EstimatorPage } from './pages/EstimatorPage';
+import { StartProjectPage } from './pages/StartProjectPage';
+import { ClientPortalPage } from './pages/ClientPortalPage';
 import { WorkPage } from './pages/WorkPage';
 import { WorkDetailPage } from './pages/WorkDetailPage';
 import { VenturesPage } from './pages/VenturesPage';
@@ -41,6 +44,10 @@ export function App() {
             <Route path="/solutions" element={<SolutionsPage />} />
             <Route path="/solutions/:category" element={<SolutionsPage />} />
             <Route path="/solutions/:category/:slug" element={<ServiceDetailPage />} />
+            <Route path="/estimator" element={<EstimatorPage />} />
+            <Route path="/start-project" element={<StartProjectPage />} />
+            <Route path="/portal" element={<ClientPortalPage />} />
+            <Route path="/client-portal" element={<ClientPortalPage />} />
             <Route path="/work" element={<WorkPage />} />
             <Route path="/work/:slug" element={<WorkDetailPage />} />
             <Route path="/ventures" element={<VenturesPage />} />

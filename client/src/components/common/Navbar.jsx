@@ -31,9 +31,11 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
     { name: 'Solutions', path: '/solutions' },
-    { name: 'Ventures', path: '/ventures' },
+    { name: 'Estimator', path: '/estimator' },
+    { name: 'Work', path: '/work' },
+    { name: 'Portal', path: '/portal' },
+    { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -96,7 +98,7 @@ export const Navbar = () => {
         <div className="flex items-center gap-4">
           <div className="hidden sm:block">
             <Button
-              to="/contact"
+              to="/start-project"
               variant="champagne"
               size="sm"
               icon={ArrowRight}
@@ -152,7 +154,7 @@ export const Navbar = () => {
 
               <div className="pt-4 flex flex-col gap-3">
                 <Button
-                  to="/contact"
+                  to="/start-project"
                   variant="primary"
                   size="md"
                   icon={ArrowRight}

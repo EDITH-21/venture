@@ -1,55 +1,73 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { Globe, Layout, ShoppingBag, Cpu, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '../common/Button';
 
 export const SolutionsGrid = () => {
-  const cards = [
+  const categories = [
     {
       num: '01',
-      category: 'TECHNOLOGY',
-      title: 'Software & Systems',
-      description: 'End-to-end full-stack architectures, high-concurrency database systems, and custom administrative engines built with pure modern engineering.',
-      link: '/solutions/technology',
-      services: [
-        { label: 'Web Development', slug: 'web-development' },
-        { label: 'Web Applications', slug: 'web-applications' },
-        { label: 'Custom Dashboards', slug: 'admin-dashboards' },
-        { label: 'Business Systems', slug: 'business-management-systems' },
-        { label: 'Automation', slug: 'automation-solutions' },
-        { label: 'Database Solutions', slug: 'database-solutions' },
+      category: 'WEBSITES',
+      title: 'Websites & Digital Presence',
+      description: 'Custom-designed, lightning-fast responsive websites engineered to establish authority and convert visitors into qualified business leads.',
+      benefits: 'Sub-second speed, mobile-first design, SEO-optimized structure',
+      useCases: [
+        'Business & Corporate Websites',
+        'High-Conversion Landing Pages',
+        'School & Educational Platforms',
+        'Executive Portfolios & Profiles',
+        'Healthcare & Practice Websites',
       ],
+      tech: 'React · Vite · Tailwind CSS · Cloudflare',
+      link: '/start-project?package=starter',
     },
     {
       num: '02',
-      category: 'CREATIVE',
-      title: 'Design & Visual Strategy',
-      description: 'Sophisticated typography, high-impact brand identities, and editorial print systems that command executive respect and market distinction.',
-      link: '/solutions/creative',
-      services: [
-        { label: 'Graphic Design', slug: 'graphic-design' },
-        { label: 'Logo Design', slug: 'logo-design' },
-        { label: 'Posters', slug: 'poster-design' },
-        { label: 'Brand Identity', slug: 'brand-identity' },
-        { label: 'Marketing Creatives', slug: 'marketing-materials' },
-        { label: 'Business Materials', slug: 'business-stationery' },
+      category: 'WEB APPLICATIONS',
+      title: 'Web Applications & Portals',
+      description: 'Dynamic full-stack web applications, customer portals, and internal business tools that automate complex operational workflows.',
+      benefits: 'Role-based access, custom databases, interactive data dashboards',
+      useCases: [
+        'SaaS Platforms & Web Tools',
+        'Administrative Management Panels',
+        'Customer Portals & Client Areas',
+        'Appointment & Booking Systems',
+        'Lead Management & CRM Systems',
       ],
+      tech: 'React · Node.js · Express · MongoDB',
+      link: '/start-project?package=business',
     },
     {
       num: '03',
-      category: 'DIGITAL',
-      title: 'Digital Operations',
-      description: 'Streamlined communication channels, verified messaging gateways, dynamic QR assets, and structured electronic document workflows.',
-      link: '/solutions/digital',
-      services: [
-        { label: 'Digital Business Solutions', slug: 'digital-business-presence' },
-        { label: 'WhatsApp Business', slug: 'whatsapp-business-setup' },
-        { label: 'Digital Cards', slug: 'digital-business-cards' },
-        { label: 'QR Solutions', slug: 'qr-code-solutions' },
-        { label: 'Online Forms', slug: 'online-forms' },
-        { label: 'Documentation Support', slug: 'digital-documentation' },
+      category: 'E-COMMERCE',
+      title: 'E-Commerce & Online Stores',
+      description: 'Complete commercial digital storefronts equipped with secure checkout, automated inventory tracking, and payment gateways.',
+      benefits: '1-click UPI payment, automated order alerts, inventory sync',
+      useCases: [
+        'Direct-to-Consumer Online Stores',
+        'Product & Service Catalogs',
+        'Instant UPI & Payment Gateways',
+        'Automated Invoice & Order Tracking',
+        'Digital Product Delivery Systems',
       ],
+      tech: 'MERN Stack · Razorpay · Stripe · Cloud APIs',
+      link: '/start-project?package=business',
+    },
+    {
+      num: '04',
+      category: 'CUSTOM DIGITAL SOLUTIONS',
+      title: 'Custom Software & Automation',
+      description: 'Bespoke software architecture, database management, and third-party API integrations designed around your exact business model.',
+      benefits: 'Eliminate repetitive manual tasks, seamless API connectivity',
+      useCases: [
+        'Business Process Automation',
+        'Custom Database Systems & Migration',
+        'Third-Party API & ERP Integration',
+        'WhatsApp Business Automated Gateways',
+        'Internal Operational Software',
+      ],
+      tech: 'Node.js · MongoDB · REST APIs · Webhooks',
+      link: '/start-project?package=custom',
     },
   ];
 
@@ -58,84 +76,93 @@ export const SolutionsGrid = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20 gap-6">
-          <div>
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-champagne font-semibold block mb-3">
-              Capabilities Suite
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-serif font-normal text-warm-white">
-              Solutions That Drive Growth
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-champagne/10 border border-champagne/20">
+              <Sparkles className="w-3.5 h-3.5 text-champagne" />
+              <span className="text-xs font-mono uppercase tracking-[0.25em] text-champagne font-bold">
+                Core Capabilities
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-serif font-normal text-warm-white leading-tight">
+              Four Core Disciplines. Zero Bloat.
             </h2>
+            <p className="text-base text-text-muted mt-3">
+              We structure our services around business outcomes rather than endless confusing tech jargon.
+            </p>
           </div>
 
           <Link
             to="/solutions"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-champagne hover:text-champagne-light transition-colors pb-1"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-champagne hover:text-champagne-light transition-colors pb-1 flex-shrink-0"
           >
-            <span>View All 48 Services</span>
+            <span>Explore All 48 Capabilities</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* 3 Solutions Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {cards.map((card, idx) => (
+        {/* 4 Clean Service Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {categories.map((card, idx) => (
             <motion.div
               key={card.num}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className="bg-graphite/60 backdrop-blur-sm rounded-md border border-graphite-border hover:border-champagne/40 p-8 sm:p-10 flex flex-col justify-between transition-all duration-300 group hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="bg-graphite/60 backdrop-blur-sm rounded-xl border border-graphite-border hover:border-champagne/40 p-8 sm:p-10 flex flex-col justify-between transition-all duration-300 group hover:shadow-[0_15px_40px_rgba(0,0,0,0.5)]"
             >
               <div>
                 {/* Header */}
-                <div className="flex items-center justify-between pb-6 border-b border-white/5">
-                  <span className="font-mono text-sm font-bold text-champagne">
+                <div className="flex items-center justify-between pb-5 border-b border-white/5">
+                  <span className="font-mono text-base font-bold text-champagne">
                     {card.num}
                   </span>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] px-2.5 py-1 rounded bg-obsidian text-text-muted border border-white/5">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] px-3 py-1 rounded bg-obsidian text-champagne border border-champagne/20 font-bold">
                     {card.category}
                   </span>
                 </div>
 
                 <div className="pt-6">
-                  <h3 className="text-2xl font-serif font-semibold text-warm-white mb-3 group-hover:text-champagne transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold text-warm-white mb-3 group-hover:text-champagne transition-colors">
                     {card.title}
                   </h3>
-                  <p className="text-sm text-text-muted leading-relaxed mb-8">
+                  <p className="text-sm text-text-muted leading-relaxed mb-6">
                     {card.description}
                   </p>
+
+                  <div className="p-3.5 rounded-lg bg-obsidian/70 border border-white/5 text-xs text-sage font-mono mb-6 flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-sage flex-shrink-0 mt-0.5" />
+                    <span><strong className="text-warm-white">Outcome:</strong> {card.benefits}</span>
+                  </div>
                 </div>
 
-                {/* Core Items List */}
-                <div className="space-y-3 pt-2 pb-8 border-t border-white/5">
-                  {card.services.map((svc) => (
-                    <Link
-                      key={svc.label}
-                      to={`/solutions/${card.category.toLowerCase()}/${svc.slug}`}
-                      className="flex items-center justify-between py-1.5 text-xs text-warm-white/80 hover:text-champagne transition-colors group/item"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-champagne/40 group-hover/item:bg-champagne transition-colors" />
-                        <span>{svc.label}</span>
-                      </div>
-                      <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-champagne" />
-                    </Link>
+                {/* Example Use Cases */}
+                <div className="space-y-2.5 pt-2 pb-6 border-t border-white/5">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-text-muted block mb-2 font-semibold">
+                    What We Build:
+                  </span>
+                  {card.useCases.map((uc, i) => (
+                    <div key={i} className="flex items-center gap-2.5 text-xs text-warm-white/90">
+                      <span className="w-1.5 h-1.5 rounded-full bg-champagne flex-shrink-0" />
+                      <span>{uc}</span>
+                    </div>
                   ))}
                 </div>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-6 border-t border-white/5">
-                <Button
+              {/* Action Button & Tech Bar */}
+              <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <span className="text-[10px] font-mono text-text-muted">
+                  Tech: <span className="text-warm-white">{card.tech}</span>
+                </span>
+
+                <Link
                   to={card.link}
-                  variant="outline"
-                  size="md"
-                  icon={ArrowRight}
-                  className="w-full justify-between text-xs uppercase tracking-wider font-semibold"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider hover:bg-champagne-light transition-all shadow-md"
                 >
-                  Explore {card.category}
-                </Button>
+                  <span>Discuss Your Project</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </motion.div>
           ))}

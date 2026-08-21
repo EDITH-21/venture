@@ -1,125 +1,263 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Cpu, Zap, Activity, Code2, Layers, CheckCircle2, Lock } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Layout, 
+  BarChart3, 
+  ShoppingBag, 
+  Layers, 
+  ArrowUpRight, 
+  CheckCircle2, 
+  ShieldCheck, 
+  TrendingUp, 
+  Users, 
+  Zap, 
+  Smartphone,
+  Globe,
+  Sparkles
+} from 'lucide-react';
 
 export const HeroVisual = () => {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  const tabs = [
+    { id: 'dashboard', label: 'Web Application', icon: Layout },
+    { id: 'ecommerce', label: 'E-Commerce', icon: ShoppingBag },
+    { id: 'analytics', label: 'Analytics Engine', icon: BarChart3 },
+  ];
+
   return (
-    <div className="relative w-full aspect-square max-w-[540px] mx-auto flex items-center justify-center select-none pointer-events-none sm:pointer-events-auto">
-      {/* Background Radial Glow */}
-      <div className="absolute inset-0 bg-radial-glow opacity-80" />
-      <div className="absolute w-72 h-72 rounded-full bg-champagne/10 blur-3xl pointer-events-none" />
+    <div className="relative w-full max-w-lg mx-auto select-none">
+      {/* Background Ambient Glow */}
+      <div className="absolute -inset-4 bg-gradient-to-tr from-champagne/20 via-transparent to-sage/15 rounded-3xl blur-2xl pointer-events-none opacity-60" />
 
-      {/* Grid Pattern Overlay */}
-      <div 
-        className="absolute inset-4 rounded-2xl opacity-20"
-        style={{
-          backgroundImage: `linear-gradient(to right, rgba(200, 169, 107, 0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(200, 169, 107, 0.15) 1px, transparent 1px)`,
-          backgroundSize: '32px 32px'
-        }}
-      />
-
-      {/* Outer Rotating Subtle Orbital Ring */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-        className="absolute w-[440px] h-[440px] rounded-full border border-champagne/15 border-dashed"
-      />
-
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-        className="absolute w-[340px] h-[340px] rounded-full border border-champagne/20"
-      />
-
-      {/* Floating Center Core Console Card */}
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: 'easeOut' }}
-        className="relative z-20 w-80 rounded-xl bg-graphite/90 backdrop-blur-xl border border-champagne/30 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
-      >
-        {/* Card Header */}
-        <div className="flex items-center justify-between pb-3.5 border-b border-champagne/15">
+      {/* Main Container Mockup */}
+      <div className="relative rounded-2xl bg-graphite/95 backdrop-blur-xl border border-champagne/30 shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden">
+        {/* Browser Top Window Bar */}
+        <div className="px-4 py-3 bg-obsidian border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-champagne animate-pulse" />
-            <span className="text-[11px] font-mono tracking-wider uppercase text-warm-white font-semibold">
-              Vanguard Core Engine
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+            <span className="ml-2 text-[10px] font-mono text-text-muted/70 flex items-center gap-1">
+              <Globe className="w-3 h-3 text-champagne" /> vanguard-client.app
             </span>
           </div>
-          <span className="text-[9px] font-mono text-champagne bg-champagne/10 px-2 py-0.5 rounded-sm border border-champagne/30">
-            v2.8 · ACTIVE
+
+          <div className="flex items-center gap-1 bg-graphite/80 px-2 py-0.5 rounded text-[9px] font-mono text-champagne border border-champagne/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse" />
+            LIVE DEMO
+          </div>
+        </div>
+
+        {/* Tab Switcher */}
+        <div className="grid grid-cols-3 bg-obsidian/60 p-1.5 border-b border-white/5 gap-1 text-xs">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md font-sans text-[11px] font-semibold transition-all ${
+                  isActive
+                    ? 'bg-graphite text-champagne border border-champagne/30 shadow-sm'
+                    : 'text-text-muted hover:text-warm-white'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Dynamic Interactive Body */}
+        <div className="p-5 min-h-[290px] flex flex-col justify-between">
+          <AnimatePresence mode="wait">
+            {activeTab === 'dashboard' && (
+              <motion.div
+                key="dashboard"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-4"
+              >
+                {/* Stats Row */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="bg-obsidian/80 p-3 rounded-lg border border-white/5">
+                    <span className="text-[10px] font-mono text-text-muted block">Monthly Active</span>
+                    <span className="text-base font-bold text-warm-white">48,290</span>
+                    <span className="text-[9px] text-sage flex items-center gap-0.5 mt-0.5">
+                      <TrendingUp className="w-2.5 h-2.5" /> +24.8%
+                    </span>
+                  </div>
+                  <div className="bg-obsidian/80 p-3 rounded-lg border border-white/5">
+                    <span className="text-[10px] font-mono text-text-muted block">Conversion Rate</span>
+                    <span className="text-base font-bold text-champagne">6.42%</span>
+                    <span className="text-[9px] text-sage flex items-center gap-0.5 mt-0.5">
+                      <TrendingUp className="w-2.5 h-2.5" /> +1.8%
+                    </span>
+                  </div>
+                  <div className="bg-obsidian/80 p-3 rounded-lg border border-white/5">
+                    <span className="text-[10px] font-mono text-text-muted block">System Uptime</span>
+                    <span className="text-base font-bold text-warm-white">99.98%</span>
+                    <span className="text-[9px] text-text-muted mt-0.5 block">Sub-10ms</span>
+                  </div>
+                </div>
+
+                {/* Dashboard Chart Mock */}
+                <div className="bg-obsidian/90 p-3.5 rounded-lg border border-champagne/15 space-y-2">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-warm-white font-semibold flex items-center gap-1.5">
+                      <Zap className="w-3.5 h-3.5 text-champagne" /> Real-Time Platform Throughput
+                    </span>
+                    <span className="text-[10px] font-mono text-champagne">Optimized</span>
+                  </div>
+                  {/* Bar graph visual */}
+                  <div className="flex items-end gap-1.5 h-16 pt-2">
+                    {[45, 60, 38, 72, 85, 95, 78, 92, 100, 88, 96, 110].map((val, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ height: 0 }}
+                        animate={{ height: `${(val / 110) * 100}%` }}
+                        transition={{ duration: 0.6, delay: idx * 0.03 }}
+                        className={`flex-1 rounded-t-sm ${
+                          idx >= 9 ? 'bg-champagne' : 'bg-champagne/30'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Status Bar */}
+                <div className="flex items-center justify-between text-[10px] font-mono text-text-muted pt-1">
+                  <span className="flex items-center gap-1 text-sage">
+                    <CheckCircle2 className="w-3 h-3" /> Fully Integrated API & Admin
+                  </span>
+                  <span>Automated Sync</span>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === 'ecommerce' && (
+              <motion.div
+                key="ecommerce"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-3.5"
+              >
+                {/* Store Header Preview */}
+                <div className="flex items-center justify-between bg-obsidian/80 p-3 rounded-lg border border-white/5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded bg-champagne/20 border border-champagne/40 flex items-center justify-center text-champagne">
+                      <ShoppingBag className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-warm-white">Direct-to-Consumer Store</h4>
+                      <p className="text-[10px] text-text-muted">Instant Checkout & Payment Gateway</p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-mono font-bold text-champagne">₹1,84,500 <span className="text-[9px] text-text-muted font-normal">today</span></span>
+                </div>
+
+                {/* Product Items List */}
+                <div className="space-y-2">
+                  {[
+                    { name: 'Signature Enterprise Kit', price: '₹14,999', stock: 'In Stock', tag: 'Fast Selling' },
+                    { name: 'Digital Operations Bundle', price: '₹28,500', stock: 'Instant Delivery', tag: 'Popular' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center justify-between p-2.5 rounded bg-obsidian/60 border border-white/5 text-xs">
+                      <div>
+                        <span className="font-semibold text-warm-white text-[11px] block">{item.name}</span>
+                        <span className="text-[9px] text-sage font-mono">{item.stock}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="font-mono font-bold text-champagne text-xs block">{item.price}</span>
+                        <span className="text-[8px] uppercase tracking-wider text-text-muted bg-white/5 px-1.5 py-0.5 rounded">{item.tag}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Checkout Integration Badge */}
+                <div className="p-2.5 rounded bg-champagne/10 border border-champagne/30 flex items-center justify-between text-[10px] font-mono text-champagne">
+                  <span className="flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5" /> Razorpay & UPI Instant Settlement
+                  </span>
+                  <span className="font-bold">1-Click Pay</span>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === 'analytics' && (
+              <motion.div
+                key="analytics"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-3.5"
+              >
+                {/* Traffic Breakdown */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-obsidian/90 p-3 rounded-lg border border-champagne/20">
+                    <span className="text-[10px] font-mono text-text-muted">Total Inquiries</span>
+                    <span className="text-lg font-bold text-champagne block">348 Leads</span>
+                    <span className="text-[9px] text-sage">+38% vs last month</span>
+                  </div>
+                  <div className="bg-obsidian/90 p-3 rounded-lg border border-white/5">
+                    <span className="text-[10px] font-mono text-text-muted">Avg Session Time</span>
+                    <span className="text-lg font-bold text-warm-white block">3m 42s</span>
+                    <span className="text-[9px] text-text-muted">High Engagement</span>
+                  </div>
+                </div>
+
+                {/* Top Conversion Channels */}
+                <div className="bg-obsidian/80 p-3 rounded-lg border border-white/5 space-y-2">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted block">
+                    Top Referral Channels
+                  </span>
+                  <div className="space-y-1.5 text-[11px] font-mono">
+                    <div className="flex justify-between items-center">
+                      <span className="text-warm-white">Direct & WhatsApp</span>
+                      <span className="text-champagne font-bold">54%</span>
+                    </div>
+                    <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                      <div className="w-[54%] bg-champagne h-full" />
+                    </div>
+
+                    <div className="flex justify-between items-center pt-1">
+                      <span className="text-warm-white">Organic Google Search</span>
+                      <span className="text-sage font-bold">32%</span>
+                    </div>
+                    <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                      <div className="w-[32%] bg-sage h-full" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-[10px] font-mono text-text-muted flex items-center justify-between pt-1">
+                  <span>Audited by Vanguard Telemetry</span>
+                  <span className="text-champagne flex items-center gap-1 font-semibold">
+                    <Sparkles className="w-3 h-3" /> Growth Ready
+                  </span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Footer Badge Bar */}
+        <div className="px-5 py-2.5 bg-obsidian/90 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-text-muted">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-sage" /> Custom Built for Growth
           </span>
+          <span className="text-champagne font-semibold">100% Tailored</span>
         </div>
-
-        {/* Telemetry Metrics */}
-        <div className="py-4 space-y-3">
-          <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-text-muted flex items-center gap-1.5">
-              <Cpu className="w-3.5 h-3.5 text-champagne" /> System Throughput
-            </span>
-            <span className="text-warm-white font-bold">99.98% / 1.2ms</span>
-          </div>
-
-          {/* Dynamic Progress Indicator */}
-          <div className="w-full bg-obsidian/80 h-1.5 rounded-full overflow-hidden border border-white/5">
-            <motion.div
-              initial={{ width: '0%' }}
-              animate={{ width: '88%' }}
-              transition={{ duration: 1.8, ease: 'easeOut' }}
-              className="h-full bg-gradient-to-r from-champagne-dark via-champagne to-champagne-light rounded-full"
-            />
-          </div>
-
-          <div className="flex items-center justify-between text-xs font-mono pt-1">
-            <span className="text-text-muted flex items-center gap-1.5">
-              <Shield className="w-3.5 h-3.5 text-sage" /> Security State
-            </span>
-            <span className="text-sage font-semibold flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" /> Shield Encrypted
-            </span>
-          </div>
-        </div>
-
-        {/* Live Code/Event Stream Preview */}
-        <div className="bg-obsidian/90 rounded-md p-3 border border-champagne/10 text-[10px] font-mono text-text-muted space-y-1">
-          <div className="text-champagne/80 flex items-center justify-between">
-            <span>&gt; pipeline.initSync()</span>
-            <span className="text-[8px] text-text-muted">NODE_01</span>
-          </div>
-          <div className="text-warm-white/70">&gt; state: nominal_sync_complete</div>
-          <div className="text-sage/80">&gt; multi_cluster_ready [38 ms]</div>
-        </div>
-      </motion.div>
-
-      {/* Floating Top Left Satellite Pill */}
-      <motion.div
-        animate={{ y: [-8, 8, -8] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -top-4 -left-2 z-30 flex items-center gap-2.5 px-3.5 py-2 rounded-lg bg-obsidian/95 backdrop-blur-md border border-champagne/30 shadow-xl"
-      >
-        <div className="w-7 h-7 rounded-sm bg-champagne/15 flex items-center justify-center text-champagne">
-          <Layers className="w-4 h-4" />
-        </div>
-        <div className="flex flex-col text-left">
-          <span className="text-[10px] uppercase tracking-wider text-text-muted">Architecture</span>
-          <span className="text-xs font-bold text-warm-white">Reactive MERN</span>
-        </div>
-      </motion.div>
-
-      {/* Floating Bottom Right Satellite Pill */}
-      <motion.div
-        animate={{ y: [8, -8, 8] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-        className="absolute -bottom-2 -right-4 z-30 flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-obsidian/95 backdrop-blur-md border border-champagne/30 shadow-xl"
-      >
-        <div className="w-7 h-7 rounded-sm bg-sage/15 flex items-center justify-center text-sage">
-          <Zap className="w-4 h-4" />
-        </div>
-        <div className="flex flex-col text-left">
-          <span className="text-[10px] uppercase tracking-wider text-text-muted">Response Velocity</span>
-          <span className="text-xs font-bold text-warm-white">Sub-10ms Global</span>
-        </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

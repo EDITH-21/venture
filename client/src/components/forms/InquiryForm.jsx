@@ -136,28 +136,23 @@ export const InquiryForm = ({ initialService = '' }) => {
     setErrorMessage('');
 
     try {
-      const res = await inquiriesAPI.submit(formData);
-      if (res.data?.success) {
-        // Auto-open WhatsApp with inquiry details
-        openWhatsApp(formData);
-        setStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          service: initialService || 'Web Development',
-          budget: '₹25,000 – ₹1,00,000',
-          message: '',
-        });
-      } else {
-        setStatus('error');
-        setErrorMessage(res.data?.message || 'Something went wrong. Please try again.');
-      }
+      await inquiriesAPI.submit(formData);
     } catch (err) {
-      setStatus('error');
-      setErrorMessage(err.message || 'Something went wrong. Please check your inputs and try again.');
+      console.warn('API submission notice (falling back to direct WhatsApp link):', err.message);
     }
+
+    // Always trigger WhatsApp dispatch with the inquiry details
+    openWhatsApp(formData);
+    setStatus('success');
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      service: initialService || 'Web Development',
+      budget: '₹25,000 – ₹1,00,000',
+      message: '',
+    });
   };
 
   return (

@@ -70,17 +70,22 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-warm-white transition-colors">
-                  Solutions & Services
+                <Link to="/work" className="hover:text-warm-white transition-colors">
+                  Selected Work
                 </Link>
               </li>
               <li>
-                <Link to="/ventures" className="hover:text-warm-white transition-colors">
-                  Ventures & R&D
+                <Link to="/estimator" className="hover:text-warm-white transition-colors">
+                  Project Estimator
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-warm-white transition-colors">
+                <Link to="/portal" className="hover:text-warm-white transition-colors">
+                  Client Portal
+                </Link>
+              </li>
+              <li>
+                <Link to="/start-project" className="hover:text-warm-white transition-colors">
                   Start a Project
                 </Link>
               </li>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from '../components/common/Navbar';
 import { Footer } from '../components/common/Footer';
+import { WhatsAppFloating } from '../components/common/WhatsAppFloating';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 export const PublicLayout = () => {
@@ -15,6 +16,7 @@ export const PublicLayout = () => {
         <Outlet />
       </main>
       <Footer />
+      <WhatsAppFloating />
     </div>
   );
 };
