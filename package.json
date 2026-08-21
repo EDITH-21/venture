@@ -5,11 +5,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node -e \"const fs=require('fs'),cp=require('child_process'); if(fs.existsSync('client/package.json')){cp.execSync('cd client && npm install && npm run build',{stdio:'inherit'});}else{cp.execSync('npm run build',{stdio:'inherit'});}\"",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
-    "seed": "cd server && npm run seed",
     "server": "cd server && npm start",
-    "client": "cd client && npm run dev",
-    "build": "cd client && npm install && npm run build"
+    "client": "cd client && npm run dev"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
