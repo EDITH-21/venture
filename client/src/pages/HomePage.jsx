@@ -1,15 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, MessageSquare, CheckCircle2 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { Button } from '../components/common/Button';
 import { HeroVisual } from '../components/home/HeroVisual';
 import { Positioning } from '../components/home/Positioning';
 import { SolutionsGrid } from '../components/home/SolutionsGrid';
+import { WorkShowcase } from '../components/home/WorkShowcase';
 import { WhyVanguard } from '../components/home/WhyVanguard';
 import { HowWeWork } from '../components/home/HowWeWork';
-import { AIConsultantSection } from '../components/home/AIConsultantSection';
-import { PricingSection } from '../components/home/PricingSection';
 import { TechShowcase } from '../components/home/TechShowcase';
 import { FAQSection } from '../components/home/FAQSection';
 import { CTASection } from '../components/home/CTASection';
@@ -40,7 +39,7 @@ export const HomePage = () => {
               <div className="inline-flex items-center gap-2 mb-6 px-3.5 py-1.5 rounded-full bg-champagne/10 border border-champagne/25 w-fit">
                 <span className="w-2 h-2 rounded-full bg-champagne animate-pulse" />
                 <span className="text-xs font-mono tracking-[0.2em] uppercase text-champagne font-bold">
-                  WEB DEVELOPMENT & DIGITAL ENGINEERING
+                  CUSTOM WEB DEVELOPMENT & DIGITAL SOLUTIONS
                 </span>
               </div>
 
@@ -54,7 +53,7 @@ export const HomePage = () => {
 
               {/* Supporting Text */}
               <p className="text-base sm:text-lg text-text-muted leading-relaxed max-w-xl mb-10">
-                Websites, web applications, e-commerce platforms and custom digital solutions designed around your business to help you look better, work smarter, and grow faster.
+                Websites, web applications, e-commerce platforms and custom digital solutions designed around your business to help you look better, work smarter and grow faster.
               </p>
 
               {/* Action Buttons */}
@@ -66,7 +65,7 @@ export const HomePage = () => {
                   icon={ArrowRight}
                   className="text-xs uppercase tracking-wider font-bold shadow-xl"
                 >
-                  Start a Project
+                  Start Your Project
                 </Button>
                 <Button
                   to="/work"
@@ -83,15 +82,15 @@ export const HomePage = () => {
                   className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-sm bg-graphite/80 border border-champagne/30 text-champagne hover:bg-graphite hover:border-champagne text-xs font-mono uppercase tracking-wider font-bold transition-all"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>Chat on WhatsApp</span>
+                  <span>Talk to Us</span>
                 </a>
               </div>
 
-              {/* Quick Trust Badges */}
+              {/* Quick Trust Highlights */}
               <div className="flex items-center gap-6 pt-8 mt-4 border-t border-white/5 text-xs text-text-muted font-mono">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-sage" />
-                  <span>100% Custom Engineering</span>
+                  <span>100% Custom Architecture</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-sage" />
@@ -99,7 +98,7 @@ export const HomePage = () => {
                 </div>
                 <div className="hidden sm:flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-sage" />
-                  <span>Direct Support</span>
+                  <span>Direct WhatsApp Support</span>
                 </div>
               </div>
             </motion.div>
@@ -120,28 +119,25 @@ export const HomePage = () => {
       {/* SECTION 2 — POSITIONING (Warm Ivory) */}
       <Positioning />
 
-      {/* SECTION 3 — 4 CORE SOLUTIONS (Dark Obsidian) */}
+      {/* SECTION 3 — CORE SERVICES (Dark Obsidian) */}
       <SolutionsGrid />
 
-      {/* SECTION 4 — WHY VANGUARD? (Dark Obsidian Deep) */}
+      {/* SECTION 4 — SELECTED WORK & CASE STUDIES (Dark Obsidian Deep) */}
+      <WorkShowcase />
+
+      {/* SECTION 5 — WHY VANGUARD? (Dark Obsidian) */}
       <WhyVanguard />
 
-      {/* SECTION 5 — HOW WE WORK (Warm Ivory 6-Step Execution) */}
+      {/* SECTION 6 — HOW WE WORK (Warm Ivory 5-Step Process) */}
       <HowWeWork />
 
-      {/* SECTION 6 — VANGUARD AI CONSULTANT (Interactive Diagnostic Engine) */}
-      <AIConsultantSection />
-
-      {/* SECTION 7 — PRICING & STARTING PACKAGES (Dark Obsidian) */}
-      <PricingSection />
-
-      {/* SECTION 8 — TECHNOLOGY SHOWCASE (Categorized Stacks) */}
+      {/* SECTION 7 — TECHNOLOGY SHOWCASE (Categorized Stacks) */}
       <TechShowcase />
 
-      {/* SECTION 9 — FAQ (Warm Ivory Accordion) */}
+      {/* SECTION 8 — FAQ (Warm Ivory Accordion) */}
       <FAQSection />
 
-      {/* SECTION 10 — CTA (Initiate Collaboration) */}
+      {/* SECTION 9 — FINAL CTA (Dark Obsidian) */}
       <CTASection />
     </>
   );
