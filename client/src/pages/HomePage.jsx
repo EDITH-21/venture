@@ -9,7 +9,6 @@ import { SolutionsGrid } from '../components/home/SolutionsGrid';
 import { WorkShowcase } from '../components/home/WorkShowcase';
 import { WhyVanguard } from '../components/home/WhyVanguard';
 import { HowWeWork } from '../components/home/HowWeWork';
-import { TechShowcase } from '../components/home/TechShowcase';
 import { FAQSection } from '../components/home/FAQSection';
 import { CTASection } from '../components/home/CTASection';
 
@@ -131,13 +130,10 @@ export const HomePage = () => {
       {/* SECTION 6 — HOW WE WORK (Warm Ivory 5-Step Process) */}
       <HowWeWork />
 
-      {/* SECTION 7 — TECHNOLOGY SHOWCASE (Categorized Stacks) */}
-      <TechShowcase />
-
-      {/* SECTION 8 — FAQ (Warm Ivory Accordion) */}
+      {/* SECTION 7 — FAQ (Warm Ivory Accordion) */}
       <FAQSection />
 
-      {/* SECTION 9 — FINAL CTA (Dark Obsidian) */}
+      {/* SECTION 8 — FINAL CTA (Dark Obsidian) */}
       <CTASection />
     </>
   );

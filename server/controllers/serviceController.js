@@ -16,7 +16,7 @@ const slugify = (text) =>
 // @access  Public / Admin
 export const getServices = async (req, res) => {
   try {
-    const { category, search, all } = req.query;
+    const { category, subcategory, search, all } = req.query;
     const query = {};
 
     // If not admin requesting "all=true", enforce published only
@@ -28,11 +28,16 @@ export const getServices = async (req, res) => {
       query.category = new RegExp(`^${category}$`, 'i');
     }
 
+    if (subcategory) {
+      query.subcategory = new RegExp(`^${subcategory}$`, 'i');
+    }
+
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
         { shortDescription: { $regex: search, $options: 'i' } },
         { description: { $regex: search, $options: 'i' } },
+        { subcategory: { $regex: search, $options: 'i' } },
       ];
     }
 
@@ -61,7 +66,6 @@ export const getServiceBySlug = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Service not found' });
     }
 
-    // If unpublished, ensure user is admin
     if (!service.published && !req.user) {
       return res.status(404).json({ success: false, message: 'Service not found' });
     }
@@ -73,7 +77,7 @@ export const getServiceBySlug = async (req, res) => {
       published: true,
     })
       .limit(3)
-      .select('name slug shortDescription icon category');
+      .select('name slug shortDescription icon category subcategory');
 
     res.json({
       success: true,
@@ -90,7 +94,7 @@ export const getServiceBySlug = async (req, res) => {
 // @access  Private/Admin
 export const createService = async (req, res) => {
   try {
-    const { name, category, shortDescription, description, icon, deliverables, idealFor, process, faq, order, published } = req.body;
+    const { name, category, subcategory, shortDescription, description, icon, deliverables, idealFor, process, faq, order, published } = req.body;
 
     const slug = req.body.slug ? slugify(req.body.slug) : slugify(name);
 
@@ -102,7 +106,8 @@ export const createService = async (req, res) => {
     const service = await Service.create({
       name,
       slug,
-      category,
+      category: category || 'Websites',
+      subcategory: subcategory || '',
       shortDescription,
       description,
       icon: icon || 'Code',

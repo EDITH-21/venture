@@ -178,9 +178,6 @@ export const Footer = () => {
             <Link to="/terms" className="hover:text-warm-white transition-colors">
               Terms of Service
             </Link>
-            <Link to="/admin/login" className="text-graphite-border hover:text-champagne transition-colors">
-              Admin Portal
-            </Link>
           </div>
         </div>
       </div>

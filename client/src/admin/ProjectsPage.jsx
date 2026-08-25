@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Star, Eye, EyeOff, X, Search, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit2, Trash2, Star, Eye, EyeOff, X, Search, Image as ImageIcon, Sparkles, CheckCircle } from 'lucide-react';
 import { projectsAPI } from '../services/api';
 
 export const ProjectsPage = () => {
@@ -7,6 +7,7 @@ export const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
   const [editingProject, setEditingProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [filterMode, setFilterMode] = useState('all'); // 'all' | 'featured' | 'published'
 
   const [formData, setFormData] = useState({
     title: '',
@@ -16,7 +17,7 @@ export const ProjectsPage = () => {
     description: '',
     thumbnail: '',
     technologies: '',
-    featured: false,
+    featured: true,
     published: true,
   });
 
@@ -61,7 +62,7 @@ export const ProjectsPage = () => {
         description: '',
         thumbnail: '',
         technologies: 'React, Node.js, Express, MongoDB, Tailwind CSS',
-        featured: false,
+        featured: true,
         published: true,
       });
     }
@@ -109,7 +110,7 @@ export const ProjectsPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this case study permanently?')) return;
+    if (!window.confirm('Delete this project permanently?')) return;
     try {
       await projectsAPI.delete(id);
       await fetchProjects();
@@ -118,25 +119,61 @@ export const ProjectsPage = () => {
     }
   };
 
+  const displayedProjects = projects.filter((p) => {
+    if (filterMode === 'featured') return p.featured;
+    if (filterMode === 'published') return p.published;
+    return true;
+  });
+
+  const featuredCount = projects.filter((p) => p.featured && p.published).length;
+
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-graphite-border">
         <div>
           <span className="text-xs font-mono uppercase tracking-[0.2em] text-champagne font-semibold block mb-1">
-            Portfolio Management
+            Portfolio & Selected Work Command
           </span>
           <h1 className="text-3xl font-serif font-normal text-warm-white">
-            Projects ({projects.length})
+            Projects Management ({projects.length})
           </h1>
+          <p className="text-xs text-text-muted mt-1">
+            ⭐️ <strong className="text-champagne">{featuredCount} project(s)</strong> currently featured in "Selected Work" on the Homepage.
+          </p>
         </div>
 
         <button
           onClick={() => handleOpenModal()}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider rounded hover:bg-champagne-light transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider rounded hover:bg-champagne-light transition-colors shadow-lg"
         >
           <Plus className="w-4 h-4" />
           <span>New Project</span>
+        </button>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setFilterMode('all')}
+          className={`px-3 py-1.5 rounded-sm text-xs font-mono uppercase tracking-wider transition-all ${
+            filterMode === 'all'
+              ? 'bg-champagne text-obsidian font-bold'
+              : 'bg-graphite text-text-muted hover:text-warm-white border border-graphite-border'
+          }`}
+        >
+          All Projects ({projects.length})
+        </button>
+        <button
+          onClick={() => setFilterMode('featured')}
+          className={`px-3 py-1.5 rounded-sm text-xs font-mono uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+            filterMode === 'featured'
+              ? 'bg-champagne text-obsidian font-bold'
+              : 'bg-graphite text-text-muted hover:text-warm-white border border-graphite-border'
+          }`}
+        >
+          <Star className="w-3.5 h-3.5" fill="currentColor" />
+          <span>Featured on Home ({featuredCount})</span>
         </button>
       </div>
 
@@ -146,9 +183,9 @@ export const ProjectsPage = () => {
           <div className="py-16 text-center text-xs font-mono text-champagne">
             Loading Projects...
           </div>
-        ) : projects.length === 0 ? (
+        ) : displayedProjects.length === 0 ? (
           <div className="py-16 text-center text-xs font-mono text-text-muted">
-            No projects in database.
+            No projects found matching the filter.
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -158,16 +195,16 @@ export const ProjectsPage = () => {
                   <th className="p-4">Project</th>
                   <th className="p-4">Category</th>
                   <th className="p-4">Client</th>
-                  <th className="p-4">Featured</th>
-                  <th className="p-4">Visibility</th>
+                  <th className="p-4 text-center">Featured on Home</th>
+                  <th className="p-4 text-center">Live Status</th>
                   <th className="p-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {projects.map((proj) => (
+                {displayedProjects.map((proj) => (
                   <tr key={proj._id} className="hover:bg-obsidian/40 transition-colors">
                     <td className="p-4 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded bg-obsidian border border-graphite-border overflow-hidden flex-shrink-0">
+                      <div className="w-12 h-12 rounded bg-obsidian border border-graphite-border overflow-hidden flex-shrink-0">
                         {proj.thumbnail ? (
                           <img src={proj.thumbnail} alt="" className="w-full h-full object-cover" />
                         ) : (
@@ -182,28 +219,29 @@ export const ProjectsPage = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="px-2 py-0.5 rounded bg-obsidian text-champagne border border-champagne/20 text-[10px] uppercase">
+                      <span className="px-2 py-0.5 rounded bg-obsidian text-champagne border border-champagne/20 text-[10px] uppercase font-semibold">
                         {proj.category}
                       </span>
                     </td>
-                    <td className="p-4 text-warm-white/80">{proj.client}</td>
-                    <td className="p-4">
+                    <td className="p-4 text-warm-white/80">{proj.client || '—'}</td>
+                    <td className="p-4 text-center">
                       <button
                         onClick={() => handleToggleFeature(proj)}
-                        className={`p-1.5 rounded transition-colors ${
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded text-[11px] font-mono transition-all ${
                           proj.featured
-                            ? 'text-amber-400 bg-amber-950/40 border border-amber-800/40'
-                            : 'text-text-muted hover:text-warm-white'
+                            ? 'text-amber-300 bg-amber-950/60 border border-amber-500/40 shadow-sm font-bold'
+                            : 'text-text-muted hover:text-warm-white bg-graphite border border-graphite-border'
                         }`}
-                        title="Toggle Featured on Home"
+                        title="Click to toggle featured on Home"
                       >
-                        <Star className="w-4 h-4" fill={proj.featured ? 'currentColor' : 'none'} />
+                        <Star className="w-3.5 h-3.5" fill={proj.featured ? 'currentColor' : 'none'} />
+                        <span>{proj.featured ? 'Featured on Home' : 'Not Featured'}</span>
                       </button>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 text-center">
                       <button
                         onClick={() => handleTogglePublish(proj)}
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-[10px] uppercase font-bold ${
                           proj.published
                             ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/50'
                             : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
@@ -216,12 +254,14 @@ export const ProjectsPage = () => {
                       <button
                         onClick={() => handleOpenModal(proj)}
                         className="p-1.5 rounded bg-graphite hover:bg-obsidian text-champagne"
+                        title="Edit Project"
                       >
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDelete(proj._id)}
                         className="p-1.5 rounded bg-graphite hover:bg-red-950/40 text-text-muted hover:text-red-400"
+                        title="Delete Project"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -272,6 +312,8 @@ export const ProjectsPage = () => {
                     <option value="Technology">Technology</option>
                     <option value="Creative">Creative</option>
                     <option value="Digital">Digital</option>
+                    <option value="Websites">Websites</option>
+                    <option value="E-Commerce">E-Commerce</option>
                   </select>
                 </div>
               </div>
@@ -293,7 +335,7 @@ export const ProjectsPage = () => {
                     type="text"
                     value={formData.thumbnail}
                     onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
-                    placeholder="https://..."
+                    placeholder="https://images.unsplash.com/..."
                     className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2 text-warm-white"
                   />
                 </div>
@@ -331,18 +373,18 @@ export const ProjectsPage = () => {
                 />
               </div>
 
-              <div className="flex items-center gap-6 pt-2">
-                <label className="flex items-center gap-2 text-warm-white cursor-pointer">
+              <div className="flex items-center gap-6 pt-2 bg-obsidian/60 p-3 rounded border border-white/5">
+                <label className="flex items-center gap-2 text-warm-white cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={formData.featured}
                     onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
                     className="rounded bg-obsidian border-graphite-border text-champagne"
                   />
-                  <span>Featured on Home Page</span>
+                  <span className="font-bold text-champagne">⭐️ Show in "Selected Work" on Homepage</span>
                 </label>
 
-                <label className="flex items-center gap-2 text-warm-white cursor-pointer">
+                <label className="flex items-center gap-2 text-warm-white cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={formData.published}

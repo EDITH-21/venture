@@ -17,8 +17,12 @@ const serviceSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, 'Category is required'],
-      enum: ['technology', 'creative', 'digital', 'Technology', 'Creative', 'Digital'],
       trim: true,
+    },
+    subcategory: {
+      type: String,
+      trim: true,
+      default: '',
     },
     shortDescription: {
       type: String,
@@ -68,7 +72,7 @@ const serviceSchema = new mongoose.Schema(
   }
 );
 
-serviceSchema.index({ category: 1, published: 1, order: 1 });
+serviceSchema.index({ category: 1, subcategory: 1, published: 1, order: 1 });
 
 const Service = mongoose.model('Service', serviceSchema);
 export default Service;

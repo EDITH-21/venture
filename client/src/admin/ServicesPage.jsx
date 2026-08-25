@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Eye, EyeOff, Check, X, Search, Layers } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, EyeOff, Check, X, Search, Layers, Tag } from 'lucide-react';
 import { servicesAPI } from '../services/api';
-import { Button } from '../components/common/Button';
+
+const DEFAULT_CATEGORIES = [
+  'Websites',
+  'Web Applications',
+  'E-Commerce',
+  'Custom Solutions',
+  'UI/UX Design',
+  'Technology',
+  'Creative',
+  'Digital',
+];
 
 export const ServicesPage = () => {
   const [services, setServices] = useState([]);
@@ -14,7 +24,8 @@ export const ServicesPage = () => {
   // Form State
   const [formData, setFormData] = useState({
     name: '',
-    category: 'Technology',
+    category: 'Websites',
+    subcategory: '',
     shortDescription: '',
     description: '',
     deliverables: '',
@@ -24,7 +35,6 @@ export const ServicesPage = () => {
 
   const fetchServices = async () => {
     try {
-      // Admin queries all=true to see both published and unpublished
       const res = await servicesAPI.getAll({ all: 'true' });
       if (res.data?.success) {
         setServices(res.data.data);
@@ -45,18 +55,20 @@ export const ServicesPage = () => {
       setEditingService(service);
       setFormData({
         name: service.name,
-        category: service.category,
-        shortDescription: service.shortDescription,
-        description: service.description,
+        category: service.category || 'Websites',
+        subcategory: service.subcategory || '',
+        shortDescription: service.shortDescription || '',
+        description: service.description || '',
         deliverables: (service.deliverables || []).join('\n'),
         idealFor: (service.idealFor || []).join('\n'),
-        published: service.published,
+        published: service.published !== undefined ? service.published : true,
       });
     } else {
       setEditingService(null);
       setFormData({
         name: '',
-        category: 'Technology',
+        category: 'Websites',
+        subcategory: '',
         shortDescription: '',
         description: '',
         deliverables: '',
@@ -108,12 +120,16 @@ export const ServicesPage = () => {
     }
   };
 
+  // Get dynamic unique categories
+  const dynamicCategories = ['All', ...Array.from(new Set(services.map((s) => s.category).filter(Boolean)))];
+
   const filteredServices = services.filter((s) => {
     const matchesCategory =
-      categoryFilter === 'All' || s.category.toLowerCase() === categoryFilter.toLowerCase();
+      categoryFilter === 'All' || (s.category && s.category.toLowerCase() === categoryFilter.toLowerCase());
     const matchesSearch =
       s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.shortDescription.toLowerCase().includes(search.toLowerCase());
+      (s.shortDescription && s.shortDescription.toLowerCase().includes(search.toLowerCase())) ||
+      (s.subcategory && s.subcategory.toLowerCase().includes(search.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -123,10 +139,10 @@ export const ServicesPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-graphite-border">
         <div>
           <span className="text-xs font-mono uppercase tracking-[0.2em] text-champagne font-semibold block mb-1">
-            Service Architecture
+            Service Architecture & Catalog
           </span>
           <h1 className="text-3xl font-serif font-normal text-warm-white">
-            Services Management ({services.length})
+            Services & Subcategories ({services.length})
           </h1>
         </div>
 
@@ -142,11 +158,11 @@ export const ServicesPage = () => {
       {/* Filter / Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
-          {['All', 'Technology', 'Creative', 'Digital'].map((cat) => (
+          {dynamicCategories.map((cat) => (
             <button
               key={cat}
               onClick={() => setCategoryFilter(cat)}
-              className={`px-3 py-1.5 rounded-sm text-xs font-mono uppercase tracking-wider ${
+              className={`px-3 py-1.5 rounded-sm text-xs font-mono uppercase tracking-wider whitespace-nowrap ${
                 categoryFilter === cat
                   ? 'bg-champagne text-obsidian font-bold'
                   : 'bg-graphite text-text-muted hover:text-warm-white border border-graphite-border'
@@ -163,7 +179,7 @@ export const ServicesPage = () => {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Filter services..."
+            placeholder="Search by name or subcategory..."
             className="w-full bg-graphite border border-graphite-border rounded-sm pl-9 pr-4 py-2 text-xs font-mono text-warm-white focus:outline-none focus:border-champagne"
           />
         </div>
@@ -186,6 +202,7 @@ export const ServicesPage = () => {
                 <tr className="bg-obsidian/60 border-b border-graphite-border text-text-muted uppercase tracking-wider">
                   <th className="p-4">Service Name</th>
                   <th className="p-4">Category</th>
+                  <th className="p-4">Subcategory</th>
                   <th className="p-4">Deliverables</th>
                   <th className="p-4">Status</th>
                   <th className="p-4 text-right">Actions</th>
@@ -201,9 +218,19 @@ export const ServicesPage = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="px-2 py-0.5 rounded bg-obsidian text-champagne border border-champagne/20 uppercase text-[10px]">
+                      <span className="px-2 py-0.5 rounded bg-obsidian text-champagne border border-champagne/20 uppercase text-[10px] font-semibold">
                         {svc.category}
                       </span>
+                    </td>
+                    <td className="p-4">
+                      {svc.subcategory ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-graphite text-sage border border-sage/20 text-[10px]">
+                          <Tag className="w-2.5 h-2.5" />
+                          {svc.subcategory}
+                        </span>
+                      ) : (
+                        <span className="text-text-muted/40">—</span>
+                      )}
                     </td>
                     <td className="p-4 text-text-muted">
                       {svc.deliverables?.length || 0} items
@@ -258,7 +285,7 @@ export const ServicesPage = () => {
           <div className="bg-graphite border border-champagne/40 rounded-md max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-4 border-b border-white/5">
               <h3 className="text-2xl font-serif font-bold text-warm-white">
-                {editingService ? 'Edit Service' : 'Create New Service'}
+                {editingService ? 'Edit Service & Subcategory' : 'Create New Service & Subcategory'}
               </h3>
               <button
                 onClick={() => setModalOpen(false)}
@@ -269,38 +296,55 @@ export const ServicesPage = () => {
             </div>
 
             <form onSubmit={handleSave} className="space-y-4 text-xs font-mono">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-1">
                   <label className="block text-text-muted uppercase mb-1">Service Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="e.g. Business Websites"
                     className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2 text-warm-white font-sans text-sm"
                   />
                 </div>
                 <div>
                   <label className="block text-text-muted uppercase mb-1">Category *</label>
-                  <select
+                  <input
+                    type="text"
+                    required
+                    list="cat-options"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    placeholder="Websites / Web Apps..."
                     className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2 text-warm-white"
-                  >
-                    <option value="Technology">Technology</option>
-                    <option value="Creative">Creative</option>
-                    <option value="Digital">Digital</option>
-                  </select>
+                  />
+                  <datalist id="cat-options">
+                    {DEFAULT_CATEGORIES.map((c) => (
+                      <option key={c} value={c} />
+                    ))}
+                  </datalist>
+                </div>
+                <div>
+                  <label className="block text-text-muted uppercase mb-1">Subcategory</label>
+                  <input
+                    type="text"
+                    value={formData.subcategory}
+                    onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+                    placeholder="e.g. School / E-commerce"
+                    className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2 text-warm-white"
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block text-text-muted uppercase mb-1">Short Description *</label>
+                <label className="block text-text-muted uppercase mb-1">Short Benefit Description *</label>
                 <input
                   type="text"
                   required
                   value={formData.shortDescription}
                   onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
+                  placeholder="Clear client outcome & value proposition"
                   className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2 text-warm-white font-sans text-sm"
                 />
               </div>
@@ -312,6 +356,7 @@ export const ServicesPage = () => {
                   required
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Detailed breakdown of how this solution is engineered and benefits the client..."
                   className="w-full bg-obsidian border border-graphite-border rounded p-3 text-warm-white font-sans text-sm"
                 />
               </div>
@@ -323,7 +368,7 @@ export const ServicesPage = () => {
                     rows={4}
                     value={formData.deliverables}
                     onChange={(e) => setFormData({ ...formData, deliverables: e.target.value })}
-                    placeholder="Custom Design System&#10;Speed Optimization"
+                    placeholder="Custom Design System&#10;Speed Optimization&#10;Payment Integration"
                     className="w-full bg-obsidian border border-graphite-border rounded p-3 text-warm-white font-sans text-xs"
                   />
                 </div>
@@ -333,7 +378,7 @@ export const ServicesPage = () => {
                     rows={4}
                     value={formData.idealFor}
                     onChange={(e) => setFormData({ ...formData, idealFor: e.target.value })}
-                    placeholder="B2B Corporations&#10;Growing Startups"
+                    placeholder="Corporate Businesses&#10;Schools & Institutions&#10;Growing Startups"
                     className="w-full bg-obsidian border border-graphite-border rounded p-3 text-warm-white font-sans text-xs"
                   />
                 </div>
@@ -348,7 +393,7 @@ export const ServicesPage = () => {
                   className="rounded bg-obsidian border-graphite-border text-champagne focus:ring-0"
                 />
                 <label htmlFor="pub" className="text-warm-white cursor-pointer select-none">
-                  Published on live site
+                  Published live in public solutions & directory
                 </label>
               </div>
 
