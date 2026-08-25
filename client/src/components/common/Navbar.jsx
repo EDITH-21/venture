@@ -34,7 +34,6 @@ export const Navbar = () => {
     { name: 'Solutions', path: '/solutions' },
     { name: 'Estimator', path: '/estimator' },
     { name: 'Work', path: '/work' },
-    { name: 'Portal', path: '/portal' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
