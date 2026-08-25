@@ -1,66 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { projectsAPI } from '../../services/api';
 import { Button } from '../common/Button';
-
-const DEFAULT_FEATURED_PROJECTS = [
-  {
-    _id: '1',
-    slug: 'aethelgard-capital-management',
-    title: 'Aethelgard Capital Management',
-    category: 'Technology',
-    shortDescription: 'High-frequency asset management portal with real-time portfolio telemetry and algorithmic rebalancing.',
-    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Recharts'],
-    client: 'Aethelgard Global Partners',
-  },
-  {
-    _id: '2',
-    slug: 'kinetix-autonomous-robotics',
-    title: 'Kinetix Autonomous Robotics',
-    category: 'Creative',
-    shortDescription: 'Brand identity, typography system, and 3D web showcase for an industrial drone robotics firm.',
-    thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80',
-    technologies: ['Brand Strategy', 'Visual Identity', 'Typography', 'React'],
-    client: 'Kinetix Robotics Corp',
-  },
-  {
-    _id: '3',
-    slug: 'luminary-health-platform',
-    title: 'Luminary Health Platform',
-    category: 'Technology',
-    shortDescription: 'Telehealth web ecosystem connecting specialized clinicians with patients across India and globally.',
-    thumbnail: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
-    technologies: ['React', 'Express.js', 'MongoDB', 'Tailwind CSS'],
-    client: 'Luminary Health Network',
-  },
-  {
-    _id: '4',
-    slug: 'vespera-atelier-design-studio',
-    title: 'Vespera Atelier Design Studio',
-    category: 'Digital',
-    shortDescription: 'Digital presence upgrade, smart booking forms, dynamic QR portfolio, and synchronized client intake.',
-    thumbnail: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80',
-    technologies: ['Digital Cards', 'QR Solutions', 'WhatsApp Business', 'Automated Forms'],
-    client: 'Vespera Atelier',
-  },
-];
+import { getStoredProjects } from '../../services/projectsStore';
 
 export const WorkShowcase = () => {
-  const [projects, setProjects] = useState(DEFAULT_FEATURED_PROJECTS);
-  const [loading, setLoading] = useState(false);
+  const [projects, setProjects] = useState(() => {
+    const all = getStoredProjects();
+    return all.filter((p) => p.featured && p.published).slice(0, 4);
+  });
 
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
         const res = await projectsAPI.getAll({ featured: 'true', published: 'true', limit: 4 });
-        if (res.data?.success && res.data.data && res.data.data.length > 0) {
+        if (res.data?.success && Array.isArray(res.data.data) && res.data.data.length > 0) {
           setProjects(res.data.data);
+        } else {
+          const all = getStoredProjects();
+          const feat = all.filter((p) => p.featured && p.published).slice(0, 4);
+          if (feat.length > 0) setProjects(feat);
         }
       } catch (err) {
-        console.warn('Using default featured projects:', err.message);
+        const all = getStoredProjects();
+        const feat = all.filter((p) => p.featured && p.published).slice(0, 4);
+        if (feat.length > 0) setProjects(feat);
       }
     };
 
@@ -132,7 +98,7 @@ export const WorkShowcase = () => {
               <div className="p-8 flex flex-col justify-between flex-grow">
                 <div>
                   <div className="text-[11px] font-mono text-text-muted mb-2">
-                    Client: <span className="text-warm-white font-medium">{project.client}</span>
+                    Client: <span className="text-warm-white font-medium">{project.client || 'Vanguard'}</span>
                   </div>
                   <h3 className="text-2xl font-serif font-bold text-warm-white mb-3 group-hover:text-champagne transition-colors">
                     {project.title}

@@ -3,31 +3,42 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Filter } from 'lucide-react';
 import { projectsAPI } from '../services/api';
+import { getStoredProjects } from '../services/projectsStore';
 import { SEOHead } from '../components/common/SEOHead';
 import { Button } from '../components/common/Button';
 import { CTASection } from '../components/home/CTASection';
 
 export const WorkPage = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState(() => {
+    const all = getStoredProjects();
+    return all.filter((p) => p.published);
+  });
   const [activeCategory, setActiveCategory] = useState('All');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
-      setLoading(true);
       try {
         const params = { published: 'true' };
         if (activeCategory !== 'All') {
           params.category = activeCategory;
         }
         const res = await projectsAPI.getAll(params);
-        if (res.data?.success) {
+        if (res.data?.success && Array.isArray(res.data.data) && res.data.data.length > 0) {
           setProjects(res.data.data);
+        } else {
+          const all = getStoredProjects();
+          const filtered = all.filter((p) =>
+            p.published && (activeCategory === 'All' || p.category.toLowerCase() === activeCategory.toLowerCase())
+          );
+          setProjects(filtered);
         }
       } catch (err) {
-        console.warn('Projects fetch failed:', err.message);
-      } finally {
-        setLoading(false);
+        const all = getStoredProjects();
+        const filtered = all.filter((p) =>
+          p.published && (activeCategory === 'All' || p.category.toLowerCase() === activeCategory.toLowerCase())
+        );
+        setProjects(filtered);
       }
     };
 

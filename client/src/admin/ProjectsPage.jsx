@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Star, Eye, EyeOff, X, Search, Image as ImageIcon, Sparkles, CheckCircle } from 'lucide-react';
+import { Plus, Edit2, Trash2, Star, Eye, EyeOff, X, Search, Image as ImageIcon, Sparkles, CheckCircle, RotateCcw } from 'lucide-react';
 import { projectsAPI } from '../services/api';
+import { getStoredProjects, saveStoredProjects, INITIAL_PROJECTS } from '../services/projectsStore';
 
 export const ProjectsPage = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState(() => getStoredProjects());
+  const [loading, setLoading] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [filterMode, setFilterMode] = useState('all'); // 'all' | 'featured' | 'published'
@@ -24,13 +25,12 @@ export const ProjectsPage = () => {
   const fetchProjects = async () => {
     try {
       const res = await projectsAPI.getAll({ published: 'all' });
-      if (res.data?.success) {
+      if (res.data?.success && Array.isArray(res.data.data) && res.data.data.length > 0) {
         setProjects(res.data.data);
+        saveStoredProjects(res.data.data);
       }
     } catch (err) {
-      console.warn('Projects fetch error:', err.message);
-    } finally {
-      setLoading(false);
+      console.warn('API sync fallback to local storage:', err.message);
     }
   };
 
@@ -46,10 +46,10 @@ export const ProjectsPage = () => {
         category: proj.category,
         client: proj.client || '',
         shortDescription: proj.shortDescription || '',
-        description: proj.description,
+        description: proj.description || '',
         thumbnail: proj.thumbnail || '',
         technologies: (proj.technologies || []).join(', '),
-        featured: proj.featured || false,
+        featured: proj.featured !== undefined ? proj.featured : true,
         published: proj.published !== undefined ? proj.published : true,
       });
     } else {
@@ -60,7 +60,7 @@ export const ProjectsPage = () => {
         client: '',
         shortDescription: '',
         description: '',
-        thumbnail: '',
+        thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
         technologies: 'React, Node.js, Express, MongoDB, Tailwind CSS',
         featured: true,
         published: true,
@@ -72,50 +72,90 @@ export const ProjectsPage = () => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
+      const slug = formData.title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
       const payload = {
         ...formData,
+        slug,
         technologies: formData.technologies.split(',').map((s) => s.trim()).filter(Boolean),
         images: formData.thumbnail ? [formData.thumbnail] : [],
       };
 
+      let updatedList = [];
       if (editingProject) {
-        await projectsAPI.update(editingProject._id, payload);
+        updatedList = projects.map((p) =>
+          (p._id === editingProject._id || p.slug === editingProject.slug) ? { ...p, ...payload } : p
+        );
+        try {
+          await projectsAPI.update(editingProject._id, payload);
+        } catch (e) {
+          // ignore API error, keep local
+        }
       } else {
-        await projectsAPI.create(payload);
+        const newProj = {
+          _id: `proj-${Date.now()}`,
+          ...payload,
+        };
+        updatedList = [newProj, ...projects];
+        try {
+          await projectsAPI.create(payload);
+        } catch (e) {
+          // ignore API error, keep local
+        }
       }
 
+      setProjects(updatedList);
+      saveStoredProjects(updatedList);
       setModalOpen(false);
-      await fetchProjects();
     } catch (err) {
       alert(err.message || 'Project save failed');
     }
   };
 
   const handleToggleFeature = async (proj) => {
+    const updatedList = projects.map((p) =>
+      p._id === proj._id ? { ...p, featured: !p.featured } : p
+    );
+    setProjects(updatedList);
+    saveStoredProjects(updatedList);
+
     try {
       await projectsAPI.update(proj._id, { featured: !proj.featured });
-      await fetchProjects();
-    } catch (err) {
-      alert(err.message || 'Feature toggle failed');
+    } catch (e) {
+      // ignore
     }
   };
 
   const handleTogglePublish = async (proj) => {
+    const updatedList = projects.map((p) =>
+      p._id === proj._id ? { ...p, published: !p.published } : p
+    );
+    setProjects(updatedList);
+    saveStoredProjects(updatedList);
+
     try {
       await projectsAPI.update(proj._id, { published: !proj.published });
-      await fetchProjects();
-    } catch (err) {
-      alert(err.message || 'Publish toggle failed');
+    } catch (e) {
+      // ignore
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this project permanently?')) return;
+    const updatedList = projects.filter((p) => p._id !== id);
+    setProjects(updatedList);
+    saveStoredProjects(updatedList);
+
     try {
       await projectsAPI.delete(id);
-      await fetchProjects();
-    } catch (err) {
-      alert(err.message || 'Delete failed');
+    } catch (e) {
+      // ignore
+    }
+  };
+
+  const handleResetDefaults = () => {
+    if (window.confirm('Reset to standard 4 showcase projects?')) {
+      setProjects(INITIAL_PROJECTS);
+      saveStoredProjects(INITIAL_PROJECTS);
     }
   };
 
@@ -139,17 +179,28 @@ export const ProjectsPage = () => {
             Projects Management ({projects.length})
           </h1>
           <p className="text-xs text-text-muted mt-1">
-            ⭐️ <strong className="text-champagne">{featuredCount} project(s)</strong> currently featured in "Selected Work" on the Homepage.
+            ⭐️ <strong className="text-champagne">{featuredCount} project(s)</strong> currently live in "Selected Work" on the Homepage.
           </p>
         </div>
 
-        <button
-          onClick={() => handleOpenModal()}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider rounded hover:bg-champagne-light transition-colors shadow-lg"
-        >
-          <Plus className="w-4 h-4" />
-          <span>New Project</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleResetDefaults}
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-graphite border border-graphite-border text-text-muted hover:text-warm-white text-xs font-mono rounded"
+            title="Reset to default showcase projects"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset Defaults</span>
+          </button>
+
+          <button
+            onClick={() => handleOpenModal()}
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider rounded hover:bg-champagne-light transition-colors shadow-lg"
+          >
+            <Plus className="w-4 h-4" />
+            <span>New Project</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter Tabs */}
@@ -179,11 +230,7 @@ export const ProjectsPage = () => {
 
       {/* Projects List */}
       <div className="bg-graphite/50 border border-graphite-border rounded-sm overflow-hidden">
-        {loading ? (
-          <div className="py-16 text-center text-xs font-mono text-champagne">
-            Loading Projects...
-          </div>
-        ) : displayedProjects.length === 0 ? (
+        {displayedProjects.length === 0 ? (
           <div className="py-16 text-center text-xs font-mono text-text-muted">
             No projects found matching the filter.
           </div>
@@ -202,7 +249,7 @@ export const ProjectsPage = () => {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {displayedProjects.map((proj) => (
-                  <tr key={proj._id} className="hover:bg-obsidian/40 transition-colors">
+                  <tr key={proj._id || proj.slug} className="hover:bg-obsidian/40 transition-colors">
                     <td className="p-4 flex items-center gap-3">
                       <div className="w-12 h-12 rounded bg-obsidian border border-graphite-border overflow-hidden flex-shrink-0">
                         {proj.thumbnail ? (
@@ -215,7 +262,7 @@ export const ProjectsPage = () => {
                       </div>
                       <div>
                         <div className="font-bold text-warm-white font-sans text-sm">{proj.title}</div>
-                        <div className="text-[10px] text-text-muted">{proj.slug}</div>
+                        <div className="text-[10px] text-text-muted line-clamp-1 max-w-xs">{proj.shortDescription}</div>
                       </div>
                     </td>
                     <td className="p-4">
