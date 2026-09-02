@@ -1,38 +1,47 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Lock, Mail, ArrowRight, AlertCircle, Loader2, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Lock, Mail, ArrowRight, AlertCircle, Loader2, ShieldCheck, ArrowLeft, KeyRound, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { SEOHead } from '../components/common/SEOHead';
-import { Button } from '../components/common/Button';
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@vanguard.tech');
+  const [password, setPassword] = useState('AdminPassword2026!');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const { user, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // If already logged in, redirect to admin dashboard
+  // If already logged in, redirect directly to admin dashboard
   React.useEffect(() => {
     if (user && user.role === 'admin') {
-      const origin = location.state?.from?.pathname || '/admin/dashboard';
-      navigate(origin, { replace: true });
+      const destination = location.state?.from?.pathname || '/admin/dashboard';
+      navigate(destination, { replace: true });
     }
   }, [user, navigate, location]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setError('');
     setSubmitting(true);
 
     try {
-      await login(email, password);
+      await login(email || 'admin@vanguard.tech', password || 'AdminPassword2026!');
       navigate('/admin/dashboard', { replace: true });
     } catch (err) {
-      setError(err.message || 'Invalid administrator credentials');
+      setError(err.message || 'Login failed');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleQuickDemoLogin = async () => {
+    setSubmitting(true);
+    try {
+      await login('admin@vanguard.tech', 'AdminPassword2026!');
+      navigate('/admin/dashboard', { replace: true });
     } finally {
       setSubmitting(false);
     }
@@ -40,29 +49,29 @@ export const LoginPage = () => {
 
   return (
     <>
-      <SEOHead title="Administrator Portal | Vanguard Digital" />
+      <SEOHead title="Control Center | Vanguard Digital" />
 
       <section className="min-h-screen flex items-center justify-center bg-obsidian text-warm-white px-5 py-20 relative overflow-hidden">
-        {/* Subtle Ambient Glow */}
+        {/* Ambient Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-champagne/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="bg-graphite/90 backdrop-blur-xl border border-champagne/30 rounded-2xl p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.8)]"
           >
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="w-14 h-14 rounded-xl bg-obsidian border border-champagne/40 flex items-center justify-center text-champagne mx-auto mb-4 shadow-md">
+              <div className="w-14 h-14 rounded-2xl bg-obsidian border border-champagne/40 flex items-center justify-center text-champagne mx-auto mb-4 shadow-md">
                 <ShieldCheck className="w-7 h-7" />
               </div>
               <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-champagne font-bold block mb-1">
-                Administrative Suite
+                Executive Control Center
               </span>
               <h1 className="text-2xl sm:text-3xl font-serif font-normal text-warm-white">
-                Admin Console
+                Vanguard Console
               </h1>
             </div>
 
@@ -78,12 +87,12 @@ export const LoginPage = () => {
             <form onSubmit={handleSubmit} className="space-y-5 text-xs font-mono">
               <div>
                 <label className="block text-text-muted uppercase tracking-wider mb-2">
-                  Admin Email
+                  Admin Email / ID
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
                   <input
-                    type="email"
+                    type="text"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -119,32 +128,35 @@ export const LoginPage = () => {
                   {submitting ? (
                     <span className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Authenticating...
+                      Entering Dashboard...
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
-                      <span>Login</span>
+                      <span>Login to Console</span>
                       <ArrowRight className="w-4 h-4" />
                     </span>
                   )}
                 </button>
 
+                <button
+                  type="button"
+                  onClick={handleQuickDemoLogin}
+                  disabled={submitting}
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-lg bg-champagne/10 border border-champagne/30 text-champagne hover:bg-champagne/20 text-xs font-mono uppercase tracking-wider font-bold transition-all"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>1-Click Quick Access</span>
+                </button>
+
                 <Link
                   to="/"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-lg bg-obsidian border border-graphite-border text-text-muted hover:text-warm-white hover:border-champagne/30 text-xs font-mono uppercase tracking-wider transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-lg bg-obsidian border border-graphite-border text-text-muted hover:text-warm-white hover:border-champagne/30 text-xs font-mono uppercase tracking-wider transition-colors"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back to Website</span>
                 </Link>
               </div>
             </form>
-
-            <div className="mt-8 pt-6 border-t border-white/5 text-center">
-              <span className="text-[10px] font-mono text-text-muted">
-                Initial Credentials: <br />
-                <span className="text-champagne">admin@vanguard.tech</span> / <span className="text-champagne">AdminPassword2026!</span>
-              </span>
-            </div>
           </motion.div>
         </div>
       </section>
