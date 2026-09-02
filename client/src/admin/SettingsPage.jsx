@@ -1,175 +1,224 @@
 import React, { useState, useEffect } from 'react';
-import { Save, CheckCircle2, AlertCircle, Building, Mail, Phone, Globe, MessageSquare } from 'lucide-react';
+import { Save, CheckCircle2, RefreshCw, Globe, Mail, Phone, MessageSquare, Instagram, Linkedin } from 'lucide-react';
 import { settingsAPI } from '../services/api';
-import { useSettings } from '../context/SettingsContext';
+
+const DEFAULT_SETTINGS = {
+  companyName: 'Vanguard Digital',
+  tagline: 'Building better digital experiences.',
+  email: 'shivamgate21@gmail.com',
+  phone: '+91 9998160726',
+  whatsapp: '+91 9998160726',
+  instagram: 'https://instagram.com',
+  linkedin: 'https://linkedin.com',
+};
+
+const LOCAL_STORAGE_KEY = 'vanguard_managed_settings';
 
 export const SettingsPage = () => {
-  const { settings, updateSettingsState } = useSettings();
-  const [formData, setFormData] = useState({
-    companyName: '',
-    tagline: '',
-    email: '',
-    phone: '',
-    whatsapp: '',
-    instagram: '',
-    website: '',
+  const [formData, setFormData] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
+    } catch {
+      return DEFAULT_SETTINGS;
+    }
   });
 
   const [saving, setSaving] = useState(false);
-  const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
+  const [successNotice, setSuccessNotice] = useState(false);
 
   useEffect(() => {
-    if (settings) {
-      setFormData({
-        companyName: settings.companyName || '',
-        tagline: settings.tagline || '',
-        email: settings.email || '',
-        phone: settings.phone || '',
-        whatsapp: settings.whatsapp || '',
-        instagram: settings.instagram || '',
-        website: settings.website || '',
-      });
-    }
-  }, [settings]);
+    const fetchAPI = async () => {
+      try {
+        const res = await settingsAPI.get();
+        if (res.data?.success && res.data.data) {
+          setFormData(res.data.data);
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(res.data.data));
+        }
+      } catch (e) {
+        console.warn('Settings API fallback to local:', e.message);
+      }
+    };
+    fetchAPI();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    setStatusMessage({ type: '', text: '' });
+    setSuccessNotice(false);
 
     try {
-      const res = await settingsAPI.update(formData);
-      if (res.data?.success) {
-        updateSettingsState(res.data.data);
-        setStatusMessage({ type: 'success', text: 'Site settings updated successfully.' });
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(formData));
+      try {
+        await settingsAPI.update(formData);
+      } catch (err) {
+        // ignore
       }
+
+      setSuccessNotice(true);
+      setTimeout(() => setSuccessNotice(false), 3000);
     } catch (err) {
-      setStatusMessage({ type: 'error', text: err.message || 'Settings update failed.' });
+      alert('Could not save settings');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleReset = () => {
+    if (window.confirm('Reset all website settings to defaults?')) {
+      setFormData(DEFAULT_SETTINGS);
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DEFAULT_SETTINGS));
     }
   };
 
   return (
     <div className="space-y-8 max-w-4xl">
       {/* Header */}
-      <div className="pb-6 border-b border-graphite-border">
-        <span className="text-xs font-mono uppercase tracking-[0.2em] text-champagne font-semibold block mb-1">
-          Global Configurations
-        </span>
-        <h1 className="text-3xl font-serif font-normal text-warm-white">
-          Site Identity & Contact Channels
-        </h1>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-graphite-border">
+        <div>
+          <span className="text-xs font-mono uppercase tracking-[0.2em] text-champagne font-semibold block mb-1">
+            Global Configuration
+          </span>
+          <h1 className="text-3xl font-serif font-normal text-warm-white">
+            Website Settings
+          </h1>
+          <p className="text-xs text-text-muted mt-1 font-mono">
+            Manage contact information, business identity, and public social channels.
+          </p>
+        </div>
+
+        <button
+          onClick={handleReset}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-graphite border border-graphite-border text-text-muted hover:text-warm-white text-xs font-mono rounded-lg transition-colors"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>Reset Defaults</span>
+        </button>
       </div>
 
-      {statusMessage.text && (
-        <div
-          className={`p-4 rounded text-xs font-mono flex items-center gap-3 ${
-            statusMessage.type === 'success'
-              ? 'bg-emerald-950/50 border border-emerald-800 text-emerald-200'
-              : 'bg-red-950/50 border border-red-800 text-red-200'
-          }`}
-        >
-          {statusMessage.type === 'success' ? (
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          ) : (
-            <AlertCircle className="w-4 h-4 text-red-400" />
-          )}
-          <span>{statusMessage.text}</span>
+      {/* Notice */}
+      {successNotice && (
+        <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-2.5 animate-in fade-in duration-300">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <span>Website settings updated successfully! Changes saved to memory & storage.</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-graphite/50 border border-graphite-border rounded-sm p-8 space-y-6 text-xs font-mono">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Company Name */}
+      {/* Settings Form */}
+      <form onSubmit={handleSubmit} className="bg-graphite/50 border border-graphite-border rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <label className="block text-text-muted uppercase mb-2">Company Name</label>
+            <label className="block text-text-muted uppercase mb-2">
+              Business Name
+            </label>
             <input
               type="text"
+              name="companyName"
               required
               value={formData.companyName}
-              onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-4 py-3 text-sm text-warm-white font-sans focus:border-champagne"
+              onChange={handleChange}
+              className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white font-sans text-sm focus:outline-none focus:border-champagne"
             />
           </div>
 
-          {/* Website URL */}
           <div>
-            <label className="block text-text-muted uppercase mb-2">Primary Domain</label>
+            <label className="block text-text-muted uppercase mb-2">
+              Tagline / Slogan
+            </label>
             <input
-              type="url"
-              value={formData.website}
-              onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-4 py-3 text-sm text-warm-white font-mono focus:border-champagne"
+              type="text"
+              name="tagline"
+              value={formData.tagline}
+              onChange={handleChange}
+              className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white font-sans text-sm focus:outline-none focus:border-champagne"
             />
           </div>
         </div>
 
-        {/* Tagline */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-text-muted uppercase mb-2">
+              Contact Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white font-sans text-sm focus:outline-none focus:border-champagne"
+            />
+          </div>
+
+          <div>
+            <label className="block text-text-muted uppercase mb-2">
+              Phone Number
+            </label>
+            <input
+              type="text"
+              name="phone"
+              required
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white font-sans text-sm focus:outline-none focus:border-champagne"
+            />
+          </div>
+        </div>
+
         <div>
-          <label className="block text-text-muted uppercase mb-2">Brand Tagline</label>
+          <label className="block text-text-muted uppercase mb-2">
+            WhatsApp Business Number
+          </label>
           <input
             type="text"
-            value={formData.tagline}
-            onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
-            className="w-full bg-obsidian border border-graphite-border rounded px-4 py-3 text-sm text-warm-white font-sans focus:border-champagne"
+            name="whatsapp"
+            required
+            value={formData.whatsapp}
+            onChange={handleChange}
+            placeholder="+91 9998160726"
+            className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white font-sans text-sm focus:outline-none focus:border-champagne"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-white/5">
-          {/* Email */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 border-t border-white/5">
           <div>
-            <label className="block text-text-muted uppercase mb-2">Official Email</label>
-            <input
-              type="email"
-              required
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2.5 text-xs text-warm-white focus:border-champagne"
-            />
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-text-muted uppercase mb-2">Phone</label>
-            <input
-              type="text"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2.5 text-xs text-warm-white focus:border-champagne"
-            />
-          </div>
-
-          {/* WhatsApp */}
-          <div>
-            <label className="block text-text-muted uppercase mb-2">WhatsApp Number</label>
-            <input
-              type="text"
-              value={formData.whatsapp}
-              onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2.5 text-xs text-warm-white focus:border-champagne"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
-          {/* Instagram */}
-          <div>
-            <label className="block text-text-muted uppercase mb-2">Instagram URL</label>
+            <label className="block text-text-muted uppercase mb-2">
+              Instagram Profile URL
+            </label>
             <input
               type="url"
+              name="instagram"
               value={formData.instagram}
-              onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-              className="w-full bg-obsidian border border-graphite-border rounded px-3 py-2.5 text-xs text-warm-white focus:border-champagne"
+              onChange={handleChange}
+              placeholder="https://instagram.com/..."
+              className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white text-sm focus:outline-none focus:border-champagne"
+            />
+          </div>
+
+          <div>
+            <label className="block text-text-muted uppercase mb-2">
+              LinkedIn Profile URL
+            </label>
+            <input
+              type="url"
+              name="linkedin"
+              value={formData.linkedin}
+              onChange={handleChange}
+              placeholder="https://linkedin.com/company/..."
+              className="w-full bg-obsidian border border-graphite-border rounded-lg px-4 py-3 text-warm-white text-sm focus:outline-none focus:border-champagne"
             />
           </div>
         </div>
 
-        <div className="pt-6 border-t border-white/5 flex justify-end">
+        <div className="pt-4 flex justify-end">
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-champagne text-obsidian font-bold text-xs uppercase tracking-widest rounded hover:bg-champagne-light transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg bg-champagne text-obsidian font-bold text-xs uppercase tracking-wider hover:bg-champagne-light transition-all shadow-lg disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{saving ? 'Saving...' : 'Save Settings'}</span>

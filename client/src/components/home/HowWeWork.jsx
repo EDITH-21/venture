@@ -1,58 +1,63 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, Palette, Code2, CheckCircle, Rocket } from 'lucide-react';
+import { Search, Palette, Code2, CheckCircle2, Rocket } from 'lucide-react';
 
 export const HowWeWork = () => {
   const steps = [
     {
       num: '01',
-      title: 'Discover',
-      description: "Understand the client's requirements, target audience, and business goals.",
+      title: 'DISCOVER',
+      subtitle: 'Understanding Requirements',
+      description: "Understand the client's business, target audience, and specific project requirements.",
       icon: Search,
     },
     {
       num: '02',
-      title: 'Design',
-      description: 'Create a modern, intuitive, and user-focused website experience.',
+      title: 'DESIGN',
+      subtitle: 'Visual Architecture',
+      description: 'Create the website structure, user journey, wireframes, and modern visual experience.',
       icon: Palette,
     },
     {
       num: '03',
-      title: 'Develop',
-      description: 'Build the website with responsive, scalable, and modern technology.',
+      title: 'DEVELOP',
+      subtitle: 'Responsive Engineering',
+      description: 'Build the fast, responsive, and robust website using modern clean technology.',
       icon: Code2,
     },
     {
       num: '04',
-      title: 'Test',
-      description: 'Test performance, cross-device responsiveness, security, and functionality.',
-      icon: CheckCircle,
+      title: 'REVIEW',
+      subtitle: 'Feedback & Refinement',
+      description: 'Client reviews the completed website, tests workflows, and provides feedback.',
+      icon: CheckCircle2,
     },
     {
       num: '05',
-      title: 'Launch',
-      description: 'Deploy the website to high-speed cloud infrastructure and help you get it live.',
+      title: 'LAUNCH',
+      subtitle: 'Deployment & Go-Live',
+      description: 'Deploy the final website to high-speed cloud infrastructure and make it live.',
       icon: Rocket,
     },
   ];
 
   return (
-    <section className="bg-ivory text-text-dark py-24 sm:py-32 relative border-t border-border-light overflow-hidden">
+    <section id="process" className="bg-ivory text-text-dark py-24 sm:py-32 relative border-t border-border-light overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section Heading */}
         <div className="max-w-3xl mb-16 sm:mb-20">
           <span className="text-xs font-mono uppercase tracking-[0.25em] text-champagne-dark font-bold block mb-3">
-            Our Process
+            Structured Execution
           </span>
           <h2 className="text-4xl sm:text-5xl font-serif font-normal text-text-dark leading-tight mb-4">
-            How We Work
+            Our 5-Step Process
           </h2>
           <p className="text-base text-text-muted leading-relaxed">
-            A simple, structured workflow from concept to launch — keeping you informed at every step.
+            A simple, transparent timeline from initial consultation to successful website launch.
           </p>
         </div>
 
-        {/* 5-Step Visual Process Grid */}
+        {/* 5-Step Visual Timeline Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {steps.map((step, idx) => {
             const Icon = step.icon;
@@ -63,7 +68,7 @@ export const HowWeWork = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="bg-warm-white p-6 rounded-xl border border-border-light/80 hover:border-champagne-dark/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between group"
+                className="bg-warm-white p-6 sm:p-7 rounded-xl border border-border-light/80 hover:border-champagne-dark/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between pb-3 mb-4 border-b border-border-light/60">
@@ -75,9 +80,13 @@ export const HowWeWork = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-serif font-bold text-text-dark mb-2">
+                  <h3 className="text-xl font-serif font-bold text-text-dark mb-1">
                     {step.title}
                   </h3>
+
+                  <span className="text-[10px] font-mono text-champagne-dark uppercase tracking-wider block mb-3 font-semibold">
+                    {step.subtitle}
+                  </span>
 
                   <p className="text-xs text-text-muted leading-relaxed">
                     {step.description}

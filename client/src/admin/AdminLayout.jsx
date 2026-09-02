@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import {
   LayoutDashboard,
-  BarChart3,
-  Mail,
-  Layers,
-  FolderGit2,
-  Rocket,
+  MessageSquare,
+  QrCode,
   Settings,
+  User,
   LogOut,
   Menu,
   X,
-  ExternalLink,
   ShieldCheck,
+  Globe,
+  ExternalLink,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const AdminLayout = () => {
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const { user, logout } = useAuth();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -28,131 +27,78 @@ export const AdminLayout = () => {
 
   const navItems = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
-    { name: 'Inquiries', path: '/admin/inquiries', icon: Mail },
-    { name: 'Services', path: '/admin/services', icon: Layers },
-    { name: 'Projects', path: '/admin/projects', icon: FolderGit2 },
-    { name: 'Ventures', path: '/admin/ventures', icon: Rocket },
-    { name: 'Settings', path: '/admin/settings', icon: Settings },
+    { name: 'Enquiries', path: '/admin/enquiries', icon: MessageSquare },
+    { name: 'QR Management', path: '/admin/qr', icon: QrCode },
+    { name: 'Website Settings', path: '/admin/settings', icon: Settings },
+    { name: 'Profile', path: '/admin/profile', icon: User },
   ];
 
   return (
-    <div className="min-h-screen bg-obsidian text-warm-white flex">
-      {/* Desktop Fixed Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 bg-graphite border-r border-graphite-border justify-between h-screen sticky top-0">
-        <div>
+    <div className="min-h-screen bg-obsidian text-warm-white flex flex-col md:flex-row">
+      {/* Mobile Top Navigation Bar */}
+      <div className="md:hidden bg-obsidian-deep border-b border-graphite-border px-5 py-4 flex items-center justify-between sticky top-0 z-40">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-champagne/10 border border-champagne/30 flex items-center justify-center text-champagne">
+            <ShieldCheck className="w-4 h-4" />
+          </div>
+          <span className="font-serif font-bold text-base text-warm-white">
+            Vanguard <span className="text-champagne font-light italic">Admin</span>
+          </span>
+        </div>
+
+        <button
+          onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+          className="p-2 text-text-muted hover:text-champagne focus:outline-none"
+        >
+          {mobileDrawerOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Sidebar (Desktop + Mobile Drawer) */}
+      <aside
+        className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-obsidian-deep border-r border-graphite-border flex flex-col justify-between p-6 z-50 transition-transform duration-300 ${
+          mobileDrawerOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        }`}
+      >
+        <div className="space-y-8">
           {/* Brand Header */}
-          <div className="p-6 border-b border-graphite-border/80 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-8 h-8 rounded-sm bg-obsidian border border-champagne/40 flex items-center justify-center text-champagne font-serif font-bold text-base">
-                V
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-champagne/10 border border-champagne/30 flex items-center justify-center text-champagne shadow-sm">
+                <ShieldCheck className="w-5 h-5" />
               </div>
-              <div className="flex flex-col">
-                <span className="font-sans font-bold text-xs uppercase tracking-[0.2em] text-warm-white">
+              <div>
+                <span className="font-serif font-bold text-lg text-warm-white block leading-tight">
                   Vanguard
                 </span>
-                <span className="text-[9px] font-mono text-champagne">
-                  CONTROL PANEL
+                <span className="text-[10px] font-mono text-champagne uppercase tracking-widest block">
+                  Admin Console
                 </span>
               </div>
-            </Link>
+            </div>
 
-            <Link
-              to="/"
-              target="_blank"
-              className="p-1.5 rounded text-text-muted hover:text-champagne transition-colors"
-              title="View Public Site"
+            <button
+              onClick={() => setMobileDrawerOpen(false)}
+              className="md:hidden text-text-muted hover:text-warm-white p-1"
             >
-              <ExternalLink className="w-4 h-4" />
-            </Link>
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-4 space-y-1">
+          <nav className="space-y-1.5">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <NavLink
-                  key={item.path}
+                  key={item.name}
                   to={item.path}
+                  onClick={() => setMobileDrawerOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-3.5 py-2.5 rounded-sm text-xs font-mono tracking-wider transition-colors ${
+                    `flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all ${
                       isActive
-                        ? 'bg-obsidian text-champagne border-l-2 border-champagne font-semibold shadow-sm'
-                        : 'text-text-muted hover:text-warm-white hover:bg-obsidian/40'
-                    }`
-                  }
-                >
-                  <Icon className="w-4 h-4 flex-shrink-0" />
-                  <span>{item.name}</span>
-                </NavLink>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* User Profile & Logout */}
-        <div className="p-4 border-t border-graphite-border/80 bg-obsidian/40">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-champagne/15 border border-champagne/30 flex items-center justify-center text-champagne font-mono text-xs font-bold">
-                {user?.name?.charAt(0) || 'A'}
-              </div>
-              <div className="flex flex-col overflow-hidden">
-                <span className="text-xs font-bold text-warm-white truncate">
-                  {user?.name || 'Administrator'}
-                </span>
-                <span className="text-[10px] font-mono text-text-muted truncate">
-                  {user?.email || 'admin@vanguard.tech'}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded bg-graphite hover:bg-red-950/40 border border-graphite-border hover:border-red-800/50 text-text-muted hover:text-red-300 text-xs font-mono transition-colors"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile Header Bar */}
-        <header className="lg:hidden bg-graphite border-b border-graphite-border px-5 py-4 flex items-center justify-between sticky top-0 z-40">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-sm bg-obsidian border border-champagne/30 flex items-center justify-center text-champagne font-serif font-bold text-sm">
-              V
-            </div>
-            <span className="font-mono text-xs font-bold text-warm-white uppercase tracking-wider">
-              Admin Panel
-            </span>
-          </div>
-
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 rounded text-warm-white hover:bg-obsidian"
-          >
-            {mobileOpen ? <X className="w-5 h-5 text-champagne" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </header>
-
-        {/* Mobile Nav Drawer */}
-        {mobileOpen && (
-          <div className="lg:hidden bg-graphite border-b border-graphite-border p-4 space-y-2 z-30">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-2.5 rounded text-xs font-mono ${
-                      isActive ? 'bg-obsidian text-champagne font-bold' : 'text-text-muted'
+                        ? 'bg-champagne text-obsidian font-bold shadow-md'
+                        : 'text-text-muted hover:text-warm-white hover:bg-graphite/60'
                     }`
                   }
                 >
@@ -161,23 +107,38 @@ export const AdminLayout = () => {
                 </NavLink>
               );
             })}
-            <div className="pt-2 border-t border-white/5">
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center gap-2 py-2 px-3 text-red-300 text-xs font-mono"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Sign Out</span>
-              </button>
-            </div>
-          </div>
-        )}
+          </nav>
+        </div>
 
-        {/* Nested Admin Content View */}
-        <main className="flex-1 p-5 sm:p-8 lg:p-10 max-w-7xl w-full mx-auto">
-          <Outlet />
-        </main>
-      </div>
+        {/* Footer Actions */}
+        <div className="pt-6 border-t border-white/5 space-y-3">
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between px-3.5 py-2 rounded-lg bg-obsidian border border-graphite-border text-text-muted hover:text-champagne hover:border-champagne/30 text-xs font-mono transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <Globe className="w-3.5 h-3.5" />
+              <span>View Public Site</span>
+            </span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-mono uppercase tracking-wider text-red-400 hover:bg-red-950/40 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content View */}
+      <main className="flex-1 p-6 sm:p-10 max-w-7xl w-full mx-auto overflow-y-auto">
+        <Outlet />
+      </main>
     </div>
   );
 };

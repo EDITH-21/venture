@@ -8,13 +8,6 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 // Public Pages
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
-import { SolutionsPage } from './pages/SolutionsPage';
-import { ServiceDetailPage } from './pages/ServiceDetailPage';
-import { EstimatorPage } from './pages/EstimatorPage';
-import { StartProjectPage } from './pages/StartProjectPage';
-import { WorkPage } from './pages/WorkPage';
-import { WorkDetailPage } from './pages/WorkDetailPage';
-import { VenturesPage } from './pages/VenturesPage';
 import { ContactPage } from './pages/ContactPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
@@ -24,12 +17,10 @@ import { NotFoundPage } from './pages/NotFoundPage';
 // Admin Suite
 import { AdminLayout } from './admin/AdminLayout';
 import { DashboardPage } from './admin/DashboardPage';
-import { AnalyticsPage } from './admin/AnalyticsPage';
 import { InquiriesPage } from './admin/InquiriesPage';
-import { ServicesPage } from './admin/ServicesPage';
-import { ProjectsPage } from './admin/ProjectsPage';
-import { VenturesPage as AdminVenturesPage } from './admin/VenturesPage';
+import { QRManagementPage } from './admin/QRManagementPage';
 import { SettingsPage } from './admin/SettingsPage';
+import { ProfilePage } from './admin/ProfilePage';
 
 export function App() {
   return (
@@ -40,20 +31,12 @@ export function App() {
           <Route element={<PublicLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/solutions" element={<SolutionsPage />} />
-            <Route path="/solutions/:category" element={<SolutionsPage />} />
-            <Route path="/solutions/:category/:slug" element={<ServiceDetailPage />} />
-            <Route path="/estimator" element={<EstimatorPage />} />
-            <Route path="/start-project" element={<StartProjectPage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/work/:slug" element={<WorkDetailPage />} />
-            <Route path="/ventures" element={<VenturesPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
           </Route>
 
-          {/* Admin Login Route */}
+          {/* Admin Login Gateway (Isolated from public navbar/footer) */}
           <Route path="/admin/login" element={<LoginPage />} />
 
           {/* Protected Admin Routes */}
@@ -67,12 +50,11 @@ export function App() {
           >
             <Route index element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="enquiries" element={<InquiriesPage />} />
             <Route path="inquiries" element={<InquiriesPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="projects" element={<ProjectsPage />} />
-            <Route path="ventures" element={<AdminVenturesPage />} />
+            <Route path="qr" element={<QRManagementPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
 
           {/* Catch-all 404 Route */}
