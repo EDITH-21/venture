@@ -16,6 +16,8 @@ import {
   Globe,
   Phone,
   Link as LinkIcon,
+  AlertCircle,
+  Eye,
 } from 'lucide-react';
 
 const PRESET_QRS = [
@@ -66,14 +68,72 @@ const PRESET_QRS = [
   },
 ];
 
+// Helper QR renderer with fallback
+const QRRenderer = ({ id, value, size = 180, customImg }) => {
+  const [hasError, setHasError] = useState(false);
+
+  if (customImg) {
+    return (
+      <img
+        src={customImg}
+        alt="Custom QR"
+        className="w-44 h-44 object-contain rounded"
+      />
+    );
+  }
+
+  if (hasError) {
+    const fallbackUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size * 2}x${size * 2}&data=${encodeURIComponent(value)}`;
+    return (
+      <img
+        id={`qr-img-${id}`}
+        src={fallbackUrl}
+        alt="QR Code"
+        className="w-44 h-44 object-contain rounded bg-white p-2"
+        crossOrigin="anonymous"
+      />
+    );
+  }
+
+  try {
+    return (
+      <div className="bg-white p-3 rounded-xl flex items-center justify-center">
+        <QRCodeSVG
+          id={`qr-svg-${id}`}
+          value={value}
+          size={size}
+          level="H"
+          includeMargin={false}
+        />
+      </div>
+    );
+  } catch (err) {
+    setHasError(true);
+    const fallbackUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size * 2}x${size * 2}&data=${encodeURIComponent(value)}`;
+    return (
+      <img
+        id={`qr-img-${id}`}
+        src={fallbackUrl}
+        alt="QR Code"
+        className="w-44 h-44 object-contain rounded bg-white p-2"
+        crossOrigin="anonymous"
+      />
+    );
+  }
+};
+
 export const QRManagementPage = () => {
   const [qrList, setQrList] = useState(() => {
     try {
       const saved = localStorage.getItem('vanguard_managed_qrs');
-      return saved ? JSON.parse(saved) : PRESET_QRS;
-    } catch {
-      return PRESET_QRS;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {
+      console.warn('QR parse error:', e);
     }
+    return PRESET_QRS;
   });
 
   const [copiedId, setCopiedId] = useState(null);
@@ -82,7 +142,6 @@ export const QRManagementPage = () => {
   const [customDesc, setCustomDesc] = useState('');
   const [customCategory, setCustomCategory] = useState('Campaign');
 
-  // Custom QR Upload State
   const [uploadedImages, setUploadedImages] = useState(() => {
     try {
       const saved = localStorage.getItem('vanguard_uploaded_qrs');
@@ -95,43 +154,69 @@ export const QRManagementPage = () => {
   const fileInputRefs = useRef({});
 
   useEffect(() => {
-    localStorage.setItem('vanguard_managed_qrs', JSON.stringify(qrList));
+    try {
+      localStorage.setItem('vanguard_managed_qrs', JSON.stringify(qrList));
+    } catch (e) {
+      console.warn(e);
+    }
   }, [qrList]);
 
   useEffect(() => {
-    localStorage.setItem('vanguard_uploaded_qrs', JSON.stringify(uploadedImages));
+    try {
+      localStorage.setItem('vanguard_uploaded_qrs', JSON.stringify(uploadedImages));
+    } catch (e) {
+      console.warn(e);
+    }
   }, [uploadedImages]);
 
   const handleCopyLink = (url, id) => {
-    navigator.clipboard.writeText(url);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
+    try {
+      navigator.clipboard.writeText(url);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      alert(`URL: ${url}`);
+    }
   };
 
-  const handleDownloadSVG = (id, title) => {
+  const handleDownloadQR = (id, title, url) => {
+    // Try downloading SVG first
     const svgElem = document.getElementById(`qr-svg-${id}`);
-    if (!svgElem) return;
+    if (svgElem) {
+      try {
+        const svgData = new XMLSerializer().serializeToString(svgElem);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
 
-    const svgData = new XMLSerializer().serializeToString(svgElem);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
+        img.onload = () => {
+          canvas.width = 400;
+          canvas.height = 400;
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 20, 20, 360, 360);
+          const pngFile = canvas.toDataURL('image/png');
 
-    img.onload = () => {
-      canvas.width = 400;
-      canvas.height = 400;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 20, 20, 360, 360);
-      const pngFile = canvas.toDataURL('image/png');
+          const downloadLink = document.createElement('a');
+          downloadLink.download = `${title.toLowerCase().replace(/\s+/g, '-')}-qr.png`;
+          downloadLink.href = pngFile;
+          downloadLink.click();
+        };
 
-      const downloadLink = document.createElement('a');
-      downloadLink.download = `${title.toLowerCase().replace(/\s+/g, '-')}-qr.png`;
-      downloadLink.href = pngFile;
-      downloadLink.click();
-    };
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+        return;
+      } catch (err) {
+        console.warn('SVG download error, fallback to image generator:', err);
+      }
+    }
 
-    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    // Direct fallback download
+    const directUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}`;
+    const downloadLink = document.createElement('a');
+    downloadLink.target = '_blank';
+    downloadLink.download = `${title.toLowerCase().replace(/\s+/g, '-')}-qr.png`;
+    downloadLink.href = directUrl;
+    downloadLink.click();
   };
 
   const handleCreateCustomQR = (e) => {
@@ -144,11 +229,11 @@ export const QRManagementPage = () => {
       description: customDesc || 'Custom generated destination QR code.',
       url: customUrl.startsWith('http') ? customUrl : `https://${customUrl}`,
       category: customCategory,
-      icon: QrCode,
       badgeColor: 'bg-champagne/10 text-champagne border-champagne/25',
     };
 
-    setQrList([newQr, ...qrList]);
+    const updated = [newQr, ...qrList];
+    setQrList(updated);
     setCustomTitle('');
     setCustomUrl('');
     setCustomDesc('');
@@ -156,7 +241,8 @@ export const QRManagementPage = () => {
 
   const handleDeleteQR = (id) => {
     if (!window.confirm('Delete this QR code entry?')) return;
-    setQrList(qrList.filter((q) => q.id !== id));
+    const updated = qrList.filter((q) => q.id !== id);
+    setQrList(updated);
     const updatedUploads = { ...uploadedImages };
     delete updatedUploads[id];
     setUploadedImages(updatedUploads);
@@ -296,7 +382,6 @@ export const QRManagementPage = () => {
       {/* QR Codes Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {qrList.map((item) => {
-          const Icon = item.icon || QrCode;
           const isCopied = copiedId === item.id;
           const customUploadedImg = uploadedImages[item.id];
 
@@ -310,39 +395,30 @@ export const QRManagementPage = () => {
                 <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/5">
                   <div className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-lg bg-obsidian border border-champagne/20 flex items-center justify-center text-champagne">
-                      <Icon className="w-4 h-4" />
+                      <QrCode className="w-4 h-4" />
                     </div>
-                    <span className="font-mono text-xs font-bold text-warm-white">
+                    <span className="font-mono text-xs font-bold text-warm-white line-clamp-1">
                       {item.title}
                     </span>
                   </div>
 
-                  <span className={`text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border ${item.badgeColor}`}>
-                    {item.category}
+                  <span className={`text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border ${item.badgeColor || 'bg-champagne/10 text-champagne border-champagne/25'}`}>
+                    {item.category || 'General'}
                   </span>
                 </div>
 
-                <p className="text-xs text-text-muted leading-relaxed mb-6">
+                <p className="text-xs text-text-muted leading-relaxed mb-6 line-clamp-2">
                   {item.description}
                 </p>
 
                 {/* High-Contrast QR Code Visual Container */}
                 <div className="p-4 rounded-xl bg-warm-white flex items-center justify-center mx-auto w-fit mb-6 shadow-inner relative group/qr">
-                  {customUploadedImg ? (
-                    <img
-                      src={customUploadedImg}
-                      alt={item.title}
-                      className="w-44 h-44 object-contain rounded"
-                    />
-                  ) : (
-                    <QRCodeSVG
-                      id={`qr-svg-${item.id}`}
-                      value={item.url}
-                      size={176}
-                      level="H"
-                      includeMargin={true}
-                    />
-                  )}
+                  <QRRenderer
+                    id={item.id}
+                    value={item.url}
+                    size={176}
+                    customImg={customUploadedImg}
+                  />
                 </div>
 
                 {/* Target URL Preview */}
@@ -372,7 +448,7 @@ export const QRManagementPage = () => {
                   </button>
 
                   <button
-                    onClick={() => handleDownloadSVG(item.id, item.title)}
+                    onClick={() => handleDownloadQR(item.id, item.title, item.url)}
                     className="inline-flex items-center justify-center gap-1.5 py-2 rounded-lg bg-champagne text-obsidian font-bold hover:bg-champagne-light transition-colors shadow-sm"
                   >
                     <Download className="w-3.5 h-3.5" />
@@ -396,7 +472,7 @@ export const QRManagementPage = () => {
                         onClick={() => fileInputRefs.current[item.id]?.click()}
                         className="text-[11px] font-mono text-champagne hover:underline inline-flex items-center gap-1"
                       >
-                        <RefreshCw className="w-3 h-3" /> Replace Custom Image
+                        <RefreshCw className="w-3 h-3" /> Replace Custom Graphic
                       </button>
                       <button
                         onClick={() => handleRemoveUploadedImage(item.id)}
