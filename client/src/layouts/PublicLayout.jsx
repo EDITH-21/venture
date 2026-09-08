@@ -6,11 +6,10 @@ import { WhatsAppFloating } from '../components/common/WhatsAppFloating';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 export const PublicLayout = () => {
-  // Global telemetry tracker on all public routes
   useAnalytics();
 
   return (
-    <div className="min-h-screen flex flex-col bg-obsidian text-warm-white">
+    <div className="min-h-screen flex flex-col bg-cream text-charcoal antialiased">
       <Navbar />
       <main className="flex-grow">
         <Outlet />

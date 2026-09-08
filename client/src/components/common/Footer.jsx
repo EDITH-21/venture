@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MessageSquare, Mail, Phone, Instagram, Linkedin, ArrowUpRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 export const Footer = () => {
   const location = useLocation();
@@ -8,7 +8,7 @@ export const Footer = () => {
   const handleNavClick = (e, href) => {
     e.preventDefault();
     if (location.pathname === '/') {
-      const targetId = href.replace('/#', '');
+      const targetId = href.replace('/#', '').replace('#', '');
       const elem = document.getElementById(targetId);
       if (elem) {
         elem.scrollIntoView({ behavior: 'smooth' });
@@ -21,126 +21,110 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-obsidian-deep text-warm-white border-t border-graphite-border relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-20 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-graphite-border">
-          {/* Brand Column (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
+    <footer className="bg-cream-surface border-t border-cream-border text-charcoal py-16 sm:py-20">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-cream-border/70">
+          {/* Brand Info (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-5">
             <Link
               to="/"
-              onClick={(e) => handleNavClick(e, '/#home')}
-              className="flex items-center gap-3 w-fit group"
+              onClick={(e) => handleNavClick(e, '#')}
+              className="flex items-center gap-2.5 w-fit group"
             >
-              <div className="w-10 h-10 rounded-lg bg-champagne/10 border border-champagne/30 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-colors">
-                <span className="font-serif font-bold text-xl">V</span>
+              <div className="w-7 h-7 rounded-md bg-forest flex items-center justify-center text-cream shadow-sm">
+                <span className="font-sans font-bold text-sm leading-none">A</span>
               </div>
-              <span className="font-serif text-2xl font-medium tracking-tight text-warm-white group-hover:text-champagne transition-colors">
-                Vanguard <span className="text-champagne italic font-light">Digital</span>
+              <span className="font-sans font-bold text-lg tracking-tight text-charcoal group-hover:text-forest transition-colors">
+                Asteya
               </span>
             </Link>
 
-            <p className="text-sm text-text-muted leading-relaxed max-w-sm">
-              Building better digital experiences. Websites and digital solutions engineered for businesses, schools, cinemas and growing brands.
+            <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed max-w-sm font-sans">
+              Building products, platforms, and intelligent systems designed to solve meaningful problems and create lasting impact.
             </p>
 
-            <div className="flex items-center gap-4 text-xs font-mono text-champagne/80">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Available for new projects & consultations</span>
+            <div className="flex items-center gap-2 text-xs font-mono text-forest">
+              <span className="w-1.5 h-1.5 rounded-full bg-forest animate-pulse" />
+              <span>Multi-decade technological horizon</span>
             </div>
           </div>
 
-          {/* Quick Navigation (3 cols) */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
-            <h4 className="text-xs uppercase tracking-[0.2em] text-champagne font-semibold">
-              Navigation
-            </h4>
-            <ul className="flex flex-col gap-3 text-sm text-text-muted font-mono">
+          {/* Navigation Links (3 cols) */}
+          <div className="lg:col-span-3 flex flex-col gap-3">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-forest font-bold mb-1">
+              Company
+            </span>
+            <ul className="flex flex-col gap-2.5 text-xs font-sans text-charcoal-muted">
               <li>
                 <a
-                  href="/#home"
-                  onClick={(e) => handleNavClick(e, '/#home')}
-                  className="hover:text-warm-white transition-colors"
+                  href="#vision"
+                  onClick={(e) => handleNavClick(e, '#vision')}
+                  className="hover:text-charcoal transition-colors"
                 >
-                  Home
+                  Vision
                 </a>
               </li>
               <li>
                 <a
-                  href="/#about"
-                  onClick={(e) => handleNavClick(e, '/#about')}
-                  className="hover:text-warm-white transition-colors"
+                  href="#build"
+                  onClick={(e) => handleNavClick(e, '#build')}
+                  className="hover:text-charcoal transition-colors"
                 >
-                  About Vanguard
+                  What We Build
                 </a>
               </li>
               <li>
                 <a
-                  href="/#services"
-                  onClick={(e) => handleNavClick(e, '/#services')}
-                  className="hover:text-warm-white transition-colors"
+                  href="#philosophy"
+                  onClick={(e) => handleNavClick(e, '#philosophy')}
+                  className="hover:text-charcoal transition-colors"
                 >
-                  Services
+                  Philosophy
                 </a>
               </li>
               <li>
                 <a
-                  href="/#process"
-                  onClick={(e) => handleNavClick(e, '/#process')}
-                  className="hover:text-warm-white transition-colors"
+                  href="#research"
+                  onClick={(e) => handleNavClick(e, '#research')}
+                  className="hover:text-charcoal transition-colors"
                 >
-                  Our Process
+                  Research & Future
                 </a>
               </li>
               <li>
                 <a
-                  href="/#contact"
-                  onClick={(e) => handleNavClick(e, '/#contact')}
-                  className="hover:text-warm-white transition-colors"
+                  href="#careers"
+                  onClick={(e) => handleNavClick(e, '#careers')}
+                  className="hover:text-charcoal transition-colors"
                 >
-                  Contact & Enquiries
+                  Careers
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Connect & Socials (4 cols) */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            <h4 className="text-xs uppercase tracking-[0.2em] text-champagne font-semibold">
-              Connect With Us
-            </h4>
-            <ul className="flex flex-col gap-3 text-sm text-text-muted font-mono">
+          {/* Contact & Social (4 cols) */}
+          <div className="lg:col-span-4 flex flex-col gap-3">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-forest font-bold mb-1">
+              Connect
+            </span>
+            <ul className="flex flex-col gap-2.5 text-xs font-sans text-charcoal-muted">
               <li>
                 <a
-                  href="https://wa.me/919998160726?text=Hi%20Vanguard%20Digital,%20I'd%20like%20to%20discuss%20a%20website%20project."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-champagne transition-colors group"
+                  href="mailto:contact@asteya.tech"
+                  className="hover:text-charcoal transition-colors inline-flex items-center gap-1 group"
                 >
-                  <MessageSquare className="w-4 h-4 text-champagne" />
-                  <span>WhatsApp (+91 9998160726)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span>contact@asteya.tech</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-forest" />
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:shivamgate21@gmail.com"
-                  className="flex items-center gap-2 hover:text-champagne transition-colors group"
+                  href="mailto:careers@asteya.tech"
+                  className="hover:text-charcoal transition-colors inline-flex items-center gap-1 group"
                 >
-                  <Mail className="w-4 h-4 text-champagne" />
-                  <span>shivamgate21@gmail.com</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-champagne transition-colors group"
-                >
-                  <Instagram className="w-4 h-4 text-champagne" />
-                  <span>Instagram</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span>careers@asteya.tech</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-forest" />
                 </a>
               </li>
               <li>
@@ -148,25 +132,35 @@ export const Footer = () => {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-champagne transition-colors group"
+                  className="hover:text-charcoal transition-colors inline-flex items-center gap-1 group"
                 >
-                  <Linkedin className="w-4 h-4 text-champagne" />
                   <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-forest" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-charcoal transition-colors inline-flex items-center gap-1 group"
+                >
+                  <span>X / Twitter</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-forest" />
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-muted font-mono">
-          <p>© {new Date().getFullYear()} Vanguard Digital. All rights reserved.</p>
+        {/* Bottom Copyright */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-charcoal-muted">
+          <p>© {new Date().getFullYear()} Asteya Technologies Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="hover:text-warm-white transition-colors">
+            <Link to="/privacy" className="hover:text-charcoal transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="hover:text-warm-white transition-colors">
+            <Link to="/terms" className="hover:text-charcoal transition-colors">
               Terms of Service
             </Link>
           </div>
