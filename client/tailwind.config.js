@@ -7,72 +7,103 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Asteya Warm Cream & Off-White System
-        cream: {
-          DEFAULT: '#FAF8F5',
-          surface: '#F3EFE6',
+        // Clean white and subtle gray grid surfaces from the blueprint
+        blueprint: {
+          bg: '#F8F9FA',
+          surface: '#FFFFFF',
           card: '#FFFFFF',
-          dark: '#EDE7DA',
-          border: '#E5DFD3',
+          border: '#E9ECEF',
+          line: '#DEE2E6',
+          muted: '#6C757D',
+          dark: '#111827',
         },
-        // Sophisticated Sea-Green & Deep Forest Accent System
+        // Deep obsidian for dark sections (Ventures & Final CTA)
+        darkness: {
+          DEFAULT: '#0B0F17',
+          surface: '#111827',
+          card: '#161F30',
+          border: '#1F293D',
+          accent: '#38BDF8',
+          purple: '#818CF8',
+        },
+        // Glowing blueprint blue / cyan accents from the diagram
+        cyanic: {
+          DEFAULT: '#0284C7',
+          light: '#38BDF8',
+          glow: 'rgba(56, 189, 248, 0.35)',
+        },
+        // Legacy compatibility
+        cream: {
+          DEFAULT: '#F8F9FA',
+          surface: '#F1F3F5',
+          card: '#FFFFFF',
+          dark: '#E9ECEF',
+          border: '#E2E8F0',
+        },
         forest: {
-          DEFAULT: '#1B4332',
-          deep: '#0F291E',
-          dark: '#133526',
-          light: '#2D6A4F',
-          subtle: '#E8F1EC',
-          border: '#2D6A4F33',
+          DEFAULT: '#0F172A',
+          deep: '#0B0F17',
+          dark: '#0284C7',
+          light: '#2563EB',
+          subtle: '#EFF6FF',
+          border: 'rgba(37, 99, 235, 0.15)',
         },
-        // Charcoal & Near-Black Editorial Typography System
         charcoal: {
-          DEFAULT: '#111813',
-          dark: '#0A0F0C',
-          light: '#212B25',
-          muted: '#526058',
-          subtle: '#7A8880',
-          border: '#D8D2C4',
+          DEFAULT: '#0F172A',
+          dark: '#020617',
+          light: '#1E293B',
+          muted: '#475569',
+          subtle: '#64748B',
+          border: '#E2E8F0',
         },
-        // Legacy surfaces for Admin Console
         obsidian: {
-          DEFAULT: '#0D1117',
-          deep: '#080B0F',
-          surface: '#12171F',
+          DEFAULT: '#0B0F17',
+          deep: '#06090E',
+          surface: '#111827',
         },
         graphite: {
-          DEFAULT: '#161B22',
-          light: '#21262D',
-          border: '#30363D',
+          DEFAULT: '#161F30',
+          light: '#1E293B',
+          border: '#1F293D',
         },
         champagne: {
-          DEFAULT: '#1B4332',
-          light: '#2D6A4F',
-          dark: '#0F291E',
-          subtle: 'rgba(27, 67, 50, 0.08)',
+          DEFAULT: '#0284C7',
+          light: '#38BDF8',
+          dark: '#0369A1',
+          subtle: 'rgba(2, 132, 199, 0.08)',
         },
-        sage: {
-          DEFAULT: '#2D6A4F',
-          light: '#E8F1EC',
-          dark: '#1B4332',
-        },
-        'warm-white': '#FFFFFF',
-        'text-dark': '#111813',
-        'text-muted': '#526058',
-        'border-light': '#E5DFD3',
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'Manrope', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        sans: ['"Inter"', '"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'Menlo', 'Monaco', 'monospace'],
+        display: ['"Space Grotesk"', '"Plus Jakarta Sans"', 'sans-serif'],
       },
       boxShadow: {
-        'subtle': '0 2px 10px rgba(17, 24, 19, 0.04)',
-        'card': '0 4px 20px rgba(17, 24, 19, 0.06)',
-        'card-hover': '0 12px 32px rgba(17, 24, 19, 0.09)',
-        'elevation': '0 20px 48px rgba(17, 24, 19, 0.08)',
+        'blueprint': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
+        'blueprint-hover': '0 20px 35px -5px rgba(15, 23, 42, 0.08), 0 10px 15px -5px rgba(15, 23, 42, 0.04)',
+        'cyan-glow': '0 0 30px rgba(56, 189, 248, 0.25)',
+        'neon-card': '0 0 0 1px rgba(56, 189, 248, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4)',
       },
       backgroundImage: {
-        'radial-subtle': 'radial-gradient(circle at 50% 0%, rgba(27, 67, 50, 0.06) 0%, rgba(250, 248, 245, 0) 70%)',
+        'blueprint-grid': 'radial-gradient(#CBD5E1 1px, transparent 1px)',
+        'dark-grid': 'radial-gradient(#1E293B 1px, transparent 1px)',
+        'cyan-gradient': 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
+        'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 100%)',
+      },
+      animation: {
+        'float-slow': 'float 6s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+        'rotate-diagram': 'rotateDiagram 30s linear infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+        },
       },
     },
   },

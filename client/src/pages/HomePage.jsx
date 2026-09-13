@@ -1,49 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SEOHead } from '../components/common/SEOHead';
 import { HeroSection } from '../components/home/HeroSection';
-import { VisionSection } from '../components/home/VisionSection';
-import { WhatWeBuild } from '../components/home/WhatWeBuild';
-import { IdeaToImpact } from '../components/home/IdeaToImpact';
-import { PhilosophySection } from '../components/home/PhilosophySection';
-import { ResearchSection } from '../components/home/ResearchSection';
-import { TimelineSection } from '../components/home/TimelineSection';
-import { CareersSection } from '../components/home/CareersSection';
+import { StatementSection } from '../components/home/StatementSection';
+import { CapabilitiesSection } from '../components/home/CapabilitiesSection';
+import { ConnectedSystemSection } from '../components/home/ConnectedSystemSection';
+import { AdvantageSection } from '../components/home/AdvantageSection';
+import { VenturesSection } from '../components/home/VenturesSection';
+import { IndustriesSection } from '../components/home/IndustriesSection';
+import { AboutSection } from '../components/home/AboutSection';
 import { FinalCTA } from '../components/home/FinalCTA';
+import { ProjectModal } from '../components/common/ProjectModal';
 
 export const HomePage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <SEOHead
-        title="Asteya | Building Technology for the Next Generation"
-        description="Asteya is a technology company building products, platforms, and intelligent systems designed to solve meaningful problems and create lasting impact."
+        title="ASTEYA | Digital Foundations for Ambitious Businesses"
+        description="Asteya combines technology, design and business thinking to turn ideas into scalable digital experiences."
       />
 
-      {/* 1. HERO SECTION */}
-      <HeroSection />
+      {/* HERO SECTION */}
+      <HeroSection onOpenProjectModal={() => setIsModalOpen(true)} />
 
-      {/* 2. VISION SECTION */}
-      <VisionSection />
+      {/* SECTION 01 — STATEMENT */}
+      <StatementSection />
 
-      {/* 3. WHAT WE BUILD */}
-      <WhatWeBuild />
+      {/* SECTION 02 — CAPABILITIES */}
+      <CapabilitiesSection />
 
-      {/* 4. FROM IDEA TO IMPACT */}
-      <IdeaToImpact />
+      {/* SECTION 03 — ASTEYA SYSTEM */}
+      <ConnectedSystemSection />
 
-      {/* 5. PHILOSOPHY */}
-      <PhilosophySection />
+      {/* SECTION 04 — HOW ASTEYA WORKS */}
+      <AdvantageSection />
 
-      {/* 6. RESEARCH & FUTURE */}
-      <ResearchSection />
+      {/* SECTION 05 — ASTEYA VENTURES */}
+      <VenturesSection />
 
-      {/* 7. LONG-TERM TIMELINE */}
-      <TimelineSection />
+      {/* SECTION 07 — INDUSTRIES */}
+      <IndustriesSection />
 
-      {/* 8. CAREERS */}
-      <CareersSection />
+      {/* SECTION 08 — ABOUT */}
+      <AboutSection />
 
-      {/* 9. FINAL CLOSING CTA */}
-      <FinalCTA />
+      {/* SECTION 09 — FINAL CTA */}
+      <FinalCTA onOpenProjectModal={() => setIsModalOpen(true)} />
+
+      {/* Interactive Project Initiation Modal */}
+      <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };

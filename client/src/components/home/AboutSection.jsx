@@ -1,86 +1,72 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe2, ShieldCheck, Zap, Layers, Sparkles } from 'lucide-react';
+import { ShieldCheck, Cpu, Layers } from 'lucide-react';
 
 export const AboutSection = () => {
-  const pillars = [
-    {
-      icon: Globe2,
-      title: 'Digital Authority',
-      desc: 'Engineered to elevate brand perception from the very first interaction.',
-    },
-    {
-      icon: Zap,
-      title: 'High Performance',
-      desc: 'Sub-second load speeds that keep visitors engaged and improve search ranking.',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Modern Reliability',
-      desc: 'Clean code architecture and responsive standards that work seamlessly on all devices.',
-    },
-  ];
-
   return (
-    <section id="about" className="bg-ivory text-text-dark py-24 sm:py-32 relative border-t border-border-light overflow-hidden">
+    <section id="about" className="bg-slate-50 py-24 sm:py-32 border-b border-slate-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Narrative */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-6"
-          >
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-champagne-dark font-bold block mb-4">
-              About Vanguard Digital
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Text */}
+          <div className="lg:col-span-6 space-y-6">
+            <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase block">
+              SECTION 08 — ABOUT
             </span>
 
-            <h2 className="text-4xl sm:text-5xl font-serif font-normal text-text-dark leading-[1.18] mb-6">
-              Empowering organizations with websites that look exceptional and deliver real business impact.
+            <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-slate-900 tracking-tight leading-[1.12]">
+              THE FUTURE IS BUILT, NOT PREDICTED.
             </h2>
 
-            <p className="text-base sm:text-lg text-text-muted leading-relaxed mb-8">
-              Vanguard Digital helps businesses, schools, cinemas, and growing brands establish a stronger digital presence through modern website design and development.
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-sans font-medium">
+              Asteya is a technology and digital business company focused on building useful products, digital experiences and business solutions.
             </p>
 
-            <div className="inline-flex items-center gap-3 p-4 rounded-lg bg-warm-white border border-border-light shadow-sm text-xs font-mono text-text-dark">
-              <Sparkles className="w-4 h-4 text-champagne-dark flex-shrink-0" />
-              <span>Tailored engineering · Zero templates · Direct developer support</span>
-            </div>
-          </motion.div>
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-sans">
+              We operate at the intersection of systems architecture, brand aesthetics, and commercial velocity. Every line of code, design token, and platform module we build is engineered for permanence and compounded leverage.
+            </p>
 
-          {/* Right Visual Pillars Card Composition */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-6 space-y-4"
-          >
-            {pillars.map((p, idx) => {
-              const Icon = p.icon;
-              return (
-                <div
-                  key={p.title}
-                  className="bg-warm-white p-6 sm:p-7 rounded-xl border border-border-light/80 hover:border-champagne-dark/50 transition-all duration-300 shadow-sm hover:shadow-md flex items-start gap-5 group"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-ivory flex items-center justify-center text-champagne-dark group-hover:bg-champagne/15 transition-colors flex-shrink-0">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-text-dark mb-1 group-hover:text-champagne-dark transition-colors">
-                      {p.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
-                      {p.desc}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </motion.div>
+            <div className="grid grid-cols-2 gap-4 pt-4 text-xs font-mono">
+              <div className="p-4 bg-white rounded-xl border border-slate-200">
+                <span className="font-bold text-slate-900 block mb-1">Architecture First</span>
+                <span className="text-slate-500 text-[11px]">Resilient micro-systems</span>
+              </div>
+              <div className="p-4 bg-white rounded-xl border border-slate-200">
+                <span className="font-bold text-slate-900 block mb-1">Enduring Value</span>
+                <span className="text-slate-500 text-[11px]">Multi-decade horizon</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Monolithic Geometric Architectural Structure */}
+          <div className="lg:col-span-6">
+            <div className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-md relative overflow-hidden flex items-center justify-center">
+              <svg viewBox="0 0 400 350" className="w-full h-auto max-w-sm drop-shadow-lg" fill="none">
+                <defs>
+                  <linearGradient id="monolith1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#1E293B" />
+                    <stop offset="100%" stopColor="#0F172A" />
+                  </linearGradient>
+                  <linearGradient id="monolith2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#94A3B8" />
+                    <stop offset="100%" stopColor="#475569" />
+                  </linearGradient>
+                  <linearGradient id="monolith3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#E2E8F0" />
+                    <stop offset="100%" stopColor="#CBD5E1" />
+                  </linearGradient>
+                </defs>
+
+                {/* 3D Geometric Prisms Facets */}
+                <polygon points="200,40 320,120 200,200 80,120" fill="url(#monolith3)" stroke="#94A3B8" strokeWidth="1" />
+                <polygon points="80,120 200,200 200,320 80,240" fill="url(#monolith2)" stroke="#64748B" strokeWidth="1" />
+                <polygon points="200,200 320,120 320,240 200,320" fill="url(#monolith1)" stroke="#334155" strokeWidth="1" />
+
+                {/* Center Laser Focus Ring */}
+                <circle cx="200" cy="200" r="16" fill="#0284C7" fillOpacity="0.2" stroke="#38BDF8" strokeWidth="1.5" />
+                <circle cx="200" cy="200" r="4" fill="#38BDF8" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,79 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-cream: #FAF8F5;
-  --bg-surface: #F3EFE6;
-  --bg-card: #FFFFFF;
-  --forest: #1B4332;
-  --forest-dark: #0F291E;
-  --forest-light: #2D6A4F;
-  --charcoal: #111813;
-  --charcoal-muted: #526058;
-  --border-cream: #E5DFD3;
-}
-
 @layer base {
   * {
-    border-color: #E5DFD3;
+    border-color: #E2E8F0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #FAF8F5;
-    color: #111813;
+    background-color: #FFFFFF;
+    color: #0F172A;
   }
 
   body {
-    background-color: #FAF8F5;
-    color: #111813;
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #FFFFFF;
+    color: #0F172A;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
     line-height: 1.6;
   }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.03em;
+  }
 }
 
-/* Sophisticated Subtle Glass & Surface Utilities */
-.glass-cream {
-  background: rgba(250, 248, 245, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(229, 223, 211, 0.8);
+/* Blueprint Grid Background */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #E5DFD3;
-}
-
-/* Subtle Grain / Texture Overlay */
-.bg-noise {
-  background-image: radial-gradient(rgba(27, 67, 50, 0.04) 1px, transparent 0);
+.bg-grid-dots {
+  background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Custom Minimal Scrollbars */
+.bg-dark-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(31, 41, 61, 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 41, 61, 0.6) 1px, transparent 1px);
+}
+
+/* Glass Card & Neon Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+}
+
+.glass-dark-card {
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+/* Glowing Neon Shimmer */
+.neon-glow-cyan {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+}
+
+.neon-glow-purple {
+  box-shadow: 0 0 35px rgba(129, 140, 248, 0.3);
+}
+
+/* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAF8F5;
+  background: #F8F9FA;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D8D2C4;
-  border-radius: 3px;
+  background: #CBD5E1;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1B4332;
+  background: #0F172A;
 }
