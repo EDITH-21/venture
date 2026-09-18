@@ -110,7 +110,7 @@ export const EcosystemSection = () => {
                   <img
                     src="/asteya-logo.png"
                     alt="ASTEYA Center Logo"
-                    className="w-12 h-12 object-contain filter invert drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]"
+                    className="w-12 h-12 object-contain filter invert mix-blend-screen drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]"
                   />
                   <span className="font-display font-bold text-[10px] tracking-[0.2em] text-white mt-1">
                     ASTEYA

@@ -219,7 +219,7 @@ export const HeroVisual = () => {
             <img
               src="/asteya-logo.png"
               alt="ASTEYA Core Emblem"
-              className="relative z-10 w-24 h-24 object-contain filter invert drop-shadow-[0_0_25px_rgba(168,85,247,0.9)]"
+              className="relative z-10 w-24 h-24 object-contain filter invert mix-blend-screen drop-shadow-[0_0_25px_rgba(168,85,247,0.9)]"
             />
           </div>
         </motion.div>
