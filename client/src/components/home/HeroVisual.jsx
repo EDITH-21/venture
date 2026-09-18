@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 export const HeroVisual = () => {
-  // 3D Mouse Parallax Tracking
+  // 3D Interactive Mouse Parallax Tracking
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
   const mouseXSpring = useSpring(x, { stiffness: 120, damping: 18 });
   const mouseYSpring = useSpring(y, { stiffness: 120, damping: 18 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['15deg', '-15deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-15deg', '15deg']);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['18deg', '-18deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-18deg', '18deg']);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -33,11 +33,11 @@ export const HeroVisual = () => {
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-xl mx-auto aspect-square flex items-center justify-center select-none py-4 perspective-1000 cursor-grab active:cursor-grabbing"
+      className="relative w-full max-w-xl mx-auto aspect-square flex items-center justify-center select-none py-4 cursor-grab active:cursor-grabbing"
       style={{ perspective: 1200 }}
     >
       {/* Background Volumetric Nebula Corona Glow */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-violet-dark/50 via-purple-600/25 to-cyan-dark/35 rounded-full blur-[100px] pointer-events-none animate-nebula-pulse" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-violet-dark/50 via-purple-600/30 to-cyan-dark/40 rounded-full blur-[110px] pointer-events-none animate-nebula-pulse" />
 
       {/* 3D Parallax Container */}
       <motion.div
@@ -46,29 +46,28 @@ export const HeroVisual = () => {
       >
         {/* Main 3D Celestial Orbital Vector Assembly */}
         <svg
-          className="w-full h-full drop-shadow-[0_0_60px_rgba(139,92,246,0.45)]"
+          className="w-full h-full drop-shadow-[0_0_60px_rgba(139,92,246,0.5)]"
           viewBox="0 0 500 500"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            {/* Gradients */}
             <radialGradient id="sphereCoreGrad" cx="30%" cy="30%" r="70%">
-              <stop offset="0%" stopColor="#C084FC" stopOpacity="0.9" />
-              <stop offset="35%" stopColor="#7C3AED" stopOpacity="0.8" />
-              <stop offset="70%" stopColor="#1E1B4B" stopOpacity="0.9" />
+              <stop offset="0%" stopColor="#C084FC" stopOpacity="0.95" />
+              <stop offset="35%" stopColor="#7C3AED" stopOpacity="0.85" />
+              <stop offset="70%" stopColor="#1E1B4B" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#040711" />
             </radialGradient>
 
             <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.95" />
-              <stop offset="50%" stopColor="#A855F7" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#A855F7" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.2" />
             </linearGradient>
 
             <linearGradient id="ringGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#E879F9" stopOpacity="0.95" />
-              <stop offset="50%" stopColor="#818CF8" stopOpacity="0.7" />
+              <stop offset="50%" stopColor="#818CF8" stopOpacity="0.75" />
               <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.15" />
             </linearGradient>
 
@@ -101,7 +100,6 @@ export const HeroVisual = () => {
               transform="rotate(-25 250 250)"
               filter="url(#superGlow)"
             />
-            {/* Trailing energy bead */}
             <circle cx="460" cy="210" r="4.5" fill="#38BDF8" filter="url(#superGlow)" />
           </motion.g>
 
@@ -122,7 +120,6 @@ export const HeroVisual = () => {
               transform="rotate(40 250 250)"
               filter="url(#superGlow)"
             />
-            {/* Trailing energy bead */}
             <circle cx="110" cy="180" r="4" fill="#C084FC" filter="url(#superGlow)" />
           </motion.g>
 
@@ -150,11 +147,11 @@ export const HeroVisual = () => {
             <circle
               cx="250"
               cy="250"
-              r="110"
+              r="112"
               fill="url(#sphereCoreGrad)"
               stroke="#E879F9"
               strokeWidth="2"
-              strokeOpacity="0.6"
+              strokeOpacity="0.7"
             />
           </g>
 
@@ -204,22 +201,22 @@ export const HeroVisual = () => {
           </motion.g>
         </svg>
 
-        {/* Central Official Asteya Logo Floating Inside Core (with 3D Depth) */}
+        {/* Central Exact Asteya Monogram Floating with 3D Depth */}
         <motion.div
-          animate={{ scale: [1, 1.05, 1], y: [0, -4, 0] }}
+          animate={{ scale: [1, 1.06, 1], y: [0, -5, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ transform: 'translateZ(60px)' }}
+          style={{ transform: 'translateZ(65px)' }}
         >
-          <div className="relative w-28 h-28 flex items-center justify-center">
-            {/* Glowing Aura Ring */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-violet-glow to-cyan-glow rounded-full blur-xl opacity-80 animate-pulse-glow" />
+          <div className="relative w-32 h-32 flex items-center justify-center">
+            {/* Ambient Glowing Halo */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/80 to-cyan-400/80 rounded-full blur-2xl opacity-90 animate-pulse-glow" />
 
-            {/* Inverted Logo Image with Radiant Drop Shadow */}
+            {/* Inverted Monogram Image with Radiant Drop Shadow */}
             <img
               src="/asteya-logo.png"
-              alt="ASTEYA Core Emblem"
-              className="relative z-10 w-24 h-24 object-contain filter invert mix-blend-screen drop-shadow-[0_0_25px_rgba(168,85,247,0.9)]"
+              alt="ASTEYA Monogram"
+              className="relative z-10 w-28 h-28 object-contain filter invert mix-blend-screen drop-shadow-[0_0_30px_rgba(168,85,247,1)]"
             />
           </div>
         </motion.div>
