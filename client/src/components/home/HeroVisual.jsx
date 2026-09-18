@@ -201,22 +201,22 @@ export const HeroVisual = () => {
           </motion.g>
         </svg>
 
-        {/* Central Exact Asteya Monogram Floating with 3D Depth */}
+        {/* Central Official Asteya Monogram Floating with 3D Parallax Depth */}
         <motion.div
-          animate={{ scale: [1, 1.06, 1], y: [0, -5, 0] }}
+          animate={{ scale: [1, 1.05, 1], y: [0, -6, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ transform: 'translateZ(65px)' }}
+          style={{ transform: 'translateZ(75px)' }}
         >
-          <div className="relative w-32 h-32 flex items-center justify-center">
-            {/* Ambient Glowing Halo */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/80 to-cyan-400/80 rounded-full blur-2xl opacity-90 animate-pulse-glow" />
+          <div className="relative w-40 h-40 flex items-center justify-center">
+            {/* Ambient Glowing Halo Behind Monogram */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/80 via-indigo-500/60 to-cyan-400/80 rounded-full blur-2xl opacity-95 animate-pulse-glow" />
 
-            {/* Inverted Monogram Image with Radiant Drop Shadow */}
+            {/* Official Monogram (100% Transparent, Pure White with Neon Corona Drop Shadow) */}
             <img
               src="/asteya-logo.png"
-              alt="ASTEYA Monogram"
-              className="relative z-10 w-28 h-28 object-contain filter invert mix-blend-screen drop-shadow-[0_0_30px_rgba(168,85,247,1)]"
+              alt="ASTEYA Official Monogram"
+              className="relative z-10 w-32 h-32 object-contain drop-shadow-[0_0_35px_rgba(168,85,247,1)] drop-shadow-[0_0_15px_rgba(56,189,248,0.9)]"
             />
           </div>
         </motion.div>

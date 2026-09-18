@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export const AsteyaLogo = ({
-  className = 'w-8 h-8',
+  className = 'w-9 h-9',
   showText = false,
   textClassName = 'text-xl',
   animated = false,
@@ -10,9 +10,9 @@ export const AsteyaLogo = ({
 }) => {
   return (
     <div className="flex items-center gap-3 select-none">
-      {/* 3D Animated Exact Logo Emblem */}
+      {/* 3D Animated Official Monogram Emblem */}
       <motion.div
-        whileHover={animated ? { scale: 1.1, rotate: [0, -4, 4, 0] } : {}}
+        whileHover={animated ? { scale: 1.12, rotate: [0, -4, 4, 0] } : {}}
         transition={{ duration: 0.3 }}
         className={`relative flex items-center justify-center ${className}`}
       >
@@ -21,11 +21,11 @@ export const AsteyaLogo = ({
           <div className="absolute inset-0 bg-gradient-to-tr from-purple-500 via-indigo-500 to-cyan-400 rounded-full blur-md opacity-75 animate-pulse-glow pointer-events-none" />
         )}
 
-        {/* The Exact Uploaded Monogram with Screen Blend for Pure Transparent Clean White/Glow */}
+        {/* The Exact Uploaded Monogram (100% Transparent PNG with Crisp White Glyph) */}
         <img
           src="/asteya-logo.png"
           alt="ASTEYA Official Monogram"
-          className="relative z-10 w-full h-full object-contain filter invert mix-blend-screen drop-shadow-[0_0_15px_rgba(168,85,247,0.95)]"
+          className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_12px_rgba(168,85,247,0.95)]"
         />
       </motion.div>
 

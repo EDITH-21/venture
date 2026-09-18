@@ -104,15 +104,15 @@ export const EcosystemSection = () => {
                 </g>
               </svg>
 
-              {/* Central Official Asteya Logo Floating Inside Core */}
+              {/* Central Official Asteya Monogram Floating Inside Core */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="relative w-20 h-20 flex flex-col items-center justify-center">
+                <div className="relative w-24 h-24 flex flex-col items-center justify-center">
                   <img
                     src="/asteya-logo.png"
                     alt="ASTEYA Center Logo"
-                    className="w-12 h-12 object-contain filter invert mix-blend-screen drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]"
+                    className="w-14 h-14 object-contain drop-shadow-[0_0_20px_rgba(168,85,247,0.95)]"
                   />
-                  <span className="font-display font-bold text-[10px] tracking-[0.2em] text-white mt-1">
+                  <span className="font-display font-black text-[10px] tracking-[0.2em] text-white mt-1">
                     ASTEYA
                   </span>
                 </div>
