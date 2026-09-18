@@ -1,171 +1,229 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 export const HeroVisual = () => {
+  // 3D Mouse Parallax Tracking
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 120, damping: 18 });
+  const mouseYSpring = useSpring(y, { stiffness: 120, damping: 18 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['15deg', '-15deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-15deg', '15deg']);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <div className="relative w-full max-w-xl mx-auto aspect-square flex items-center justify-center select-none py-4">
-      {/* Background Radial Purple & Cyan Glow Corona */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-violet-dark/40 via-purple-600/20 to-cyan-dark/30 rounded-full blur-[90px] pointer-events-none animate-nebula-pulse" />
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full max-w-xl mx-auto aspect-square flex items-center justify-center select-none py-4 perspective-1000 cursor-grab active:cursor-grabbing"
+      style={{ perspective: 1200 }}
+    >
+      {/* Background Volumetric Nebula Corona Glow */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-violet-dark/50 via-purple-600/25 to-cyan-dark/35 rounded-full blur-[100px] pointer-events-none animate-nebula-pulse" />
 
-      {/* Main 3D Orbital Cosmic Planetary Sphere Assembly */}
-      <svg
-        className="w-full h-full drop-shadow-[0_0_50px_rgba(139,92,246,0.35)]"
-        viewBox="0 0 500 500"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+      {/* 3D Parallax Container */}
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="relative w-full h-full flex items-center justify-center"
       >
-        <defs>
-          {/* Radial Sphere Gradients */}
-          <radialGradient id="sphereCoreGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#A855F7" />
-            <stop offset="40%" stopColor="#6366F1" />
-            <stop offset="80%" stopColor="#0B0F1F" />
-            <stop offset="100%" stopColor="#040711" />
-          </radialGradient>
+        {/* Main 3D Celestial Orbital Vector Assembly */}
+        <svg
+          className="w-full h-full drop-shadow-[0_0_60px_rgba(139,92,246,0.45)]"
+          viewBox="0 0 500 500"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            {/* Gradients */}
+            <radialGradient id="sphereCoreGrad" cx="30%" cy="30%" r="70%">
+              <stop offset="0%" stopColor="#C084FC" stopOpacity="0.9" />
+              <stop offset="35%" stopColor="#7C3AED" stopOpacity="0.8" />
+              <stop offset="70%" stopColor="#1E1B4B" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#040711" />
+            </radialGradient>
 
-          <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="60%" stopColor="#38BDF8" stopOpacity="0.8" />
-            <stop offset="90%" stopColor="#A855F7" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-          </radialGradient>
+            <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.95" />
+              <stop offset="50%" stopColor="#A855F7" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.2" />
+            </linearGradient>
 
-          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.9" />
-            <stop offset="50%" stopColor="#A855F7" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.2" />
-          </linearGradient>
+            <linearGradient id="ringGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#E879F9" stopOpacity="0.95" />
+              <stop offset="50%" stopColor="#818CF8" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.15" />
+            </linearGradient>
 
-          <linearGradient id="ringGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#C084FC" stopOpacity="0.9" />
-            <stop offset="60%" stopColor="#6366F1" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.1" />
-          </linearGradient>
+            <linearGradient id="ringGrad3" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#67E8F9" stopOpacity="0.9" />
+              <stop offset="50%" stopColor="#C084FC" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#4338CA" stopOpacity="0.1" />
+            </linearGradient>
 
-          <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
+            <filter id="superGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="9" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
 
-        {/* Outer Background Orbital Orbit Trace */}
-        <ellipse
-          cx="250"
-          cy="250"
-          rx="220"
-          ry="110"
-          stroke="url(#ringGrad1)"
-          strokeWidth="1.5"
-          strokeDasharray="4 8"
-          transform="rotate(-25 250 250)"
-          opacity="0.4"
-        />
+          {/* 3D Gimbal Ring 1 — Outer Diagonal Orbit */}
+          <motion.g
+            animate={{ rotate: 360 }}
+            transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
+            style={{ originX: '250px', originY: '250px' }}
+          >
+            <ellipse
+              cx="250"
+              cy="250"
+              rx="225"
+              ry="105"
+              stroke="url(#ringGrad1)"
+              strokeWidth="2"
+              strokeDasharray="180 90"
+              transform="rotate(-25 250 250)"
+              filter="url(#superGlow)"
+            />
+            {/* Trailing energy bead */}
+            <circle cx="460" cy="210" r="4.5" fill="#38BDF8" filter="url(#superGlow)" />
+          </motion.g>
 
-        {/* Secondary Tilted Orbital Arc */}
-        <motion.ellipse
-          cx="250"
-          cy="250"
-          rx="200"
-          ry="90"
-          stroke="url(#ringGrad2)"
-          strokeWidth="2.5"
-          filter="url(#glowEffect)"
-          transform="rotate(35 250 250)"
-          animate={{ strokeDashoffset: [0, 400] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          strokeDasharray="180 80"
-        />
+          {/* 3D Gimbal Ring 2 — Tilted Reverse Orbit */}
+          <motion.g
+            animate={{ rotate: -360 }}
+            transition={{ duration: 42, repeat: Infinity, ease: 'linear' }}
+            style={{ originX: '250px', originY: '250px' }}
+          >
+            <ellipse
+              cx="250"
+              cy="250"
+              rx="205"
+              ry="85"
+              stroke="url(#ringGrad2)"
+              strokeWidth="2.5"
+              strokeDasharray="140 70"
+              transform="rotate(40 250 250)"
+              filter="url(#superGlow)"
+            />
+            {/* Trailing energy bead */}
+            <circle cx="110" cy="180" r="4" fill="#C084FC" filter="url(#superGlow)" />
+          </motion.g>
 
-        {/* Central Planetary Dark Sphere */}
-        <g filter="url(#glowEffect)">
+          {/* 3D Gimbal Ring 3 — Equatorial Precision Horizon Ring */}
+          <motion.g
+            animate={{ rotate: 360 }}
+            transition={{ duration: 55, repeat: Infinity, ease: 'linear' }}
+            style={{ originX: '250px', originY: '250px' }}
+          >
+            <ellipse
+              cx="250"
+              cy="250"
+              rx="185"
+              ry="65"
+              stroke="url(#ringGrad3)"
+              strokeWidth="1.5"
+              strokeDasharray="10 8"
+              transform="rotate(-65 250 250)"
+              opacity="0.6"
+            />
+          </motion.g>
+
+          {/* Central Planetary Dark Sphere */}
+          <g filter="url(#superGlow)">
+            <circle
+              cx="250"
+              cy="250"
+              r="110"
+              fill="url(#sphereCoreGrad)"
+              stroke="#E879F9"
+              strokeWidth="2"
+              strokeOpacity="0.6"
+            />
+          </g>
+
+          {/* Glowing Inner Spherical Horizon Rim */}
           <circle
             cx="250"
             cy="250"
-            r="105"
-            fill="url(#sphereCoreGrad)"
-            stroke="#C084FC"
+            r="98"
+            fill="none"
+            stroke="url(#ringGrad1)"
             strokeWidth="1.5"
-            strokeOpacity="0.5"
+            opacity="0.8"
           />
-        </g>
 
-        {/* Inner Glowing Atmosphere Ring */}
-        <circle
-          cx="250"
-          cy="250"
-          r="92"
-          fill="none"
-          stroke="url(#ringGrad1)"
-          strokeWidth="1.5"
-          opacity="0.7"
-        />
+          {/* Floating Translucent Refractive Crystals */}
+          {/* Crystal 1 (Top Left) */}
+          <motion.g
+            animate={{ y: [0, -10, 0], rotate: [0, 4, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            transform="translate(65, 60)"
+          >
+            <polygon points="28,6 52,18 28,30 4,18" fill="#818CF8" fillOpacity="0.45" stroke="#C084FC" strokeWidth="1.2" />
+            <polygon points="4,18 28,30 28,58 4,46" fill="#6366F1" fillOpacity="0.55" stroke="#818CF8" strokeWidth="1.2" />
+            <polygon points="28,30 52,18 52,46 28,58" fill="#38BDF8" fillOpacity="0.65" stroke="#38BDF8" strokeWidth="1.2" />
+          </motion.g>
 
-        {/* Central Glowing ASTEYA Emblem Core 'A' */}
-        <g transform="translate(210, 205)" filter="url(#glowEffect)">
-          {/* Stylized Modern Triangular 'A' */}
-          <path
-            d="M 40 10 L 70 70 L 52 70 L 40 45 L 28 70 L 10 70 Z"
-            fill="url(#ringGrad1)"
-            opacity="0.95"
-          />
-          <polygon points="40,25 48,45 32,45" fill="#040711" />
-        </g>
+          {/* Crystal 2 (Bottom Right) */}
+          <motion.g
+            animate={{ y: [0, 12, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            transform="translate(380, 350)"
+          >
+            <polygon points="32,8 60,22 32,36 4,22" fill="#38BDF8" fillOpacity="0.45" stroke="#7DD3FC" strokeWidth="1.2" />
+            <polygon points="4,22 32,36 32,64 4,50" fill="#818CF8" fillOpacity="0.55" stroke="#818CF8" strokeWidth="1.2" />
+            <polygon points="32,36 60,22 60,50 32,64" fill="#A855F7" fillOpacity="0.65" stroke="#C084FC" strokeWidth="1.2" />
+          </motion.g>
 
-        {/* Floating Translucent Hyper-Cubes (4 Isometric Crystals) */}
-        {/* Cube 1 (Top Left) */}
-        <motion.g
-          animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          transform="translate(80, 70)"
+          {/* Crystal 3 (Top Right Orbit Node) */}
+          <motion.g
+            animate={{ y: [0, -8, 0], rotate: [0, 6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+            transform="translate(395, 95)"
+          >
+            <polygon points="20,4 36,12 20,20 4,12" fill="#C084FC" fillOpacity="0.5" stroke="#E9D5FF" strokeWidth="1.2" />
+            <polygon points="4,12 20,20 20,36 4,28" fill="#6366F1" fillOpacity="0.6" stroke="#818CF8" strokeWidth="1.2" />
+            <polygon points="20,20 36,12 36,28 20,36" fill="#38BDF8" fillOpacity="0.55" stroke="#38BDF8" strokeWidth="1.2" />
+          </motion.g>
+        </svg>
+
+        {/* Central Official Asteya Logo Floating Inside Core (with 3D Depth) */}
+        <motion.div
+          animate={{ scale: [1, 1.05, 1], y: [0, -4, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ transform: 'translateZ(60px)' }}
         >
-          <polygon points="25,5 45,15 25,25 5,15" fill="#818CF8" fillOpacity="0.4" stroke="#C084FC" strokeWidth="1" />
-          <polygon points="5,15 25,25 25,48 5,38" fill="#6366F1" fillOpacity="0.5" stroke="#818CF8" strokeWidth="1" />
-          <polygon points="25,25 45,15 45,38 25,48" fill="#38BDF8" fillOpacity="0.6" stroke="#38BDF8" strokeWidth="1" />
-        </motion.g>
+          <div className="relative w-28 h-28 flex items-center justify-center">
+            {/* Glowing Aura Ring */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-violet-glow to-cyan-glow rounded-full blur-xl opacity-80 animate-pulse-glow" />
 
-        {/* Cube 2 (Bottom Right) */}
-        <motion.g
-          animate={{ y: [0, 10, 0], x: [0, -6, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          transform="translate(370, 340)"
-        >
-          <polygon points="30,8 55,20 30,32 5,20" fill="#38BDF8" fillOpacity="0.4" stroke="#7DD3FC" strokeWidth="1" />
-          <polygon points="5,20 30,32 30,58 5,46" fill="#818CF8" fillOpacity="0.5" stroke="#818CF8" strokeWidth="1" />
-          <polygon points="30,32 55,20 55,46 30,58" fill="#A855F7" fillOpacity="0.6" stroke="#C084FC" strokeWidth="1" />
-        </motion.g>
-
-        {/* Cube 3 (Top Right Orbiting Node) */}
-        <motion.g
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-          transform="translate(390, 100)"
-        >
-          <polygon points="18,4 32,11 18,18 4,11" fill="#C084FC" fillOpacity="0.5" stroke="#E9D5FF" strokeWidth="1" />
-          <polygon points="4,11 18,18 18,32 4,25" fill="#6366F1" fillOpacity="0.6" stroke="#818CF8" strokeWidth="1" />
-          <polygon points="18,18 32,11 32,25 18,32" fill="#38BDF8" fillOpacity="0.5" stroke="#38BDF8" strokeWidth="1" />
-        </motion.g>
-
-        {/* Orbiting Photon Particles */}
-        <motion.circle
-          r="4"
-          fill="#38BDF8"
-          filter="url(#glowEffect)"
-          animate={{
-            cx: [250, 420, 250, 80, 250],
-            cy: [140, 250, 360, 250, 140],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-        />
-        <motion.circle
-          r="3"
-          fill="#C084FC"
-          filter="url(#glowEffect)"
-          animate={{
-            cx: [250, 100, 250, 400, 250],
-            cy: [340, 250, 160, 250, 340],
-          }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
-        />
-      </svg>
+            {/* Inverted Logo Image with Radiant Drop Shadow */}
+            <img
+              src="/asteya-logo.png"
+              alt="ASTEYA Core Emblem"
+              className="relative z-10 w-24 h-24 object-contain filter invert drop-shadow-[0_0_25px_rgba(168,85,247,0.9)]"
+            />
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

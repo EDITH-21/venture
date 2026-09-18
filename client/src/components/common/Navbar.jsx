@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
+import { AsteyaLogo } from './AsteyaLogo';
 
 export const Navbar = ({ onOpenProjectModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,18 +51,13 @@ export const Navbar = ({ onOpenProjectModal }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Official Brand Logo */}
         <Link
           to="/"
           onClick={(e) => handleNavClick(e, '#hero')}
           className="flex items-center gap-3 focus:outline-none group"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet to-cyan flex items-center justify-center text-white shadow-card-glow group-hover:scale-105 transition-transform">
-            <span className="font-display font-black text-sm tracking-tighter">A</span>
-          </div>
-          <span className="font-display font-bold text-xl tracking-[0.15em] text-white group-hover:text-cyan-glow transition-colors">
-            ASTEYA
-          </span>
+          <AsteyaLogo className="w-8 h-8" showText={true} animated={true} />
         </Link>
 
         {/* Center Navigation Links (Pill Style) */}
@@ -78,7 +74,7 @@ export const Navbar = ({ onOpenProjectModal }) => {
           ))}
         </nav>
 
-        {/* Right Action Button & Subtle Breadcrumb Indicator */}
+        {/* Right Action Button */}
         <div className="hidden md:flex items-center gap-6">
           <button
             onClick={onOpenProjectModal}

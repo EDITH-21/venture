@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Linkedin, Twitter, Instagram, Youtube, ArrowUpRight } from 'lucide-react';
+import { AsteyaLogo } from './AsteyaLogo';
 
 export const Footer = () => {
   const location = useLocation();
@@ -32,12 +33,7 @@ export const Footer = () => {
               onClick={(e) => handleNavClick(e, '#hero')}
               className="flex items-center gap-2.5 w-fit group"
             >
-              <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-violet to-cyan flex items-center justify-center font-display font-black text-xs text-white">
-                A
-              </div>
-              <span className="font-display font-bold text-lg tracking-[0.2em] text-white group-hover:text-cyan-glow transition-colors">
-                ASTEYA
-              </span>
+              <AsteyaLogo className="w-7 h-7" showText={true} animated={true} />
             </Link>
 
             <p className="text-[11px] font-mono text-cosmic-subtle tracking-wider">

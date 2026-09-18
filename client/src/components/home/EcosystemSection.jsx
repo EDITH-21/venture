@@ -96,24 +96,29 @@ export const EcosystemSection = () => {
                   <circle
                     cx="250"
                     cy="250"
-                    r="60"
+                    r="64"
                     fill="url(#centerCoreGrad)"
                     stroke="#C084FC"
                     strokeWidth="2"
                   />
                 </g>
-
-                {/* Central Emblem Text */}
-                <g transform="translate(230, 222)">
-                  <path d="M 20 5 L 35 35 L 26 35 L 20 22 L 14 35 L 5 35 Z" fill="#FFFFFF" />
-                  <polygon points="20,12 24,22 16,22" fill="#0B0F24" />
-                </g>
-                <text x="250" y="278" textAnchor="middle" fill="#FFFFFF" fontFamily="Space Grotesk, sans-serif" fontWeight="800" fontSize="12" letterSpacing="3">
-                  ASTEYA
-                </text>
               </svg>
 
-              {/* 4 Satellite Spherical Nodes (Positioned over SVG coordinates) */}
+              {/* Central Official Asteya Logo Floating Inside Core */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="relative w-20 h-20 flex flex-col items-center justify-center">
+                  <img
+                    src="/asteya-logo.png"
+                    alt="ASTEYA Center Logo"
+                    className="w-12 h-12 object-contain filter invert drop-shadow-[0_0_15px_rgba(168,85,247,0.8)]"
+                  />
+                  <span className="font-display font-bold text-[10px] tracking-[0.2em] text-white mt-1">
+                    ASTEYA
+                  </span>
+                </div>
+              </div>
+
+              {/* 4 Satellite Spherical Nodes */}
               {/* Node 1: VENTURES (Top Left) */}
               <motion.div
                 whileHover={{ scale: 1.1 }}
