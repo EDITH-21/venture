@@ -4,50 +4,49 @@ import { ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
 
 export const FinalCTA = ({ onOpenProjectModal }) => {
   return (
-    <section id="cta" className="bg-darkness text-white py-28 sm:py-40 relative overflow-hidden bg-dark-grid">
-      {/* Glowing Fluid Neon Energy Wave Background */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
-        <div className="w-[800px] h-[350px] bg-gradient-to-r from-blue-600/30 via-sky-400/20 to-purple-600/30 rounded-full blur-[100px] animate-pulse-glow" />
-      </div>
+    <section id="cta" className="bg-cosmic-bg py-20 sm:py-28 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+        {/* Mountain Vista Cosmic Banner Card */}
+        <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-gradient-to-r from-cosmic-card via-indigo-950/80 to-cosmic-bg p-10 sm:p-14 lg:p-16 shadow-[0_0_80px_rgba(139,92,246,0.25)]">
+          {/* Subtle Cosmic Background Overlay */}
+          <div className="absolute inset-0 bg-cosmic-stars opacity-60 pointer-events-none" />
+          <div className="absolute -bottom-10 right-10 w-96 h-96 bg-purple-600/30 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -top-10 left-10 w-80 h-80 bg-cyan-600/20 rounded-full blur-[90px] pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-5 sm:px-8 text-center relative z-10">
-        {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 mb-6 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10">
-          <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-          <span className="text-xs font-mono font-bold tracking-widest text-sky-400 uppercase">
-            SECTION 09 — FINAL CTA
-          </span>
-        </div>
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div className="space-y-4 max-w-xl">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black tracking-tight text-white leading-[1.12]">
+                HAVE AN IDEA<br />
+                <span className="gradient-text-purple-cyan">
+                  WORTH BUILDING?
+                </span>
+              </h2>
 
-        {/* Big Bold Headline */}
-        <h2 className="text-4xl sm:text-5xl lg:text-7xl font-display font-black text-white tracking-tight leading-[1.08] mb-6">
-          READY TO BUILD WHAT'S NEXT?
-        </h2>
+              <p className="text-sm sm:text-base text-cosmic-muted font-sans leading-relaxed">
+                Let's turn possibilities into something real. Tell us what you're building.
+              </p>
+            </div>
 
-        {/* Subtext */}
-        <p className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-10 font-sans">
-          Tell us what you're building. We'll help turn the idea into a digital reality.
-        </p>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <button
+                onClick={onOpenProjectModal}
+                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-white/10 hover:bg-white text-white hover:text-slate-950 font-mono font-bold text-xs uppercase tracking-wider transition-all border border-white/25 shadow-lg backdrop-blur-md hover:scale-105 active:scale-95"
+              >
+                <span>Start a Conversation</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button
-            onClick={onOpenProjectModal}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white hover:bg-slate-100 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-xl hover:scale-105 active:scale-95"
-          >
-            <span>START A PROJECT</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-
-          <a
-            href="https://wa.me/919998160726?text=Hi%20Asteya,%20I'd%20like%20to%20discuss%20a%20new%20digital%20venture."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/20 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all"
-          >
-            <MessageSquare className="w-4 h-4 text-sky-400" />
-            <span>TALK TO ASTEYA</span>
-          </a>
+              <a
+                href="https://wa.me/919998160726?text=Hi%20Asteya,%20I'd%20like%20to%20start%20a%20conversation%20about%20a%20project."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-mono font-bold text-xs uppercase tracking-wider hover:bg-emerald-900/60 transition-colors backdrop-blur-md"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

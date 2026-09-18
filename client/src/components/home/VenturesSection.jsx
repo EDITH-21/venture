@@ -1,158 +1,150 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Play, Shield, Zap, Sparkles, ArrowRight, Eye, CheckCircle2 } from 'lucide-react';
+import { Shield, Play, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
 
 export const VenturesSection = () => {
-  const [activeFocusMode, setActiveFocusMode] = useState('coding');
-
   return (
-    <section id="ventures" className="bg-darkness text-white py-24 sm:py-36 relative overflow-hidden bg-dark-grid border-b border-darkness-border">
-      {/* Subtle Purple / Cyan Ambient Glow */}
-      <div className="absolute top-1/4 right-10 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+    <section id="ventures" className="bg-cosmic-bg py-28 sm:py-36 relative border-t border-white/5 overflow-hidden bg-cosmic-stars">
+      {/* Background Gradient Glow */}
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl mb-16 sm:mb-20">
-          <span className="text-xs font-mono font-bold tracking-widest text-sky-400 uppercase block mb-3">
-            ASTEYA VENTURES
+          <span className="text-[11px] font-mono font-bold tracking-[0.25em] text-cyan-glow uppercase block mb-3">
+            OUR VENTURES
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white tracking-tight leading-[1.12]">
-            WE BUILD OUR OWN FUTURE TOO.
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-[1.08]">
+            IDEAS WE'RE TURNING<br />
+            <span className="gradient-text-purple-cyan">
+              INTO REALITY.
+            </span>
           </h2>
-          <p className="text-sm sm:text-base text-slate-400 mt-4 leading-relaxed font-sans">
-            Beyond client systems, our studio incubates and scales proprietary software products addressing deep consumer and institutional needs.
-          </p>
         </div>
 
-        {/* BingeBlocker Showcase Card */}
-        <div className="bg-darkness-surface border border-darkness-border rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Product Overview */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950 border border-sky-800/60 text-sky-300 text-xs font-mono font-semibold">
-                <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-                <span>ACTIVE VENTURE · EXTENSION / APP</span>
+        {/* 4 Venture Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1: Featured Venture — BINGEBLOCKER */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="md:col-span-2 lg:col-span-1 bg-gradient-to-b from-indigo-950/60 to-cosmic-card/80 border border-indigo-500/40 hover:border-cyan rounded-2xl p-7 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl shadow-card-glow group hover:-translate-y-1"
+          >
+            <div>
+              {/* App Icon */}
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 p-0.5 mb-6 shadow-lg">
+                <div className="w-full h-full bg-cosmic-bg/80 rounded-[14px] flex items-center justify-center text-cyan-glow">
+                  <Play className="w-6 h-6 fill-current" />
+                </div>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl font-display font-black text-white tracking-tight">
+              <h3 className="text-2xl font-display font-black text-white tracking-tight mb-3 group-hover:text-cyan-glow transition-colors">
                 BINGEBLOCKER
               </h3>
 
-              <p className="text-base font-sans font-semibold text-sky-200 leading-snug">
-                Transforming YouTube into a Productive Learning Environment.
+              <p className="text-xs sm:text-sm text-cosmic-muted leading-relaxed font-sans mb-6">
+                A focused digital environment designed to help learners transform YouTube from distraction into a productive learning space.
               </p>
+            </div>
 
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-sans">
-                An intelligent browser layer that strips addictive algorithmic recommendation loops, shorts, and clickbait distraction—replacing them with structured focus feeds, note capture, and syllabus study tracks.
-              </p>
+            <div className="pt-4 border-t border-white/10">
+              <a
+                href="https://wa.me/919998160726?text=Hi%20Asteya,%20I'd%20like%20to%20know%20more%20about%20BingeBlocker."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-mono font-bold text-cyan-glow hover:text-white transition-colors"
+              >
+                <span>Explore Venture</span>
+                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" />
+              </a>
+            </div>
+          </motion.div>
 
-              <div className="pt-2">
-                <a
-                  href="#cta"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-cyan-glow hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <span>EXPLORE VENTURE</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
+          {/* Card 2: Cosmic Nebula Ring (To Be Announced) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-cosmic-card/50 border border-white/10 hover:border-violet/40 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl group hover:shadow-card-glow hover:-translate-y-1 relative overflow-hidden"
+          >
+            {/* Visual Thumbnail */}
+            <div className="w-full h-44 rounded-xl bg-gradient-to-b from-cosmic-surface to-cosmic-card border border-white/5 relative overflow-hidden flex items-center justify-center mb-6">
+              <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
+                <circle cx="100" cy="100" r="50" stroke="#38BDF8" strokeWidth="2" strokeDasharray="6 4" opacity="0.6" />
+                <ellipse cx="100" cy="100" rx="65" ry="30" stroke="#A855F7" strokeWidth="2" transform="rotate(-30 100 100)" />
+                <circle cx="100" cy="100" r="16" fill="#818CF8" fillOpacity="0.4" />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-card via-transparent to-transparent" />
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-cosmic-subtle font-semibold">
+                TO BE ANNOUNCED
+              </span>
+              <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-cosmic-muted group-hover:text-white group-hover:bg-white/10 transition-colors">
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </div>
             </div>
+          </motion.div>
 
-            {/* Right Interactive Product Mockup */}
-            <div className="lg:col-span-7">
-              <div className="bg-darkness-card border border-darkness-border rounded-2xl p-5 shadow-2xl space-y-4">
-                {/* Mock Browser Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-red-500/70" />
-                    <span className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                    <span className="w-3 h-3 rounded-full bg-green-500/70" />
-                    <span className="ml-2 text-[11px] font-mono text-slate-400">bingeblocker.app/study</span>
-                  </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
-                    FOCUS ACTIVE: 98%
-                  </span>
-                </div>
+          {/* Card 3: Glowing Prism Pyramid (To Be Announced) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-cosmic-card/50 border border-white/10 hover:border-violet/40 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl group hover:shadow-card-glow hover:-translate-y-1 relative overflow-hidden"
+          >
+            {/* Visual Thumbnail */}
+            <div className="w-full h-44 rounded-xl bg-gradient-to-b from-cosmic-surface to-cosmic-card border border-white/5 relative overflow-hidden flex items-center justify-center mb-6">
+              <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
+                <polygon points="100,35 155,145 45,145" stroke="#C084FC" strokeWidth="2" fill="#6366F1" fillOpacity="0.2" />
+                <line x1="100" y1="35" x2="100" y2="145" stroke="#38BDF8" strokeWidth="1.5" />
+                <circle cx="100" cy="100" r="8" fill="#38BDF8" />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-card via-transparent to-transparent" />
+            </div>
 
-                {/* Focus Filter Pills */}
-                <div className="flex items-center gap-2 pt-1 text-xs font-mono">
-                  {['coding', 'academics', 'deep-work'].map((mode) => (
-                    <button
-                      key={mode}
-                      onClick={() => setActiveFocusMode(mode)}
-                      className={`px-3 py-1.5 rounded-lg uppercase tracking-wider transition-all ${
-                        activeFocusMode === mode
-                          ? 'bg-sky-500 text-slate-950 font-bold shadow-md'
-                          : 'bg-white/5 text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      {mode}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Dashboard Metrics Bar */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="bg-darkness-surface p-3 rounded-xl border border-white/5">
-                    <span className="text-[10px] font-mono text-slate-400 block">Saved Time</span>
-                    <span className="text-lg font-bold text-white">4h 18m</span>
-                  </div>
-                  <div className="bg-darkness-surface p-3 rounded-xl border border-white/5">
-                    <span className="text-[10px] font-mono text-slate-400 block">Shorts Blocked</span>
-                    <span className="text-lg font-bold text-sky-400">142</span>
-                  </div>
-                  <div className="bg-darkness-surface p-3 rounded-xl border border-white/5">
-                    <span className="text-[10px] font-mono text-slate-400 block">Study Streak</span>
-                    <span className="text-lg font-bold text-emerald-400">18 Days</span>
-                  </div>
-                </div>
-
-                {/* Video Clean Feed Simulation */}
-                <div className="bg-darkness-surface p-4 rounded-xl border border-sky-500/20 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-sky-950 border border-sky-800 flex items-center justify-center text-sky-300">
-                      <Play className="w-5 h-5 fill-current" />
-                    </div>
-                    <div>
-                      <h5 className="text-xs font-bold text-white font-sans">
-                        MIT 6.006: Introduction to Algorithms (Spring Term)
-                      </h5>
-                      <span className="text-[10px] font-mono text-slate-400">Clean Lecture Mode · Comments Filtered</span>
-                    </div>
-                  </div>
-                  <span className="text-[11px] font-mono text-sky-300 font-semibold">1:18:40</span>
-                </div>
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-cosmic-subtle font-semibold">
+                TO BE ANNOUNCED
+              </span>
+              <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-cosmic-muted group-hover:text-white group-hover:bg-white/10 transition-colors">
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
 
-        {/* Studio Lifecycle Timeline */}
-        <div className="border-t border-white/10 pt-12">
-          <div className="text-center mb-8">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400">
-              More ventures are currently being built inside the Asteya Lab.
-            </span>
-          </div>
+          {/* Card 4: Cosmic Energy Wave (To Be Announced) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-cosmic-card/50 border border-white/10 hover:border-violet/40 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 backdrop-blur-xl group hover:shadow-card-glow hover:-translate-y-1 relative overflow-hidden"
+          >
+            {/* Visual Thumbnail */}
+            <div className="w-full h-44 rounded-xl bg-gradient-to-b from-cosmic-surface to-cosmic-card border border-white/5 relative overflow-hidden flex items-center justify-center mb-6">
+              <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
+                <path d="M 20 120 Q 60 60 100 120 T 180 120" stroke="#38BDF8" strokeWidth="2" fill="none" />
+                <path d="M 20 140 Q 60 90 100 140 T 180 140" stroke="#818CF8" strokeWidth="1.5" fill="none" opacity="0.6" />
+                <path d="M 20 100 Q 60 40 100 100 T 180 100" stroke="#C084FC" strokeWidth="1" fill="none" opacity="0.4" />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-card via-transparent to-transparent" />
+            </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono">
-            <div className="bg-darkness-surface p-4 rounded-xl border border-white/5 text-center">
-              <span className="text-sky-400 font-bold block mb-1">01 ARCHITECT</span>
-              <span className="text-slate-400 text-[11px]">System Blueprints</span>
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-cosmic-subtle font-semibold">
+                TO BE ANNOUNCED
+              </span>
+              <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-cosmic-muted group-hover:text-white group-hover:bg-white/10 transition-colors">
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </div>
             </div>
-            <div className="bg-darkness-surface p-4 rounded-xl border border-white/5 text-center">
-              <span className="text-sky-400 font-bold block mb-1">02 DESIGN</span>
-              <span className="text-slate-400 text-[11px]">Interactive UI/UX</span>
-            </div>
-            <div className="bg-darkness-surface p-4 rounded-xl border border-white/5 text-center">
-              <span className="text-sky-400 font-bold block mb-1">03 ENGINEER</span>
-              <span className="text-slate-400 text-[11px]">Full Stack Deployment</span>
-            </div>
-            <div className="bg-darkness-surface p-4 rounded-xl border border-white/5 text-center">
-              <span className="text-sky-400 font-bold block mb-1">04 LAUNCH</span>
-              <span className="text-slate-400 text-[11px]">Global Distribution</span>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

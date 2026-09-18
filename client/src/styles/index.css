@@ -6,97 +6,100 @@
 
 @layer base {
   * {
-    border-color: #E2E8F0;
+    border-color: rgba(255, 255, 255, 0.08);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #FFFFFF;
-    color: #0F172A;
+    background-color: #040711;
+    color: #F8FAFC;
   }
 
   body {
-    background-color: #FFFFFF;
-    color: #0F172A;
+    background-color: #040711;
+    color: #F8FAFC;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
     line-height: 1.6;
   }
 
   h1, h2, h3, h4, .font-display {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
     letter-spacing: -0.03em;
   }
 }
 
-/* Blueprint Grid Background */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+/* Cosmic Gradient Text Utility */
+.gradient-text-purple-cyan {
+  background: linear-gradient(110deg, #C084FC 0%, #818CF8 45%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bg-grid-dots {
-  background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
-  background-size: 24px 24px;
+.gradient-text-cyan-white {
+  background: linear-gradient(110deg, #FFFFFF 0%, #BAE6FD 60%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bg-dark-grid {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(31, 41, 61, 0.6) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(31, 41, 61, 0.6) 1px, transparent 1px);
+/* Glassmorphism Dark Panels */
+.glass-cosmic {
+  background: rgba(13, 19, 38, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Glass Card & Neon Utilities */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+.glass-cosmic:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.glass-pill-nav {
+  background: rgba(8, 12, 26, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(203, 213, 225, 0.8);
+/* Cosmic Starry Grid */
+.bg-cosmic-stars {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #FFFFFF, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 100px 150px, #A855F7, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 200px 80px, #38BDF8, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 300px 250px, #FFFFFF, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 450px 180px, #818CF8, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 600px 320px, #FFFFFF, rgba(0,0,0,0));
+  background-size: 650px 450px;
 }
 
-.glass-dark-card {
-  background: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+/* Glow Utilities */
+.glow-orb-purple {
+  filter: drop-shadow(0 0 45px rgba(168, 85, 247, 0.6));
 }
 
-/* Glowing Neon Shimmer */
-.neon-glow-cyan {
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+.glow-orb-cyan {
+  filter: drop-shadow(0 0 45px rgba(56, 189, 248, 0.6));
 }
 
-.neon-glow-purple {
-  box-shadow: 0 0 35px rgba(129, 140, 248, 0.3);
-}
-
-/* Custom Minimal Scrollbar */
+/* Custom Minimal Dark Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8F9FA;
+  background: #040711;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #1E294B;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0F172A;
+  background: #8B5CF6;
 }

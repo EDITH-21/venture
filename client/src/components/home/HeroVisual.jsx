@@ -1,251 +1,171 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Sparkles, Layers, Cpu, Compass, ArrowUpRight } from 'lucide-react';
 
 export const HeroVisual = () => {
-  const [activeLayer, setActiveLayer] = useState('all');
-
-  const nodes = [
-    { id: 'web', name: 'WEB', desc: 'High-Performance Web Systems', x: 260, y: 110 },
-    { id: 'brand', name: 'BRAND', desc: 'Interactive Brand Systems', x: 420, y: 120 },
-    { id: 'technology', name: 'TECHNOLOGY', desc: 'Deep Tech & Scalable Infra', x: 190, y: 260 },
-    { id: 'ventures', name: 'VENTURES', desc: 'Proprietary Digital Products', x: 380, y: 280 },
-  ];
-
   return (
-    <div className="relative w-full max-w-2xl mx-auto aspect-[1.15/1] flex items-center justify-center select-none py-4">
-      {/* Background Subtle Blueprint Grid Lines */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-sky-500/10 via-transparent to-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="relative w-full max-w-xl mx-auto aspect-square flex items-center justify-center select-none py-4">
+      {/* Background Radial Purple & Cyan Glow Corona */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-violet-dark/40 via-purple-600/20 to-cyan-dark/30 rounded-full blur-[90px] pointer-events-none animate-nebula-pulse" />
 
-      {/* Main Isometric SVG Diagram */}
+      {/* Main 3D Orbital Cosmic Planetary Sphere Assembly */}
       <svg
-        className="w-full h-full drop-shadow-2xl"
-        viewBox="0 0 600 500"
+        className="w-full h-full drop-shadow-[0_0_50px_rgba(139,92,246,0.35)]"
+        viewBox="0 0 500 500"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Gradients */}
-          <linearGradient id="discGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#E0F2FE" stopOpacity="0.45" />
+          {/* Radial Sphere Gradients */}
+          <radialGradient id="sphereCoreGrad" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stopColor="#A855F7" />
+            <stop offset="40%" stopColor="#6366F1" />
+            <stop offset="80%" stopColor="#0B0F1F" />
+            <stop offset="100%" stopColor="#040711" />
+          </radialGradient>
+
+          <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="60%" stopColor="#38BDF8" stopOpacity="0.8" />
+            <stop offset="90%" stopColor="#A855F7" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+          </radialGradient>
+
+          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.9" />
+            <stop offset="50%" stopColor="#A855F7" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.2" />
           </linearGradient>
 
-          <linearGradient id="discGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#EBF8FF" stopOpacity="0.5" />
+          <linearGradient id="ringGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#C084FC" stopOpacity="0.9" />
+            <stop offset="60%" stopColor="#6366F1" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.1" />
           </linearGradient>
 
-          <linearGradient id="cyanStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0284C7" />
-            <stop offset="50%" stopColor="#38BDF8" />
-            <stop offset="100%" stopColor="#818CF8" />
-          </linearGradient>
-
-          <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
+          <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
 
-        {/* Outer Connection Circuit Bus Lines */}
-        <g stroke="#94A3B8" strokeWidth="1" strokeDasharray="3 4" opacity="0.6">
-          <path d="M 50 120 L 220 120 L 300 200" />
-          <path d="M 550 100 L 450 100 L 380 180" />
-          <path d="M 580 340 L 420 340 L 340 280" />
-          <path d="M 30 380 L 180 380 L 260 300" />
-        </g>
-
-        {/* Lower Isometric Ellipse Tier (Ventures & Technology) */}
-        <motion.g
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ellipse
-            cx="300"
-            cy="300"
-            rx="210"
-            ry="95"
-            fill="url(#discGrad1)"
-            stroke="#BAE6FD"
-            strokeWidth="1.5"
-          />
-          <ellipse
-            cx="300"
-            cy="300"
-            rx="180"
-            ry="78"
-            fill="none"
-            stroke="#0284C7"
-            strokeOpacity="0.3"
-            strokeWidth="1"
-            strokeDasharray="4 6"
-          />
-        </motion.g>
-
-        {/* Middle Connecting Pillars / Glass Columns */}
-        <path
-          d="M 170 200 L 170 290 M 430 200 L 430 290 M 300 130 L 300 230"
-          stroke="#0284C7"
-          strokeWidth="1"
-          strokeDasharray="2 3"
-          opacity="0.5"
+        {/* Outer Background Orbital Orbit Trace */}
+        <ellipse
+          cx="250"
+          cy="250"
+          rx="220"
+          ry="110"
+          stroke="url(#ringGrad1)"
+          strokeWidth="1.5"
+          strokeDasharray="4 8"
+          transform="rotate(-25 250 250)"
+          opacity="0.4"
         />
 
-        {/* Upper Isometric Ellipse Tier (Web & Brand) */}
+        {/* Secondary Tilted Orbital Arc */}
+        <motion.ellipse
+          cx="250"
+          cy="250"
+          rx="200"
+          ry="90"
+          stroke="url(#ringGrad2)"
+          strokeWidth="2.5"
+          filter="url(#glowEffect)"
+          transform="rotate(35 250 250)"
+          animate={{ strokeDashoffset: [0, 400] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          strokeDasharray="180 80"
+        />
+
+        {/* Central Planetary Dark Sphere */}
+        <g filter="url(#glowEffect)">
+          <circle
+            cx="250"
+            cy="250"
+            r="105"
+            fill="url(#sphereCoreGrad)"
+            stroke="#C084FC"
+            strokeWidth="1.5"
+            strokeOpacity="0.5"
+          />
+        </g>
+
+        {/* Inner Glowing Atmosphere Ring */}
+        <circle
+          cx="250"
+          cy="250"
+          r="92"
+          fill="none"
+          stroke="url(#ringGrad1)"
+          strokeWidth="1.5"
+          opacity="0.7"
+        />
+
+        {/* Central Glowing ASTEYA Emblem Core 'A' */}
+        <g transform="translate(210, 205)" filter="url(#glowEffect)">
+          {/* Stylized Modern Triangular 'A' */}
+          <path
+            d="M 40 10 L 70 70 L 52 70 L 40 45 L 28 70 L 10 70 Z"
+            fill="url(#ringGrad1)"
+            opacity="0.95"
+          />
+          <polygon points="40,25 48,45 32,45" fill="#040711" />
+        </g>
+
+        {/* Floating Translucent Hyper-Cubes (4 Isometric Crystals) */}
+        {/* Cube 1 (Top Left) */}
         <motion.g
-          animate={{ y: [0, -8, 0] }}
+          animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          transform="translate(80, 70)"
         >
-          <ellipse
-            cx="300"
-            cy="200"
-            rx="200"
-            ry="90"
-            fill="url(#discGrad2)"
-            stroke="url(#cyanStroke)"
-            strokeWidth="2"
-            filter="drop-shadow(0 15px 25px rgba(2,132,199,0.15))"
-          />
-
-          <ellipse
-            cx="300"
-            cy="200"
-            rx="140"
-            ry="60"
-            fill="none"
-            stroke="#0F172A"
-            strokeOpacity="0.15"
-            strokeWidth="1"
-          />
-
-          {/* Core Central Platform Label "ASTEYA" */}
-          <g className="cursor-pointer">
-            <rect
-              x="230"
-              y="175"
-              width="140"
-              height="50"
-              rx="12"
-              fill="#0F172A"
-              filter="drop-shadow(0 8px 16px rgba(15,23,42,0.3))"
-            />
-            <text
-              x="300"
-              y="206"
-              textAnchor="middle"
-              fill="#FFFFFF"
-              fontFamily="Inter, sans-serif"
-              fontWeight="800"
-              fontSize="16"
-              letterSpacing="3"
-            >
-              ASTEYA
-            </text>
-            <circle cx="245" cy="200" r="3" fill="#38BDF8" />
-            <circle cx="355" cy="200" r="3" fill="#38BDF8" />
-          </g>
-
-          {/* Orbiting Laser Point along upper rim */}
-          <motion.circle
-            r="4"
-            fill="#0284C7"
-            filter="url(#glowFilter)"
-            animate={{
-              cx: [300, 480, 300, 120, 300],
-              cy: [110, 200, 290, 200, 110],
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-          />
+          <polygon points="25,5 45,15 25,25 5,15" fill="#818CF8" fillOpacity="0.4" stroke="#C084FC" strokeWidth="1" />
+          <polygon points="5,15 25,25 25,48 5,38" fill="#6366F1" fillOpacity="0.5" stroke="#818CF8" strokeWidth="1" />
+          <polygon points="25,25 45,15 45,38 25,48" fill="#38BDF8" fillOpacity="0.6" stroke="#38BDF8" strokeWidth="1" />
         </motion.g>
 
-        {/* 4 Architectural Floating Category Badges */}
-        {/* 1. WEB */}
-        <g transform="translate(230, 95)" className="cursor-pointer">
-          <rect
-            x="0"
-            y="0"
-            width="72"
-            height="26"
-            rx="6"
-            fill="#FFFFFF"
-            stroke="#CBD5E1"
-            strokeWidth="1"
-            filter="drop-shadow(0 4px 6px rgba(0,0,0,0.04))"
-          />
-          <text x="36" y="17" textAnchor="middle" fill="#0F172A" fontFamily="JetBrains Mono, monospace" fontWeight="700" fontSize="11" letterSpacing="1">
-            WEB
-          </text>
-        </g>
+        {/* Cube 2 (Bottom Right) */}
+        <motion.g
+          animate={{ y: [0, 10, 0], x: [0, -6, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          transform="translate(370, 340)"
+        >
+          <polygon points="30,8 55,20 30,32 5,20" fill="#38BDF8" fillOpacity="0.4" stroke="#7DD3FC" strokeWidth="1" />
+          <polygon points="5,20 30,32 30,58 5,46" fill="#818CF8" fillOpacity="0.5" stroke="#818CF8" strokeWidth="1" />
+          <polygon points="30,32 55,20 55,46 30,58" fill="#A855F7" fillOpacity="0.6" stroke="#C084FC" strokeWidth="1" />
+        </motion.g>
 
-        {/* 2. BRAND */}
-        <g transform="translate(390, 105)" className="cursor-pointer">
-          <rect
-            x="0"
-            y="0"
-            width="82"
-            height="26"
-            rx="6"
-            fill="#FFFFFF"
-            stroke="#CBD5E1"
-            strokeWidth="1"
-            filter="drop-shadow(0 4px 6px rgba(0,0,0,0.04))"
-          />
-          <text x="41" y="17" textAnchor="middle" fill="#0F172A" fontFamily="JetBrains Mono, monospace" fontWeight="700" fontSize="11" letterSpacing="1">
-            BRAND
-          </text>
-        </g>
+        {/* Cube 3 (Top Right Orbiting Node) */}
+        <motion.g
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+          transform="translate(390, 100)"
+        >
+          <polygon points="18,4 32,11 18,18 4,11" fill="#C084FC" fillOpacity="0.5" stroke="#E9D5FF" strokeWidth="1" />
+          <polygon points="4,11 18,18 18,32 4,25" fill="#6366F1" fillOpacity="0.6" stroke="#818CF8" strokeWidth="1" />
+          <polygon points="18,18 32,11 32,25 18,32" fill="#38BDF8" fillOpacity="0.5" stroke="#38BDF8" strokeWidth="1" />
+        </motion.g>
 
-        {/* 3. TECHNOLOGY */}
-        <g transform="translate(140, 260)" className="cursor-pointer">
-          <rect
-            x="0"
-            y="0"
-            width="120"
-            height="26"
-            rx="6"
-            fill="#FFFFFF"
-            stroke="#CBD5E1"
-            strokeWidth="1"
-            filter="drop-shadow(0 4px 6px rgba(0,0,0,0.04))"
-          />
-          <text x="60" y="17" textAnchor="middle" fill="#0F172A" fontFamily="JetBrains Mono, monospace" fontWeight="700" fontSize="11" letterSpacing="1">
-            TECHNOLOGY
-          </text>
-        </g>
-
-        {/* 4. VENTURES */}
-        <g transform="translate(370, 280)" className="cursor-pointer">
-          <rect
-            x="0"
-            y="0"
-            width="100"
-            height="26"
-            rx="6"
-            fill="#FFFFFF"
-            stroke="#CBD5E1"
-            strokeWidth="1"
-            filter="drop-shadow(0 4px 6px rgba(0,0,0,0.04))"
-          />
-          <text x="50" y="17" textAnchor="middle" fill="#0F172A" fontFamily="JetBrains Mono, monospace" fontWeight="700" fontSize="11" letterSpacing="1">
-            VENTURES
-          </text>
-        </g>
-
-        {/* Isometric Circuit Grid Nodes */}
-        <circle cx="110" cy="180" r="3" fill="#94A3B8" />
-        <circle cx="490" cy="220" r="3" fill="#94A3B8" />
-        <circle cx="280" cy="370" r="3" fill="#38BDF8" />
-        <circle cx="460" cy="340" r="3" fill="#38BDF8" />
+        {/* Orbiting Photon Particles */}
+        <motion.circle
+          r="4"
+          fill="#38BDF8"
+          filter="url(#glowEffect)"
+          animate={{
+            cx: [250, 420, 250, 80, 250],
+            cy: [140, 250, 360, 250, 140],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.circle
+          r="3"
+          fill="#C084FC"
+          filter="url(#glowEffect)"
+          animate={{
+            cx: [250, 100, 250, 400, 250],
+            cy: [340, 250, 160, 250, 340],
+          }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+        />
       </svg>
-
-      {/* Floating System Status Pill */}
-      <div className="absolute -bottom-2 left-6 bg-white/90 backdrop-blur-md border border-slate-200 px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="text-[10px] font-mono text-slate-600 font-medium">
-          ASTEYA SYSTEM ARCHITECTURE · v2.4
-        </span>
-      </div>
     </div>
   );
 };

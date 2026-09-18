@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { SEOHead } from '../components/common/SEOHead';
 import { HeroSection } from '../components/home/HeroSection';
-import { StatementSection } from '../components/home/StatementSection';
-import { CapabilitiesSection } from '../components/home/CapabilitiesSection';
-import { ConnectedSystemSection } from '../components/home/ConnectedSystemSection';
-import { AdvantageSection } from '../components/home/AdvantageSection';
+import { WhoWeAreSection } from '../components/home/WhoWeAreSection';
+import { IdeaToImpactSection } from '../components/home/IdeaToImpactSection';
+import { EcosystemSection } from '../components/home/EcosystemSection';
 import { VenturesSection } from '../components/home/VenturesSection';
-import { IndustriesSection } from '../components/home/IndustriesSection';
-import { AboutSection } from '../components/home/AboutSection';
+import { PhilosophySection } from '../components/home/PhilosophySection';
 import { FinalCTA } from '../components/home/FinalCTA';
 import { ProjectModal } from '../components/common/ProjectModal';
 
@@ -17,35 +15,29 @@ export const HomePage = () => {
   return (
     <>
       <SEOHead
-        title="ASTEYA | Digital Foundations for Ambitious Businesses"
-        description="Asteya combines technology, design and business thinking to turn ideas into scalable digital experiences."
+        title="ASTEYA | Building What Comes Next"
+        description="ASTEYA is a technology and innovation company building digital products, services and ventures for the next generation."
       />
 
-      {/* HERO SECTION */}
+      {/* 1. HERO SECTION */}
       <HeroSection onOpenProjectModal={() => setIsModalOpen(true)} />
 
-      {/* SECTION 01 — STATEMENT */}
-      <StatementSection />
+      {/* 2. WHO WE ARE */}
+      <WhoWeAreSection />
 
-      {/* SECTION 02 — CAPABILITIES */}
-      <CapabilitiesSection />
+      {/* 3. WHAT WE BUILD ("FROM IDEA TO IMPACT") */}
+      <IdeaToImpactSection />
 
-      {/* SECTION 03 — ASTEYA SYSTEM */}
-      <ConnectedSystemSection />
+      {/* 4. ASTEYA ECOSYSTEM ("A STRONGER TOMORROW, TOGETHER.") */}
+      <EcosystemSection />
 
-      {/* SECTION 04 — HOW ASTEYA WORKS */}
-      <AdvantageSection />
-
-      {/* SECTION 05 — ASTEYA VENTURES */}
+      {/* 5. OUR VENTURES ("IDEAS WE'RE TURNING INTO REALITY.") */}
       <VenturesSection />
 
-      {/* SECTION 07 — INDUSTRIES */}
-      <IndustriesSection />
+      {/* 6. TECHNOLOGY & PHILOSOPHY ("THINK DIFFERENT. BUILD INTELLIGENTLY. MOVE FORWARD.") */}
+      <PhilosophySection />
 
-      {/* SECTION 08 — ABOUT */}
-      <AboutSection />
-
-      {/* SECTION 09 — FINAL CTA */}
+      {/* 7. PRE-FOOTER BANNER CTA ("HAVE AN IDEA WORTH BUILDING?") */}
       <FinalCTA onOpenProjectModal={() => setIsModalOpen(true)} />
 
       {/* Interactive Project Initiation Modal */}

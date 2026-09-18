@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 
 export const Navbar = ({ onOpenProjectModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,10 +16,10 @@ export const Navbar = ({ onOpenProjectModal }) => {
   }, []);
 
   const navLinks = [
-    { name: 'Services', href: '#capabilities' },
-    { name: 'Solutions', href: '#system' },
-    { name: 'Ventures', href: '#ventures' },
+    { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
+    { name: 'Services', href: '#services' },
+    { name: 'Ventures', href: '#ventures' },
     { name: 'Contact', href: '#cta' },
   ];
 
@@ -43,49 +43,48 @@ export const Navbar = ({ onOpenProjectModal }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md py-3.5 border-b border-slate-200/80 shadow-sm'
-          : 'bg-transparent py-5'
+          ? 'bg-cosmic-bg/85 backdrop-blur-xl py-3 border-b border-white/10 shadow-2xl'
+          : 'bg-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between">
         {/* Brand Logo */}
         <Link
           to="/"
-          onClick={(e) => handleNavClick(e, '#')}
-          className="flex items-center gap-2.5 focus:outline-none group"
+          onClick={(e) => handleNavClick(e, '#hero')}
+          className="flex items-center gap-3 focus:outline-none group"
         >
-          <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white shadow-sm group-hover:bg-blue-600 transition-colors">
-            <span className="font-display font-bold text-base leading-none">A</span>
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet to-cyan flex items-center justify-center text-white shadow-card-glow group-hover:scale-105 transition-transform">
+            <span className="font-display font-black text-sm tracking-tighter">A</span>
           </div>
-          <span className="font-display font-bold text-xl tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+          <span className="font-display font-bold text-xl tracking-[0.15em] text-white group-hover:text-cyan-glow transition-colors">
             ASTEYA
           </span>
         </Link>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-8 text-xs font-mono font-medium text-slate-600">
+        {/* Center Navigation Links (Pill Style) */}
+        <nav className="hidden md:flex items-center gap-1 bg-cosmic-card/60 backdrop-blur-md px-5 py-2 rounded-full border border-white/10 text-xs font-sans font-medium text-cosmic-muted">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="hover:text-slate-900 transition-colors py-1 relative group cursor-pointer"
+              className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all cursor-pointer relative"
             >
               {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-slate-900 transition-all duration-200 group-hover:w-full" />
             </a>
           ))}
         </nav>
 
-        {/* CTA Pill Button */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Right Action Button & Subtle Breadcrumb Indicator */}
+        <div className="hidden md:flex items-center gap-6">
           <button
             onClick={onOpenProjectModal}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-black text-white text-xs font-mono font-semibold tracking-wider transition-all shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-violet/80 to-cyan/80 hover:from-violet hover:to-cyan text-white text-xs font-mono font-semibold tracking-wider transition-all shadow-card-glow hover:scale-105 active:scale-95 border border-white/20"
           >
-            <span>LET'S BUILD</span>
+            <span>Let's Build</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -93,7 +92,7 @@ export const Navbar = ({ onOpenProjectModal }) => {
         {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-slate-700 hover:text-slate-900 focus:outline-none"
+          className="md:hidden p-2 text-cosmic-muted hover:text-white focus:outline-none"
           aria-label="Toggle navigation"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -102,14 +101,14 @@ export const Navbar = ({ onOpenProjectModal }) => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200 px-6 py-6 animate-in slide-in-from-top-2 duration-200 shadow-xl">
+        <div className="md:hidden bg-cosmic-bg/95 backdrop-blur-2xl border-b border-white/10 px-6 py-6 animate-in slide-in-from-top-2 duration-200 shadow-2xl">
           <nav className="flex flex-col gap-4 text-sm font-mono font-medium">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-slate-600 hover:text-slate-900 py-1.5 border-b border-slate-100"
+                className="text-cosmic-muted hover:text-white py-1.5 border-b border-white/5"
               >
                 {link.name}
               </a>
@@ -121,9 +120,9 @@ export const Navbar = ({ onOpenProjectModal }) => {
                   setMobileMenuOpen(false);
                   onOpenProjectModal();
                 }}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-slate-900 text-white text-xs font-mono font-semibold"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-gradient-to-r from-violet to-cyan text-white text-xs font-mono font-semibold shadow-card-glow"
               >
-                <span>LET'S BUILD</span>
+                <span>Let's Build</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

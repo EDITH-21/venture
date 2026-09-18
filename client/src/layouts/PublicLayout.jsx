@@ -11,7 +11,7 @@ export const PublicLayout = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-900 antialiased selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-cosmic-bg text-white antialiased selection:bg-violet selection:text-white">
       <Navbar onOpenProjectModal={() => setIsModalOpen(true)} />
       <main className="flex-grow">
         <Outlet context={{ onOpenProjectModal: () => setIsModalOpen(true) }} />

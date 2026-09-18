@@ -7,102 +7,102 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Clean white and subtle gray grid surfaces from the blueprint
-        blueprint: {
-          bg: '#F8F9FA',
-          surface: '#FFFFFF',
-          card: '#FFFFFF',
-          border: '#E9ECEF',
-          line: '#DEE2E6',
-          muted: '#6C757D',
-          dark: '#111827',
-        },
-        // Deep obsidian for dark sections (Ventures & Final CTA)
-        darkness: {
-          DEFAULT: '#0B0F17',
-          surface: '#111827',
-          card: '#161F30',
-          border: '#1F293D',
-          accent: '#38BDF8',
-          purple: '#818CF8',
-        },
-        // Glowing blueprint blue / cyan accents from the diagram
-        cyanic: {
-          DEFAULT: '#0284C7',
-          light: '#38BDF8',
-          glow: 'rgba(56, 189, 248, 0.35)',
-        },
-        // Legacy compatibility
-        cream: {
-          DEFAULT: '#F8F9FA',
-          surface: '#F1F3F5',
-          card: '#FFFFFF',
-          dark: '#E9ECEF',
-          border: '#E2E8F0',
-        },
-        forest: {
-          DEFAULT: '#0F172A',
-          deep: '#0B0F17',
-          dark: '#0284C7',
-          light: '#2563EB',
-          subtle: '#EFF6FF',
-          border: 'rgba(37, 99, 235, 0.15)',
-        },
-        charcoal: {
-          DEFAULT: '#0F172A',
-          dark: '#020617',
-          light: '#1E293B',
-          muted: '#475569',
+        // Deep Space Obsidian Palette matching the exact reference image
+        cosmic: {
+          bg: '#040711',
+          surface: '#080C1A',
+          card: '#0D1326',
+          border: 'rgba(255, 255, 255, 0.08)',
+          'border-hover': 'rgba(139, 92, 246, 0.4)',
+          text: '#F8FAFC',
+          muted: '#94A3B8',
           subtle: '#64748B',
-          border: '#E2E8F0',
         },
+        // Glowing Cosmic Violet & Purple Accent
+        violet: {
+          DEFAULT: '#8B5CF6',
+          glow: '#A855F7',
+          dark: '#6D28D9',
+          light: '#C084FC',
+        },
+        // Cyber Cyan & Electric Blue Accent
+        cyan: {
+          DEFAULT: '#06B6D4',
+          glow: '#38BDF8',
+          dark: '#0284C7',
+          light: '#7DD3FC',
+        },
+        // Neon Indigo
+        indigo: {
+          DEFAULT: '#6366F1',
+          glow: '#818CF8',
+          dark: '#4338CA',
+        },
+        // Legacy compat
         obsidian: {
-          DEFAULT: '#0B0F17',
-          deep: '#06090E',
-          surface: '#111827',
+          DEFAULT: '#040711',
+          deep: '#02040A',
+          surface: '#080C1A',
         },
         graphite: {
-          DEFAULT: '#161F30',
-          light: '#1E293B',
-          border: '#1F293D',
+          DEFAULT: '#0D1326',
+          light: '#131C38',
+          border: '#1E294B',
         },
-        champagne: {
-          DEFAULT: '#0284C7',
-          light: '#38BDF8',
-          dark: '#0369A1',
-          subtle: 'rgba(2, 132, 199, 0.08)',
+        charcoal: {
+          DEFAULT: '#F8FAFC',
+          muted: '#94A3B8',
+        },
+        cream: {
+          DEFAULT: '#040711',
+          surface: '#080C1A',
+        },
+        forest: {
+          DEFAULT: '#8B5CF6',
+          subtle: 'rgba(139, 92, 246, 0.12)',
         },
       },
       fontFamily: {
         sans: ['"Inter"', '"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'Menlo', 'Monaco', 'monospace'],
-        display: ['"Space Grotesk"', '"Plus Jakarta Sans"', 'sans-serif'],
+        display: ['"Space Grotesk"', '"Inter"', 'sans-serif'],
       },
       boxShadow: {
-        'blueprint': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
-        'blueprint-hover': '0 20px 35px -5px rgba(15, 23, 42, 0.08), 0 10px 15px -5px rgba(15, 23, 42, 0.04)',
-        'cyan-glow': '0 0 30px rgba(56, 189, 248, 0.25)',
-        'neon-card': '0 0 0 1px rgba(56, 189, 248, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4)',
+        'cosmic-glow': '0 0 50px -10px rgba(139, 92, 246, 0.4)',
+        'cyan-glow': '0 0 40px -10px rgba(56, 189, 248, 0.45)',
+        'card-glow': '0 0 25px rgba(139, 92, 246, 0.15)',
+        'orb-glow': '0 0 80px rgba(168, 85, 247, 0.5)',
       },
       backgroundImage: {
-        'blueprint-grid': 'radial-gradient(#CBD5E1 1px, transparent 1px)',
-        'dark-grid': 'radial-gradient(#1E293B 1px, transparent 1px)',
-        'cyan-gradient': 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
-        'glass-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 100%)',
+        'cosmic-radial': 'radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.18) 0%, rgba(6, 182, 212, 0.08) 40%, rgba(4, 7, 17, 0) 70%)',
+        'nebula-gradient': 'linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(6, 182, 212, 0.15) 50%, rgba(4, 7, 17, 0.95) 100%)',
+        'purple-cyan': 'linear-gradient(135deg, #A855F7 0%, #6366F1 50%, #38BDF8 100%)',
+        'purple-cyan-text': 'linear-gradient(90deg, #C084FC 0%, #818CF8 50%, #38BDF8 100%)',
+        'stars-pattern': 'radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)',
       },
       animation: {
-        'float-slow': 'float 6s ease-in-out infinite',
-        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
-        'rotate-diagram': 'rotateDiagram 30s linear infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+        'orbit-spin': 'orbitSpin 35s linear infinite',
+        'orbit-reverse': 'orbitSpin 45s linear infinite reverse',
+        'nebula-pulse': 'nebulaPulse 6s ease-in-out infinite alternate',
       },
       keyframes: {
         float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '50%': { transform: 'translateY(-12px) rotate(1deg)' },
         },
         pulseGlow: {
           '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
-          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+          '50%': { opacity: '0.85', transform: 'scale(1.08)' },
+        },
+        orbitSpin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        nebulaPulse: {
+          '0%': { opacity: '0.3', transform: 'scale(0.95)' },
+          '100%': { opacity: '0.7', transform: 'scale(1.05)' },
         },
       },
     },

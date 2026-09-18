@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
+import { Linkedin, Twitter, Instagram, Youtube, ArrowUpRight } from 'lucide-react';
 
 export const Footer = () => {
   const location = useLocation();
@@ -21,128 +21,98 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-darkness-deep text-white border-t border-darkness-border py-16 sm:py-20 relative z-10">
+    <footer className="bg-cosmic-bg text-white border-t border-white/10 py-12 relative z-10">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
-          {/* Brand Info (6 cols) */}
-          <div className="lg:col-span-6 space-y-4">
+        {/* Main Footer Row */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-10 border-b border-white/5">
+          {/* Brand & Tagline */}
+          <div className="space-y-1.5">
             <Link
               to="/"
-              onClick={(e) => handleNavClick(e, '#')}
+              onClick={(e) => handleNavClick(e, '#hero')}
               className="flex items-center gap-2.5 w-fit group"
             >
-              <div className="w-8 h-8 rounded-lg bg-white text-slate-950 flex items-center justify-center font-display font-bold text-base">
+              <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-violet to-cyan flex items-center justify-center font-display font-black text-xs text-white">
                 A
               </div>
-              <span className="font-display font-bold text-2xl tracking-tight text-white group-hover:text-sky-400 transition-colors">
+              <span className="font-display font-bold text-lg tracking-[0.2em] text-white group-hover:text-cyan-glow transition-colors">
                 ASTEYA
               </span>
             </Link>
 
-            <p className="text-xs font-mono text-slate-400 tracking-wider uppercase">
-              Technology · Design · Business
-            </p>
-
-            <p className="text-xs text-slate-400 max-w-sm font-sans leading-relaxed pt-2">
-              Building scalable digital foundations, bespoke web systems, and high-impact software ventures for ambitious organizations.
+            <p className="text-[11px] font-mono text-cosmic-subtle tracking-wider">
+              Technology · Innovation · Possibility
             </p>
           </div>
 
-          {/* Navigation Links (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-1">
-              Company & Work
-            </span>
-            <ul className="space-y-2 text-xs font-mono text-slate-400">
-              <li>
-                <a href="#capabilities" onClick={(e) => handleNavClick(e, '#capabilities')} className="hover:text-white transition-colors">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#system" onClick={(e) => handleNavClick(e, '#system')} className="hover:text-white transition-colors">
-                  Solutions
-                </a>
-              </li>
-              <li>
-                <a href="#ventures" onClick={(e) => handleNavClick(e, '#ventures')} className="hover:text-white transition-colors">
-                  Ventures
-                </a>
-              </li>
-              <li>
-                <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className="hover:text-white transition-colors">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#ventures" onClick={(e) => handleNavClick(e, '#ventures')} className="hover:text-sky-400 transition-colors inline-flex items-center gap-1">
-                  <span>BingeBlocker</span>
-                  <span className="text-[9px] bg-sky-950 text-sky-400 px-1.5 py-0.2 rounded border border-sky-800">New</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Center Navigation Links */}
+          <nav className="flex items-center gap-6 text-xs font-mono text-cosmic-muted">
+            <a href="#about" onClick={(e) => handleNavClick(e, '#about')} className="hover:text-white transition-colors">
+              About
+            </a>
+            <a href="#services" onClick={(e) => handleNavClick(e, '#services')} className="hover:text-white transition-colors">
+              Services
+            </a>
+            <a href="#ventures" onClick={(e) => handleNavClick(e, '#ventures')} className="hover:text-white transition-colors">
+              Ventures
+            </a>
+            <a href="#cta" onClick={(e) => handleNavClick(e, '#cta')} className="hover:text-white transition-colors">
+              Contact
+            </a>
+          </nav>
 
-          {/* Connect Links (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-1">
-              Connect
-            </span>
-            <ul className="space-y-2 text-xs font-mono text-slate-400">
-              <li>
-                <a
-                  href="https://wa.me/919998160726?text=Hi%20Asteya,%20I'd%20like%20to%20discuss%20a%20project."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 group"
-                >
-                  <span>WhatsApp (+91 9998160726)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:shivamgate21@gmail.com"
-                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 group"
-                >
-                  <span>Email (shivamgate21@gmail.com)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 group"
-                >
-                  <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 group"
-                >
-                  <span>Instagram</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              </li>
-            </ul>
+          {/* Right Social Icons */}
+          <div className="flex items-center gap-4 text-cosmic-muted">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 hover:text-white flex items-center justify-center transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-3.5 h-3.5" />
+            </a>
+
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 hover:text-white flex items-center justify-center transition-colors"
+              aria-label="X Twitter"
+            >
+              <Twitter className="w-3.5 h-3.5" />
+            </a>
+
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 hover:text-white flex items-center justify-center transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-3.5 h-3.5" />
+            </a>
+
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 hover:text-white flex items-center justify-center transition-colors"
+              aria-label="YouTube"
+            >
+              <Youtube className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
-          <p>© {new Date().getFullYear()} ASTEYA. All rights reserved.</p>
+        {/* Bottom Legal Copyright Bar */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-cosmic-subtle">
+          <p>© {new Date().getFullYear()} Asteya. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="hover:text-slate-300 transition-colors">
+            <Link to="/privacy" className="hover:text-cosmic-muted transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="hover:text-slate-300 transition-colors">
+            <Link to="/terms" className="hover:text-cosmic-muted transition-colors">
               Terms of Service
             </Link>
           </div>

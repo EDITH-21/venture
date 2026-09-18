@@ -1,68 +1,84 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Mouse } from 'lucide-react';
 import { HeroVisual } from './HeroVisual';
 
 export const HeroSection = ({ onOpenProjectModal }) => {
   return (
-    <section id="hero" className="relative min-h-[92vh] flex items-center bg-white pt-28 sm:pt-32 pb-20 overflow-hidden bg-grid-pattern border-b border-slate-200">
+    <section id="hero" className="relative min-h-screen flex items-center bg-cosmic-bg text-white pt-32 pb-20 overflow-hidden bg-cosmic-stars">
+      {/* Top Right Subtle Vertical Pillar Breadcrumbs */}
+      <div className="hidden lg:block absolute top-28 right-12 z-20 text-[10px] font-mono text-cosmic-subtle tracking-[0.25em] text-right leading-loose select-none opacity-60">
+        <div>IDEAS</div>
+        <div>TECHNOLOGY</div>
+        <div>VENTURES</div>
+        <div>IMPACT</div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Hero Content */}
+          {/* Left Content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 flex flex-col"
           >
-            {/* Eyebrow */}
+            {/* Category Eyebrow */}
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-xs font-mono font-bold tracking-widest text-slate-800 uppercase">
-                ASTEYA / DIGITAL TECHNOLOGY COMPANY
+              <span className="text-[11px] font-mono font-bold tracking-[0.25em] text-cyan-glow uppercase">
+                INNOVATION / TECHNOLOGY / VENTURES
               </span>
             </div>
 
-            {/* Massive Bold Headline matching blueprint */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-black text-slate-900 tracking-tight leading-[1.04] mb-6">
-              BUILD WHAT'S<br />
-              <span className="text-slate-900">NEXT.</span>
+            {/* Massive Bold Headline */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-black tracking-tight leading-[1.05] mb-6">
+              BUILDING<br />
+              <span className="gradient-text-purple-cyan">
+                WHAT COMES NEXT.
+              </span>
             </h1>
 
-            {/* Sub-headline */}
-            <h2 className="text-xl sm:text-2xl font-sans font-bold text-slate-900 mb-3 tracking-tight">
-              Digital foundations for ambitious businesses.
-            </h2>
-
-            {/* Paragraph Description */}
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-lg mb-8 font-sans">
-              Asteya combines technology, design and business thinking to turn ideas into scalable digital experiences.
+            {/* Supporting Copy */}
+            <p className="text-base sm:text-lg text-cosmic-muted leading-relaxed max-w-lg mb-10 font-sans">
+              ASTEYA is a technology and innovation company building digital products, services and ventures for the next generation.
             </p>
 
-            {/* Actions */}
+            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={onOpenProjectModal}
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-slate-900 hover:bg-black text-white font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-violet via-indigo to-cyan hover:from-violet-light hover:to-cyan-glow text-white font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-cosmic-glow hover:scale-105 active:scale-95"
               >
-                <span>START A PROJECT</span>
+                <span>Explore Asteya</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <a
-                href="#capabilities"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-mono font-semibold text-xs uppercase tracking-wider transition-all"
+                href="#ventures"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono font-semibold text-xs uppercase tracking-wider transition-all backdrop-blur-md"
               >
-                <span>EXPLORE ASTEYA</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Our Ventures</span>
               </a>
+            </div>
+
+            {/* Bottom Mouse Scroll to Explore Indicator */}
+            <div className="flex items-center gap-3 pt-16 mt-4 text-[10px] font-mono text-cosmic-subtle tracking-[0.2em] uppercase">
+              <div className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1">
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                  className="w-1 h-2 rounded-full bg-cyan"
+                />
+              </div>
+              <span>SCROLL TO EXPLORE</span>
             </div>
           </motion.div>
 
-          {/* Right Isometric 3D Diagram */}
+          {/* Right 3D Cosmic Planetary Orb */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 relative"
           >
             <HeroVisual />
